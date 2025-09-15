@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - PickTask Task Management</title>
+    <meta name="description" content="Discover PickTask's powerful features: voice memos, kanban boards, team collaboration, and progress tracking.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <style>
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-teal);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:focus {
+            color: var(--primary-teal);
+            background: var(--gray-50);
+            outline: none;
+        }
+
+        .nav-menu a.active {
+            color: var(--primary-teal);
+            background: var(--gray-100);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .mobile-menu-toggle:hover,
+        .mobile-menu-toggle:focus {
+            background: var(--gray-100);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .cta-nav {
+            background: var(--primary-teal);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-nav:hover,
+        .cta-nav:focus {
+            background: #2bb5ad;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* Hero Section - Redesigned with asymmetric layout */
+        .features-hero {
+            background: linear-gradient(125deg, var(--gray-50) 0%, var(--white) 60%, var(--gray-50) 100%);
+            padding: 2rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .features-hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 40%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, rgba(49, 201, 193, 0.05) 0%, transparent 70%);
+            transform: rotate(15deg);
+        }
+
+        .features-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: var(--gray-600);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-teal);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 350px;
+        }
+
+        .hero-card {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .hero-card.card-1 {
+            top: 0;
+            left: 0;
+            width: 200px;
+            transform: rotate(-5deg);
+            z-index: 3;
+        }
+
+        .hero-card.card-2 {
+            top: 20px;
+            right: 0;
+            width: 180px;
+            transform: rotate(8deg);
+            z-index: 2;
+        }
+
+        .hero-card.card-3 {
+            bottom: 0;
+            left: 114px;
+            width: 190px;
+            transform: rotate(-2deg);
+            z-index: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .card-content {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        /* NEW STYLING STARTS HERE */
+        
+        /* Features Overview Cards */
+        .features-overview {
+            padding: 3rem 1rem;
+            background: var(--white);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-100);
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        .feature-card p {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .feature-link {
+            color: var(--primary-teal);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Detailed Features Section */
+        .detailed-features {
+            padding: 4rem 1rem;
+            background: var(--gray-50);
+        }
+        
+        .detailed-features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .feature-detail {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 6rem;
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .feature-detail:nth-child(even) .feature-content {
+            flex-direction: row-reverse;
+        }
+        
+        .feature-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-text {
+            flex: 1;
+            padding: 3rem;
+        }
+        
+        .feature-media-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        .feature-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 400px;
+        }
+        
+        .feature-highlights {
+            margin: 2rem 0;
+        }
+        
+        .highlight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlight-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-100);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-teal);
+            flex-shrink: 0;
+        }
+        
+        .highlight-content h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        
+        .highlight-content p {
+            color: var(--gray-600);
+        }
+        
+        .feature-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Use Cases Section */
+        .use-cases {
+            padding: 4rem 1rem;
+            background: var(--white);
+        }
+        
+        .use-cases-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .use-case-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 2rem;
+            border-left: 4px solid var(--primary-teal);
+        }
+        
+        .use-case-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        .use-case-card p {
+            color: var(--gray-600);
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 4rem 1rem;
+            background: var(--gray-50);
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .testimonial-text::before {
+            content: "";
+            font-size: 4rem;
+            color: var(--primary-teal);
+            opacity: 0.2;
+            position: absolute;
+            top: -1rem;
+            left: -1rem;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-600);
+            font-weight: bold;
+        }
+        
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: var(--gray-900);
+        }
+        
+        .author-info p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 1rem;
+            background: var(--white);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .faq-question:hover {
+            background: var(--gray-50);
+            color: var(--primary-teal);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: var(--primary-teal);
+        }
+        
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            color: var(--gray-600);
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
+            padding: 0 1rem;
+        }
+        
+        .faq-answer.active {
+            max-height: 200px;
+            margin-top: 0.5rem;
+            padding: 0 1rem 1rem 1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 1rem;
+            background: var(--primary-dark);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+        }
+
+        .cta-wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 50px,
+                rgba(49, 201, 193, 0.1) 50px,
+                rgba(49, 201, 193, 0.1) 100px
+            );
+            animation: wave 15s linear infinite;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-container h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .cta-container p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--primary-dark);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-white:hover,
+        .btn-white:focus {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 1rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-teal);
+        }
+
+        .footer-brand p {
+            line-height: 1.6;
+            color: var(--gray-400);
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--gray-400);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--primary-teal);
+            outline: none;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+        }
+
+        /* Animations */
+        @keyframes floatPattern {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(5px) translateY(-5px);
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px);
+            }
+            75% {
+                transform: translateX(-10px) translateY(-5px);
+            }
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 968px) {
+            .feature-content {
+                flex-direction: column-reverse !important;
+            }
+            
+            .feature-text {
+                padding: 2rem;
+            }
+            
+            .feature-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: 1px solid var(--gray-200);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 1rem;
+                border-radius: 6px;
+                text-align: center;
+            }
+
+            .features-hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-visual {
+                order: -1;
+                height: 250px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-white, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-visual { 
+                height: 200px; 
+            }
+
+            .hero-card {
+                width: 150px !important;
+            }
+
+            .card-title { 
+                font-size: 0.8rem; 
+            }
+
+            .card-content { 
+                font-size: 0.7rem; 
+            }
+            
+            .section-header h2 {
+                font-size: 1.75rem;
+            }
+            
+            .feature-text {
+                padding: 1.5rem;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .features-hero::before,
+            .cta-wave {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="index.html" class="logo" aria-label="PickTask home">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                PickTask
+            </a>
+            
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="feature.html" role="menuitem" class="active">Features</a></li>
+                <li role="none"><a href="pricing.html" role="menuitem">Pricing</a></li>
+                <li role="none"><a href="tutorial.html" role="menuitem">Tutorials</a></li>
+                <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+            </ul>
+            
+            <a href="#get-started" class="cta-nav" id="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="features-hero" aria-labelledby="features-hero-title">
+            <div class="features-hero-container">
+                <div class="hero-content">
+                    <h1 id="features-hero-title">Features that actually work for real teams</h1>
+                    <p>No more wrestling with complicated tools. PickTask gives you the essential features you need, designed around how you actually work—not how software thinks you should work.</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">2.3x</span>
+                            <span class="stat-label">Faster task completion</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15min</span>
+                            <span class="stat-label">Daily time saved</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">94%</span>
+                            <span class="stat-label">Team adoption rate</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="hero-card card-1">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--primary-teal);">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <div class="card-title">Voice Task</div>
+                        </div>
+                        <div class="card-content">"Set up client meeting for next Tuesday and send project proposal"</div>
+                    </div>
+                    <div class="hero-card card-2">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--primary-green);">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="card-title">Auto-created</div>
+                        </div>
+                        <div class="card-content">✓ Schedule client meeting<br>✓ Prepare proposal draft</div>
+                    </div>
+                    <div class="hero-card card-3">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--primary-teal);">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="card-title">Team Update</div>
+                        </div>
+                        <div class="card-content">Sarah completed design review. Next: development phase.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Features Section -->
+        <section class="detailed-features" id="features">
+            <div class="detailed-features-container">
+                <div class="section-header">
+                    <h2>How PickTask Works for You</h2>
+                    <p>Explore our powerful features designed to streamline your workflow and boost productivity</p>
+                </div>
+                
+                <!-- Voice Memo Feature -->
+                <div class="feature-detail" id="voice-memo">
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <h3>Voice Memo Task Creation</h3>
+                            <p>Never forget a brilliant idea again. Our advanced voice recognition turns your spoken words into organized tasks instantly.</p>
+                            
+                            <div class="feature-highlights">
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-microphone-alt"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Hands-Free Task Creation</h4>
+                                        <p>Record voice memos during meetings, commutes, or whenever inspiration strikes</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-brain"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>AI-Powered Extraction</h4>
+                                        <p>Our smart AI identifies action items, priorities, and deadlines from your recordings</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Multi-Device Sync</h4>
+                                        <p>Record on mobile, access everywhere with seamless synchronization</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-actions">
+                                <a href="#try-voice" class="cta-nav">
+                                    <i class="fas fa-play"></i>
+                                    Try Voice Demo
+                                </a>
+                                <a href="#learn-more" class="btn-secondary">
+                                    <i class="fas fa-info-circle"></i>
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-media-container">
+                            <img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                 alt="Person using voice commands on smartphone for task management" 
+                                 class="feature-image">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kanban Boards Feature -->
+                <div class="feature-detail" id="kanban">
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <h3>Kanban Boards</h3>
+                            <p>Visualize your workflow and manage tasks with our intuitive drag-and-drop interface designed for maximum clarity.</p>
+                            
+                            <div class="feature-highlights">
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-columns"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Visual Workflow</h4>
+                                        <p>See your entire project pipeline at a glance with customizable columns</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-hand-pointer"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Drag & Drop</h4>
+                                        <p>Effortlessly move tasks between stages with intuitive interactions</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Custom Labels</h4>
+                                        <p>Color-code tasks by priority, department, or any custom criteria</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-actions">
+                                <a href="#try-kanban" class="cta-nav">
+                                    <i class="fas fa-eye"></i>
+                                    View Demo Board
+                                </a>
+                                <a href="#templates" class="btn-secondary">
+                                    <i class="fas fa-template"></i>
+                                    Board Templates
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-media-container">
+                            <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2039&q=80" 
+                                 alt="Kanban board interface showing task organization with sticky notes and columns" 
+                                 class="feature-image">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Collaboration Feature -->
+                <div class="feature-detail" id="collaboration">
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <h3>Team Collaboration</h3>
+                            <p>Bring your team together with tools designed for seamless communication and efficient task management.</p>
+                            
+                            <div class="feature-highlights">
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-user-tag"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Smart Assignments</h4>
+                                        <p>Assign tasks to team members with automatic notifications and reminders</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-comments"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Contextual Comments</h4>
+                                        <p>Discuss tasks directly within the platform with @mentions and replies</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-file-upload"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>File Sharing</h4>
+                                        <p>Attach documents, images, and files directly to tasks with version control</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-actions">
+                                <a href="#collaboration-demo" class="cta-nav">
+                                    <i class="fas fa-users"></i>
+                                    See Collaboration
+                                </a>
+                                <a href="#integrations" class="btn-secondary">
+                                    <i class="fas fa-plug"></i>
+                                    View Integrations
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-media-container">
+                            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                 alt="Team collaboration meeting with people working together around a laptop" 
+                                 class="feature-image">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Tracking Feature -->
+                <div class="feature-detail" id="progress">
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <h3>Progress Tracking & Analytics</h3>
+                            <p>Gain valuable insights into your team's performance and project status with comprehensive analytics.</p>
+                            
+                            <div class="feature-highlights">
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Visual Dashboards</h4>
+                                        <p>Get instant insights with beautiful charts showing project progress and team performance</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-stopwatch"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Time Tracking</h4>
+                                        <p>Built-in time tracking helps monitor effort and improve future estimations</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-item">
+                                    <div class="highlight-icon">
+                                        <i class="fas fa-flag-checkered"></i>
+                                    </div>
+                                    <div class="highlight-content">
+                                        <h4>Milestone Tracking</h4>
+                                        <p>Set and track key milestones to keep projects on schedule and celebrate wins</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-actions">
+                                <a href="#analytics-demo" class="cta-nav">
+                                    <i class="fas fa-chart-bar"></i>
+                                    View Analytics
+                                </a>
+                                <a href="#reports" class="btn-secondary">
+                                    <i class="fas fa-file-alt"></i>
+                                    Sample Reports
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-media-container">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                 alt="Analytics dashboard showing charts and graphs for project tracking" 
+                                 class="feature-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases Section -->
+        <section class="use-cases">
+            <div class="use-cases-container">
+                <div class="section-header">
+                    <h2>How Teams Use PickTask</h2>
+                    <p>Discover how different teams leverage PickTask to streamline their workflows</p>
+                </div>
+                
+                <div class="use-cases-grid">
+                    <div class="use-case-card">
+                        <h3>Marketing Teams</h3>
+                        <p>Plan campaigns, track deliverables, and collaborate on content creation with seamless task management.</p>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Development Teams</h3>
+                        <p>Manage sprints, track bugs, and coordinate releases with integrated development workflows.</p>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Remote Teams</h3>
+                        <p>Stay connected and productive with async communication tools and clear task ownership.</p>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Startups</h3>
+                        <p>Move fast without dropping balls with intuitive task management that scales with your growth.</p>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Enterprise Teams</h3>
+                        <p>Coordinate complex projects across departments with advanced permissions and reporting.</p>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h3>Freelancers</h3>
+                        <p>Manage multiple clients and projects in one place with time tracking and invoicing integrations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials">
+            <div class="testimonials-container">
+                <div class="section-header">
+                    <h2>What Our Customers Say</h2>
+                    <p>Hear from teams that have transformed their productivity with PickTask</p>
+                </div>
+                
+                <div class="testimonial-cards">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            PickTask's voice memo feature has been a game-changer for our creative team. We capture ideas instantly without breaking our creative flow.
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SD</div>
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>Creative Director, Design Studio</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            The analytics have given us visibility we never had before. We can now pinpoint bottlenecks before they become problems.
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MR</div>
+                            <div class="author-info">
+                                <h4>Michael Rodriguez</h4>
+                                <p>CTO, Tech Startup</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            As a remote team, PickTask keeps us aligned and accountable. The collaboration features feel like we're in the same room.
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">AL</div>
+                            <div class="author-info">
+                                <h4>Amanda Lee</h4>
+                                <p>Team Lead, Remote Agency</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="faq-container">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Get answers to common questions about PickTask features</p>
+                </div>
+                
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How accurate is the voice recognition?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Our AI-powered voice recognition is trained on diverse accents and speaking styles, with an accuracy rate of over 95% for clear audio. It continues to learn and improve with each use.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I customize the Kanban board columns?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Absolutely! You can create, rename, and reorder columns to match your workflow exactly. We also offer templates for common workflows to get you started quickly.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How many team members can collaborate on a project?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Our Team plan supports up to 50 members per project, while our Enterprise plan offers unlimited members and advanced permission controls.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is my data secure with PickTask?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Security is our top priority. We use end-to-end encryption, regular security audits, and are SOC 2 compliant. Your data is always safe with us.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section" aria-labelledby="cta-title">
+            <!-- Animated background elements -->
+            <div class="cta-animated-bg">
+                <div class="cta-wave"></div>
+                <div class="cta-wave" style="animation-duration: 20s; animation-direction: reverse;"></div>
+            </div>
+            
+            <div class="cta-container">
+                <h2 id="cta-title">Ready to Transform Your Productivity?</h2>
+                <p>Join thousands of teams who have streamlined their workflow with PickTask's powerful features. Start your free trial today and experience the difference.</p>
+                <div class="cta-buttons">
+                    <a href="#get-started" class="btn-white" id="cta-primary">Start Free Trial</a>
+                    <a href="#schedule-demo" class="btn-secondary">Schedule Demo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>PickTask</h3>
+                    <p>Empowering teams worldwide with intelligent task management solutions. Built for the modern workplace, designed for maximum productivity and seamless collaboration.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <nav aria-label="Product links">
+                        <a href="feature.html">Features</a>
+                        <a href="pricing.html">Pricing</a>
+                        <a href="#integrations">Integrations</a>
+                        <a href="documentation.html">Documentation</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <nav aria-label="Resource links">
+                        <a href="tutorial.html">Tutorials</a>
+                        <a href="help_support.html">Help & Support</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <nav aria-label="Company links">
+                        <a href="about_us.html">About Us</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="contact.html">Contact</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PickTask. All rights reserved. Built with <i class="fas fa-heart" style="color: var(--primary-teal);" aria-hidden="true"></i> for productive teams.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced UX-focused JavaScript for Features Page
+        class PickTaskFeaturesUI {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupNavigation();
+                this.setupMobileMenu();
+                this.setupSmoothScrolling();
+                this.setupAccessibility();
+                this.setupAnimations();
+                this.setupVideoControls();
+                this.setupFeatureTracking();
+                this.setupFAQ();
+            }
+
+            // Navigation with scroll behavior
+            setupNavigation() {
+                const navbar = document.getElementById('navbar');
+                let lastScrollY = window.scrollY;
+                let ticking = false;
+
+                const updateNavbar = () => {
+                    const scrollY = window.scrollY;
+                    
+                    // Add shadow when scrolled
+                    if (scrollY > 10) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+
+                    lastScrollY = scrollY;
+                    ticking = false;
+                };
+
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateNavbar);
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            // Mobile menu functionality
+            setupMobileMenu() {
+                const toggle = document.getElementById('mobile-menu-toggle');
+                const menu = document.getElementById('nav-menu');
+
+                if (toggle && menu) {
+                    toggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const isOpen = menu.classList.contains('open');
+                        
+                        menu.classList.toggle('open');
+                        toggle.setAttribute('aria-expanded', !isOpen);
+                        toggle.querySelector('i').className = isOpen ? 'fas fa-bars' : 'fas fa-times';
+                        
+                        // Prevent scroll when menu is open
+                        document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+                    });
+
+                    // Close menu when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                            menu.classList.remove('open');
+                            toggle.setAttribute('aria-expanded', 'false');
+                            toggle.querySelector('i').className = 'fas fa-bars';
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                }
+            }
+
+            // Smooth scrolling
+            setupSmoothScrolling() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = anchor.getAttribute('href').substring(1);
+                        const target = document.getElementById(targetId);
+                        
+                        if (target) {
+                            const navbar = document.getElementById('navbar');
+                            const offset = navbar ? navbar.offsetHeight + 20 : 20;
+                            const targetPosition = target.offsetTop - offset;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+
+                            target.focus({ preventScroll: true });
+                        }
+                    });
+                });
+            }
+
+            // Enhanced accessibility
+            setupAccessibility() {
+                // Skip link functionality
+                const skipLink = document.querySelector('.skip-link');
+                if (skipLink) {
+                    skipLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(skipLink.getAttribute('href'));
+                        if (target) {
+                            target.focus();
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                }
+
+                // Keyboard navigation for interactive elements
+                const interactiveElements = document.querySelectorAll('.feature-showcase, .btn-primary, .btn-secondary');
+                interactiveElements.forEach(element => {
+                    element.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            element.click();
+                        }
+                    });
+                });
+            }
+
+            // Animation observers
+            setupAnimations() {
+                if ('IntersectionObserver' in window) {
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -100px 0px'
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0) rotate(0deg)';
+                            }
+                        });
+                    }, observerOptions);
+
+                    // Observe feature showcases for scroll animations
+                    const features = document.querySelectorAll('.feature-showcase');
+                    features.forEach(feature => {
+                        feature.style.opacity = '0.7';
+                        feature.style.transform = 'translateY(30px)';
+                        feature.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                        observer.observe(feature);
+                    });
+
+                    // Animate additional cards
+                    const cards = document.querySelectorAll('.addon-card');
+                    cards.forEach((card, index) => {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px) rotate(0deg)';
+                        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                        observer.observe(card);
+                    });
+                }
+            }
+
+            // Video controls
+            setupVideoControls() {
+                const videos = document.querySelectorAll('video');
+                videos.forEach(video => {
+                    video.addEventListener('play', () => {
+                        console.log('Video started playing');
+                        this.trackEvent('Video_Play', { video_src: video.src || 'demo-video' });
+                    });
+
+                    video.addEventListener('pause', () => {
+                        console.log('Video paused');
+                    });
+
+                    video.addEventListener('ended', () => {
+                        console.log('Video finished');
+                        this.trackEvent('Video_Complete', { video_src: video.src || 'demo-video' });
+                    });
+                });
+            }
+
+            // Feature interaction tracking
+            setupFeatureTracking() {
+                // Track feature button clicks
+                document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const featureSection = e.target.closest('.feature-showcase');
+                        const featureName = featureSection ? featureSection.querySelector('.feature-title').textContent : 'Unknown';
+                        
+                        this.trackEvent('Feature_CTA_Click', {
+                            feature: featureName,
+                            button_text: e.target.textContent.trim()
+                        });
+                    });
+                });
+
+                // Track feature scroll depth
+                this.setupFeatureScrollTracking();
+            }
+
+            setupFeatureScrollTracking() {
+                const features = document.querySelectorAll('.feature-showcase');
+                const observedFeatures = new Set();
+
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                                const featureName = entry.target.querySelector('.feature-title').textContent;
+                                if (!observedFeatures.has(featureName)) {
+                                    observedFeatures.add(featureName);
+                                    this.trackEvent('Feature_Viewed', { feature: featureName });
+                                }
+                            }
+                        });
+                    }, {
+                        threshold: 0.5
+                    });
+
+                    features.forEach(feature => observer.observe(feature));
+                }
+            }
+
+            // FAQ functionality
+            setupFAQ() {
+                const faqQuestions = document.querySelectorAll('.faq-question');
+                
+                faqQuestions.forEach((question, index) => {
+                    question.addEventListener('click', () => {
+                        this.toggleFAQ(index);
+                    });
+
+                    // Add keyboard support
+                    question.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.toggleFAQ(index);
+                        }
+                    });
+
+                    // Set initial state
+                    question.setAttribute('tabindex', '0');
+                    question.setAttribute('role', 'button');
+                    question.setAttribute('aria-expanded', 'false');
+                });
+            }
+
+            toggleFAQ(index) {
+                const question = document.querySelectorAll('.faq-question')[index];
+                const answer = document.querySelectorAll('.faq-answer')[index];
+                const icon = question.querySelector('i');
+                
+                const isActive = question.classList.contains('active');
+                
+                // Close all other FAQs (optional - remove if you want multiple open)
+                document.querySelectorAll('.faq-question').forEach((q, i) => {
+                    if (i !== index) {
+                        q.classList.remove('active');
+                        q.setAttribute('aria-expanded', 'false');
+                        const a = document.querySelectorAll('.faq-answer')[i];
+                        a.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current FAQ
+                if (isActive) {
+                    question.classList.remove('active');
+                    answer.classList.remove('active');
+                    question.setAttribute('aria-expanded', 'false');
+                } else {
+                    question.classList.add('active');
+                    answer.classList.add('active');
+                    question.setAttribute('aria-expanded', 'true');
+                }
+
+                // Track FAQ interaction
+                this.trackEvent('FAQ_Toggle', {
+                    question: question.textContent.trim(),
+                    action: isActive ? 'close' : 'open'
+                });
+            }
+
+            // Analytics tracking
+            trackEvent(eventName, properties = {}) {
+                console.log(`Features Page Event: ${eventName}`, properties);
+                // Integration with analytics service would go here
+            }
+
+            // Utility method for notifications
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'var(--success)' : 'var(--primary-teal)'};
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: var(--shadow-lg);
+                    z-index: 10000;
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease, opacity 0.3s ease;
+                    opacity: 0.95;
+                `;
+
+                document.body.appendChild(notification);
+
+                requestAnimationFrame(() => {
+                    notification.style.transform = 'translateX(0)';
+                });
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3500);
+            }
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                new PickTaskFeaturesUI();
+            });
+        } else {
+            new PickTaskFeaturesUI();
+        }
+
+        // Optional: close mobile menu via Escape for accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('nav-menu');
+                const toggle = document.getElementById('mobile-menu-toggle');
+                if (menu && menu.classList.contains('open')) {
+                    menu.classList.remove('open');
+                    if (toggle) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        const icon = toggle.querySelector('i');
+                        if (icon) icon.className = 'fas fa-bars';
+                        toggle.focus();
+                    }
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrations - PickTask Task Management</title>
+    <meta name="description"
+        content="Connect PickTask with Google Calendar to sync your tasks and schedule seamlessly.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <style>
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-teal);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:focus {
+            color: var(--primary-teal);
+            background: var(--gray-50);
+            outline: none;
+        }
+
+        .nav-menu a.active {
+            color: var(--primary-teal);
+            background: var(--gray-100);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .mobile-menu-toggle:hover,
+        .mobile-menu-toggle:focus {
+            background: var(--gray-100);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .cta-nav {
+            background: var(--primary-teal);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-nav:hover,
+        .cta-nav:focus {
+            background: #2bb5ad;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* Integration Hero Section */
+        .integration-hero {
+            background: linear-gradient(125deg, var(--gray-50) 0%, var(--white) 60%, var(--gray-50) 100%);
+            padding: 4rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .integration-hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 40%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, rgba(49, 201, 193, 0.05) 0%, transparent 70%);
+            transform: rotate(15deg);
+        }
+
+        .integration-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .integration-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .integration-hero p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Integration Content Section */
+        .integration-content {
+            padding: 4rem 1rem;
+            background: var(--white);
+        }
+
+        .integration-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .integration-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .integration-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 2rem;
+            border-left: 4px solid var(--primary-teal);
+            transition: all 0.3s ease;
+        }
+
+        .integration-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .integration-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .integration-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .integration-card h3 {
+            font-size: 1.5rem;
+            color: var(--gray-900);
+        }
+
+        .integration-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .integration-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .integration-feature i {
+            color: var(--primary-teal);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .integration-feature p {
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        /* Integration Visual */
+        .integration-visual {
+            position: relative;
+            text-align: center;
+        }
+
+        .integration-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+        }
+
+        /* Setup Instructions */
+        .setup-instructions {
+            padding: 4rem 1rem;
+            background: var(--gray-50);
+        }
+
+        .setup-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 1.25rem;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+            padding: 4rem 1rem;
+            background: var(--white);
+        }
+
+        .coming-soon-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .integration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .integration-item {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+        }
+
+        .integration-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .integration-item-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray-200);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--gray-600);
+            font-size: 1.5rem;
+        }
+
+        .integration-item h3 {
+            font-size: 1.25rem;
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .integration-item p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--gray-200);
+            color: var(--gray-600);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 1rem;
+            background: var(--primary-dark);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+        }
+
+        .cta-wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(49, 201, 193, 0.1) 50px,
+                    rgba(49, 201, 193, 0.1) 100px);
+            animation: wave 15s linear infinite;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-container h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .cta-container p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--primary-dark);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-white:hover,
+        .btn-white:focus {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 1rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-teal);
+        }
+
+        .footer-brand p {
+            line-height: 1.6;
+            color: var(--gray-400);
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--gray-400);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--primary-teal);
+            outline: none;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+        }
+
+        /* Animations */
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .integration-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .integration-visual {
+                order: -1;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.75rem 0;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-md);
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .integration-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .integration-hero p {
+                font-size: 1.125rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .step-number {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="index.html" class="logo" aria-label="PickTask home">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                PickTask
+            </a>
+
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu"
+                aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="feature.html" role="menuitem">Features</a></li>
+                <li role="none"><a href="pricing.html" role="menuitem">Pricing</a></li>
+                <li role="none"><a href="tutorial.html" role="menuitem">Tutorials</a></li>
+                <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+            </ul>
+
+            <a href="#get-started" class="cta-nav" id="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Integration Hero Section -->
+    <section class="integration-hero">
+        <div class="integration-hero-container">
+            <h1>Connect Your Calendar, Supercharge Your Productivity</h1>
+            <p>Sync your tasks and schedule seamlessly with Google Calendar integration. Never miss a deadline or
+                double-book yourself again.</p>
+        </div>
+    </section>
+
+    <!-- Integration Content Section -->
+    <section class="integration-content" id="main-content">
+        <div class="integration-container">
+            <div class="integration-details">
+                <div class="integration-card">
+                    <div class="integration-card-header">
+                        <div class="integration-icon">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <h3>Google Calendar Integration</h3>
+                    </div>
+                    <div class="integration-features">
+                        <div class="integration-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Sync your tasks with Google Calendar automatically</p>
+                        </div>
+                        <div class="integration-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Two-way synchronization between PickTask and Google Calendar</p>
+                        </div>
+                        <div class="integration-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Set reminders and notifications for your tasks</p>
+                        </div>
+                        <div class="integration-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <p>View your schedule alongside your tasks for better planning</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="cta-nav" style="max-width: 300px; text-align: center; margin: 0 auto;">
+                    <i class="fab fa-google" style="margin-right: 0.5rem;"></i> Connect Google Calendar
+                </a>
+            </div>
+
+            <div class="integration-visual">
+                <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect fill='%23f3f4f6' width='600' height='400'/%3E%3Cg fill='%23e5e7eb'%3E%3Crect x='100' y='50' width='400' height='300' rx='8'/%3E%3Crect x='130' y='80' width='340' height='40' rx='4'/%3E%3Crect x='130' y='140' width='160' height='20' rx='4'/%3E%3Crect x='130' y='170' width='160' height='20' rx='4'/%3E%3Crect x='130' y='200' width='160' height='20' rx='4'/%3E%3Crect x='130' y='230' width='160' height='20' rx='4'/%3E%3Crect x='310' y='140' width='160' height='120' rx='8'/%3E%3Crect x='130' y='270' width='340' height='60' rx='8'/%3E%3C/g%3E%3Ccircle fill='%2331c9c1' cx='520' cy='70' r='20'/%3E%3C/svg%3E"
+                    alt="Google Calendar Integration Preview" class="integration-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Instructions -->
+    <section class="setup-instructions">
+        <div class="setup-container">
+            <div class="section-header">
+                <h2>How to Set Up Google Calendar Integration</h2>
+                <p>Follow these simple steps to connect your Google Calendar with PickTask</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Go to your Integrations settings</h3>
+                        <p>Navigate to your account settings and select the "Integrations" tab.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Click on Google Calendar</h3>
+                        <p>Find the Google Calendar integration card and click the "Connect" button.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Authorize the connection</h3>
+                        <p>You'll be redirected to Google to authorize the connection between PickTask and your
+                            calendar.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Configure your preferences</h3>
+                        <p>Choose which calendars to sync and set your notification preferences.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Start using the integration</h3>
+                        <p>Your tasks and events will now sync automatically between PickTask and Google Calendar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="coming-soon">
+        <div class="coming-soon-container">
+            <div class="section-header">
+                <h2>More Integrations Coming Soon</h2>
+                <p>We're constantly working to add more integrations to make PickTask even more powerful</p>
+            </div>
+
+            <div class="integration-grid">
+                <div class="integration-item">
+                    <div class="integration-item-icon">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <h3>Microsoft Outlook</h3>
+                    <p>Sync your tasks and calendar with Microsoft Outlook</p>
+                    <span class="badge">Coming Soon</span>
+                </div>
+
+                <div class="integration-item">
+                    <div class="integration-item-icon">
+                        <i class="fab fa-slack"></i>
+                    </div>
+                    <h3>Slack</h3>
+                    <p>Get task notifications and updates directly in Slack</p>
+                    <span class="badge">Coming Soon</span>
+                </div>
+
+                <div class="integration-item">
+                    <div class="integration-item-icon">
+                        <i class="fab fa-trello"></i>
+                    </div>
+                    <h3>Trello</h3>
+                    <p>Import your Trello boards and cards into PickTask</p>
+                    <span class="badge">Coming Soon</span>
+                </div>
+
+                <div class="integration-item">
+                    <div class="integration-item-icon">
+                        <i class="fab fa-jira"></i>
+                    </div>
+                    <h3>Jira</h3>
+                    <p>Connect with Jira for seamless project management</p>
+                    <span class="badge">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-animated-bg">
+            <div class="cta-wave"></div>
+        </div>
+        <div class="cta-container">
+            <h2>Ready to Boost Your Productivity?</h2>
+            <p>Connect your Google Calendar today and experience seamless task and schedule management</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-white">
+                    <i class="fab fa-google" style="margin-right: 0.5rem;"></i> Connect Google Calendar
+                </a>
+                <a href="#" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>PickTask</h3>
+                    <p>Empowering teams worldwide with intelligent task management solutions. Built for the modern
+                        workplace, designed for maximum productivity and seamless collaboration.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <nav aria-label="Product links">
+                        <a href="feature.html">Features</a>
+                        <a href="pricing.html">Pricing</a>
+                        <a href="#integrations">Integrations</a>
+                        <a href="documentation.html">Documentation</a>
+                    </nav>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <nav aria-label="Resource links">
+                        <a href="tutorial.html">Tutorials</a>
+                        <a href="help_support.html">Help & Support</a>
+                    </nav>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <nav aria-label="Company links">
+                        <a href="about_us.html">About Us</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="contact.html">Contact</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 PickTask. All rights reserved. Built with <i class="fas fa-heart"
+                        style="color: var(--primary-teal);" aria-hidden="true"></i> for productive teams.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const isExpanded = navMenu.classList.contains('active');
+            menuToggle.setAttribute('aria-expanded', isExpanded);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>

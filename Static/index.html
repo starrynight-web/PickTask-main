@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PickTask - Task Management Made Simple</title>
+    <meta name="description" content="Organize tasks, collaborate with your team, and get work done faster with PickTask's intuitive platform.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <style>
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-teal);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:focus {
+            color: var(--primary-teal);
+            background: var(--gray-50);
+            outline: none;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .mobile-menu-toggle:hover,
+        .mobile-menu-toggle:focus {
+            background: var(--gray-100);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .cta-nav {
+            background: var(--primary-teal);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-nav:hover,
+        .cta-nav:focus {
+            background: #2bb5ad;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* Hero Section with Animated Background */
+        .hero {
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+            padding: 4rem 1rem 6rem;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--primary-teal) 1px, transparent 1px),
+                radial-gradient(circle at 60% 70%, var(--primary-green) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, var(--primary-teal) 1px, transparent 1px),
+                radial-gradient(circle at 40% 80%, var(--primary-green) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px, 80px 80px, 120px 120px;
+            animation: floatPattern 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .hero-floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(49, 201, 193, 0.1), rgba(104, 228, 184, 0.1));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 8s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 40px;
+            height: 40px;
+            top: 60%;
+            left: 85%;
+            animation-delay: -2s;
+            animation-duration: 6s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 80%;
+            left: 5%;
+            animation-delay: -4s;
+            animation-duration: 10s;
+        }
+
+        .floating-shape:nth-child(4) {
+            width: 30px;
+            height: 30px;
+            top: 10%;
+            left: 90%;
+            animation-delay: -1s;
+            animation-duration: 7s;
+        }
+
+        .floating-shape:nth-child(5) {
+            width: 50px;
+            height: 50px;
+            top: 40%;
+            left: 3%;
+            animation-delay: -3s;
+            animation-duration: 9s;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-200);
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        .hero-badge i {
+            color: var(--primary-teal);
+            margin-right: 0.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+            animation: slideInLeft 0.8s ease-out 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            animation: slideInLeft 0.8s ease-out 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            animation: slideInUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn-primary {
+            background: var(--primary-teal);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 48px;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: #2bb5ad;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 48px;
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background: var(--gray-50);
+            border-color: var(--primary-teal);
+            color: var(--primary-teal);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .trust-indicators {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            animation: fadeIn 0.8s ease-out 0.8s both;
+        }
+
+        .trust-indicators strong {
+            color: var(--gray-700);
+        }
+
+        .hero-visual {
+            position: relative;
+            text-align: center;
+            animation: slideInRight 0.8s ease-out 0.3s both;
+        }
+
+        .hero-image {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .demo-preview {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .demo-title {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .demo-status {
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .demo-task {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .demo-task:last-child {
+            margin-bottom: 0;
+        }
+
+        .demo-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .demo-checkbox.checked {
+            background: var(--primary-teal);
+            border-color: var(--primary-teal);
+            position: relative;
+        }
+
+        .demo-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 1rem;
+            background: var(--white);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Deepseek-style Feature Rows */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 100px;
+            gap: 60px;
+        }
+
+        .feature:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .feature-content { flex: 1; }
+
+        .feature-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--gray-900);
+        }
+
+        .feature-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-visual {
+            flex: 1;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(49, 201, 193, 0.1), rgba(104, 228, 184, 0.1));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-visual-content {
+            width: 80%;
+            height: 80%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(7, 23, 39, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-teal);
+            font-weight: 600;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 1rem;
+            background: var(--gray-50);
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            justify-items: center;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+        }
+
+        .testimonial-card:hover,
+        .testimonial-card:focus-within {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .testimonial-content {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .author-info h5 {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        /* CTA Section with Animated Background */
+        .cta-section {
+            padding: 6rem 1rem;
+            background: var(--primary-dark);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+        }
+
+        .cta-wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 50px,
+                rgba(49, 201, 193, 0.1) 50px,
+                rgba(49, 201, 193, 0.1) 100px
+            );
+            animation: wave 15s linear infinite;
+        }
+
+        .cta-wave:nth-child(2) {
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 30px,
+                rgba(104, 228, 184, 0.08) 30px,
+                rgba(104, 228, 184, 0.08) 80px
+            );
+            animation-duration: 20s;
+            animation-direction: reverse;
+        }
+
+        .cta-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(49, 201, 193, 0.3);
+            border-radius: 50%;
+            animation: particleFloat 8s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 60%; left: 20%; animation-delay: -1s; }
+        .particle:nth-child(3) { top: 40%; left: 70%; animation-delay: -2s; }
+        .particle:nth-child(4) { top: 80%; left: 50%; animation-delay: -3s; }
+        .particle:nth-child(5) { top: 30%; left: 80%; animation-delay: -4s; }
+        .particle:nth-child(6) { top: 70%; left: 90%; animation-delay: -5s; }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-container h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .cta-container p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--primary-dark);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-white:hover,
+        .btn-white:focus {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 1rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-teal);
+        }
+
+        .footer-brand p {
+            line-height: 1.6;
+            color: var(--gray-400);
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--gray-400);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--primary-teal);
+            outline: none;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes floatPattern {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(5px) translateY(-5px);
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px);
+            }
+            75% {
+                transform: translateX(-10px) translateY(-5px);
+            }
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-10px) translateX(5px);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) translateX(-5px);
+                opacity: 1;
+            }
+            75% {
+                transform: translateY(-10px) translateX(-10px);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus indicators */
+        :focus-visible {
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: 1px solid var(--gray-200);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 1rem;
+                border-radius: 6px;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 2rem 1rem 4rem;
+                min-height: auto;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            /* Deepseek-style Features responsiveness */
+            .feature{
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .feature:nth-child(even) {
+                flex-direction: row-reverse;
+                text-align: left;
+            }
+            .feature-title { font-size: 1.8rem; }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-container h2 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .feature{
+            text-align: left;
+            }
+
+            .feature,.feature:nth-child(even){
+                flex-direction: column-reverse;
+            }
+
+            .feature-visual{
+                padding: 25px;
+                min-height: 30vh;
+                min-width: 40vh;
+                text-align: center;
+            }
+            
+            .feature-visual-content{
+                height: 160px;
+            }
+
+            .testimonial-card{
+                width: 320px;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+            
+            .cta-container h2 {
+                font-size: 1.75rem;
+            }
+
+            .btn-white{
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .hero::before,
+            .floating-shape,
+            .cta-wave,
+            .particle {
+                animation: none !important;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --gray-100: #f0f0f0;
+                --gray-200: #e0e0e0;
+                --gray-300: #c0c0c0;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .navbar, .cta-section, .footer {
+                display: none;
+            }
+            
+            .hero, .features, .testimonials {
+                padding: 2rem 0;
+            }
+            
+            * {
+                color: black !important;
+                background: white !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="index.html" class="logo" aria-label="PickTask home">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                PickTask
+            </a>
+            
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="feature.html" role="menuitem">Features</a></li>
+                <li role="none"><a href="pricing.html" role="menuitem">Pricing</a></li>
+                <li role="none"><a href="tutorial.html" role="menuitem">Tutorials</a></li>
+                <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
+            </ul>
+            
+            <a href="#get-started" class="cta-nav" id="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section with Animated Background -->
+        <section class="hero" aria-labelledby="hero-title">
+            <!-- Floating animated elements -->
+            <div class="hero-floating-elements">
+                <div class="floating-shape"></div>
+                <div class="floating-shape"></div>
+                <div class="floating-shape"></div>
+                <div class="floating-shape"></div>
+                <div class="floating-shape"></div>
+            </div>
+            
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-sparkles" aria-hidden="true"></i>
+                        <span>New: Voice-to-task feature now available</span>
+                    </div>
+                    
+                    <h1 id="hero-title">Task Management Made Simple</h1>
+                    
+                    <p>Organize tasks, collaborate with your team, and get work done faster with PickTask's intuitive platform. Designed for busy professionals who value efficiency.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#get-started" class="btn-primary" id="hero-primary-cta">
+                            <i class="fas fa-rocket" aria-hidden="true"></i>
+                            Get Started — It's Free
+                        </a>
+                        <a href="#demo" class="btn-secondary">
+                            <i class="fas fa-play" aria-hidden="true"></i>
+                            Watch Demo
+                        </a>
+                    </div>
+                    
+                    <div class="trust-indicators">
+                        <span><strong>10,000+</strong> teams trust PickTask</span>
+                        <span aria-hidden="true">•</span>
+                        <span><strong>4.9/5</strong> user rating</span>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="hero-image">
+                        <div class="demo-preview">
+                            <div class="demo-header">
+                                <span class="demo-title">Today's Tasks</span>
+                                <span class="demo-status">3 of 5 done</span>
+                            </div>
+                            <div class="demo-task">
+                                <div class="demo-checkbox checked"></div>
+                                <span>Review project proposal</span>
+                            </div>
+                            <div class="demo-task">
+                                <div class="demo-checkbox checked"></div>
+                                <span>Team standup meeting</span>
+                            </div>
+                            <div class="demo-task">
+                                <div class="demo-checkbox"></div>
+                                <span>Update client presentation</span>
+                            </div>
+                            <div class="demo-task">
+                                <div class="demo-checkbox checked"></div>
+                                <span>Voice memo: Follow up on leads</span>
+                            </div>
+                            <div class="demo-task">
+                                <div class="demo-checkbox"></div>
+                                <span>Schedule quarterly review</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features" aria-labelledby="features-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="features-title" class="section-title">Powerful Features</h2>
+                    <p class="section-subtitle">Everything you need to manage tasks efficiently and collaborate seamlessly with your team</p>
+                </div>
+                
+                <!-- Voice Memos Feature -->
+                <div class="feature">
+                    <div class="feature-content">
+                        <div class="feature-icon" aria-hidden="true">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3 class="feature-title">Voice Memo Task Creation</h3>
+                        <p class="feature-subtitle">Create tasks hands-free by speaking. Our AI extracts action items from your audio recordings and turns them into organized tasks with priorities and deadlines.</p>
+                    </div>
+                    <div class="feature-visual" aria-hidden="true">
+                        <div class="feature-visual-content">Voice Command Interface</div>
+                    </div>
+                </div>
+                
+                <!-- Kanban Boards Feature -->
+                <div class="feature">
+                    <div class="feature-content">
+                        <div class="feature-icon" aria-hidden="true">
+                            <i class="fas fa-columns"></i>
+                        </div>
+                        <h3 class="feature-title">Kanban Boards</h3>
+                        <p class="feature-subtitle">Visualize your workflow with customizable Kanban boards. Drag and drop tasks between columns to update status and keep projects moving forward.</p>
+                    </div>
+                    <div class="feature-visual" aria-hidden="true">
+                        <div class="feature-visual-content">Kanban Board Visualization</div>
+                    </div>
+                </div>
+                
+                <!-- Team Collaboration Feature -->
+                <div class="feature">
+                    <div class="feature-content">
+                        <div class="feature-icon" aria-hidden="true">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Team Collaboration</h3>
+                        <p class="feature-subtitle">Assign tasks, mention team members, leave comments, and share files in real-time. Keep everyone on the same page with seamless collaboration tools.</p>
+                    </div>
+                    <div class="feature-visual" aria-hidden="true">
+                        <div class="feature-visual-content">Team Collaboration Interface</div>
+                    </div>
+                </div>
+                
+                <!-- Progress Tracking Feature -->
+                <div class="feature">
+                    <div class="feature-content">
+                        <div class="feature-icon" aria-hidden="true">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Progress Tracking</h3>
+                        <p class="feature-subtitle">Monitor project health with detailed analytics and visual reports. Track milestones, identify bottlenecks, and celebrate team achievements.</p>
+                    </div>
+                    <div class="feature-visual" aria-hidden="true">
+                        <div class="feature-visual-content">Progress Dashboard</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials" aria-labelledby="testimonials-title">
+            <div class="testimonials-container">
+                <div class="section-header">
+                    <h2 id="testimonials-title" class="section-title">Trusted by teams worldwide</h2>
+                    <p class="section-subtitle">See what our users say about their productivity transformation</p>
+                </div>
+                
+                <div class="testimonial-grid">
+                    <article class="testimonial-card">
+                        <blockquote class="testimonial-content">
+                            "The voice memo feature completely changed how I capture ideas during meetings. I can focus on the conversation while PickTask handles the task creation. It's like having a personal assistant."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" aria-hidden="true">SM</div>
+                            <div class="author-info">
+                                <h5>Sarah Mitchell</h5>
+                                <p>Project Manager, TechCorp</p>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="testimonial-card">
+                        <blockquote class="testimonial-content">
+                            "Our team's productivity increased by 40% after switching to PickTask. The collaboration features are intuitive, and the mobile app keeps everyone connected even when remote."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" aria-hidden="true">MR</div>
+                            <div class="author-info">
+                                <h5>Mike Rodriguez</h5>
+                                <p>CEO, StartupLab</p>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="testimonial-card">
+                        <blockquote class="testimonial-content">
+                            "Finally, a task manager that doesn't get in the way. Clean interface, smart features, and the time tracking helps us deliver projects on budget consistently."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" aria-hidden="true">EJ</div>
+                            <div class="author-info">
+                                <h5>Emma Johnson</h5>
+                                <p>Operations Director, GrowthCo</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section with Animated Background -->
+        <section class="cta-section" aria-labelledby="cta-title">
+            <!-- Animated background elements -->
+            <div class="cta-animated-bg">
+                <div class="cta-wave"></div>
+                <div class="cta-wave"></div>
+                <div class="cta-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+            </div>
+            
+            <div class="cta-container">
+                <h2 id="cta-title">Start managing tasks smarter today</h2>
+                <p>Join thousands of teams who have transformed their productivity with PickTask. Free 14-day trial, no credit card required.</p>
+                <div class="cta-buttons">
+                    <a href="#get-started" class="btn-white" id="cta-primary">Start Free Trial</a>
+                    <a href="#demo" class="btn-secondary">Schedule Demo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>PickTask</h3>
+                    <p>Empowering teams worldwide with intelligent task management solutions. Built for the modern workplace, designed for maximum productivity and seamless collaboration.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <nav aria-label="Product links">
+                        <a href="feature.html">Features</a>
+                        <a href="pricing.html">Pricing</a>
+                        <a href="#integrations">Integrations</a>
+                        <a href="documentation.html">Documentation</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <nav aria-label="Resource links">
+                        <a href="tutorial.html">Tutorials</a>
+                        <a href="help_support.html">Help & Support</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <nav aria-label="Company links">
+                        <a href="about_us.html">About Us</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="contact.html">Contact</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PickTask. All rights reserved. Built with <i class="fas fa-heart" style="color: var(--primary-teal);" aria-hidden="true"></i> for productive teams.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced UX-focused JavaScript
+        class PickTaskUI {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupNavigation();
+                this.setupMobileMenu();
+                this.setupSmoothScrolling();
+                this.setupFormValidation();
+                this.setupAccessibility();
+                this.setupPerformanceOptimizations();
+                this.setupAnalytics();
+                this.setupAnimations();
+            }
+
+            // Navigation with scroll behavior
+            setupNavigation() {
+                const navbar = document.getElementById('navbar');
+                let lastScrollY = window.scrollY;
+                let ticking = false;
+
+                const updateNavbar = () => {
+                    const scrollY = window.scrollY;
+                    
+                    // Add shadow when scrolled
+                    if (scrollY > 10) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+
+                    lastScrollY = scrollY;
+                    ticking = false;
+                };
+
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateNavbar);
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            // Mobile menu with proper ARIA states
+            setupMobileMenu() {
+                const toggle = document.getElementById('mobile-menu-toggle');
+                const menu = document.getElementById('nav-menu');
+
+                if (toggle && menu) {
+                    toggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const isOpen = menu.classList.contains('open');
+                        
+                        menu.classList.toggle('open');
+                        toggle.setAttribute('aria-expanded', !isOpen);
+                        toggle.querySelector('i').className = isOpen ? 'fas fa-bars' : 'fas fa-times';
+                        
+                        // Prevent scroll when menu is open
+                        document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+                    });
+
+                    // Close menu when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                            menu.classList.remove('open');
+                            toggle.setAttribute('aria-expanded', 'false');
+                            toggle.querySelector('i').className = 'fas fa-bars';
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+
+                    // Close menu on escape key
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && menu.classList.contains('open')) {
+                            menu.classList.remove('open');
+                            toggle.setAttribute('aria-expanded', 'false');
+                            toggle.querySelector('i').className = 'fas fa-bars';
+                            document.body.style.overflow = 'auto';
+                            toggle.focus();
+                        }
+                    });
+                }
+            }
+
+            // Smooth scrolling with proper focus management
+            setupSmoothScrolling() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = anchor.getAttribute('href').substring(1);
+                        const target = document.getElementById(targetId);
+                        
+                        if (target) {
+                            // Calculate offset for fixed navbar
+                            const navbar = document.getElementById('navbar');
+                            const offset = navbar ? navbar.offsetHeight + 20 : 20;
+                            
+                            const targetPosition = target.offsetTop - offset;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+
+                            // Manage focus for accessibility
+                            target.focus({ preventScroll: true });
+                            
+                            // Close mobile menu if open
+                            const menu = document.getElementById('nav-menu');
+                            if (menu && menu.classList.contains('open')) {
+                                menu.classList.remove('open');
+                                document.getElementById('mobile-menu-toggle').setAttribute('aria-expanded', 'false');
+                                document.body.style.overflow = 'auto';
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Form validation and user feedback
+            setupFormValidation() {
+                // Add real-time validation for future forms
+                const forms = document.querySelectorAll('form');
+                forms.forEach(form => {
+                    form.addEventListener('submit', this.handleFormSubmit.bind(this));
+                });
+            }
+
+            handleFormSubmit(e) {
+                e.preventDefault();
+                const form = e.target;
+                const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+                
+                if (submitBtn) {
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Processing...';
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('loading');
+
+                    // Simulate form processing
+                    setTimeout(() => {
+                        this.showNotification('Success! We\'ll be in touch soon.', 'success');
+                        form.reset();
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('loading');
+                    }, 2000);
+                }
+            }
+
+            // Enhanced accessibility features
+            setupAccessibility() {
+                // Skip link functionality
+                const skipLink = document.querySelector('.skip-link');
+                if (skipLink) {
+                    skipLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(skipLink.getAttribute('href'));
+                        if (target) {
+                            target.focus();
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                }
+
+                // Keyboard navigation for cards
+                const interactiveCards = document.querySelectorAll('.feature-card, .testimonial-card');
+                interactiveCards.forEach(card => {
+                    card.setAttribute('tabindex', '0');
+                    card.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            card.click();
+                        }
+                    });
+                });
+
+                // Reduced motion preferences
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.documentElement.style.scrollBehavior = 'auto';
+                }
+
+                // High contrast mode detection
+                if (window.matchMedia('(prefers-contrast: high)').matches) {
+                    document.body.classList.add('high-contrast');
+                }
+            }
+
+            // Setup animation observers for performance
+            setupAnimations() {
+                // Intersection Observer for animations
+                if ('IntersectionObserver' in window) {
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    };
+
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('animate');
+                            }
+                        });
+                    }, observerOptions);
+
+                    // Observe animated elements
+                    const animatedElements = document.querySelectorAll('.feature-card, .testimonial-card');
+                    animatedElements.forEach(el => observer.observe(el));
+                }
+            }
+
+            // Performance optimizations
+            setupPerformanceOptimizations() {
+                // Lazy load images when implemented
+                if ('IntersectionObserver' in window) {
+                    const imageObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                if (img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                    img.classList.remove('lazy');
+                                    imageObserver.unobserve(img);
+                                }
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('img[data-src]').forEach(img => {
+                        imageObserver.observe(img);
+                    });
+                }
+
+                // Preload critical resources
+                const criticalLinks = [
+                    { href: '#get-started', as: 'document' }
+                ];
+
+                criticalLinks.forEach(link => {
+                    const preloadLink = document.createElement('link');
+                    preloadLink.rel = 'prefetch';
+                    preloadLink.href = link.href;
+                    document.head.appendChild(preloadLink);
+                });
+            }
+
+            // Basic analytics and user behavior tracking
+            setupAnalytics() {
+                // Track CTA clicks
+                document.querySelectorAll('.btn-primary, .cta-nav, .btn-white').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        this.trackEvent('CTA_Click', {
+                            button_text: e.target.textContent.trim(),
+                            location: this.getButtonLocation(e.target)
+                        });
+                    });
+                });
+
+                // Track feature interest
+                document.querySelectorAll('.feature-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const featureName = card.querySelector('h4').textContent;
+                        this.trackEvent('Feature_Interest', { feature: featureName });
+                    });
+                });
+
+                // Track scroll depth
+                this.setupScrollTracking();
+            }
+
+            setupScrollTracking() {
+                const milestones = [25, 50, 75, 100];
+                const tracked = new Set();
+
+                const trackScrollDepth = () => {
+                    const scrollPercent = Math.round(
+                        (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+                    );
+
+                    milestones.forEach(milestone => {
+                        if (scrollPercent >= milestone && !tracked.has(milestone)) {
+                            tracked.add(milestone);
+                            this.trackEvent('Scroll_Depth', { percent: milestone });
+                        }
+                    });
+                };
+
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(trackScrollDepth, 100);
+                }, { passive: true });
+            }
+
+            // Utility methods
+            trackEvent(eventName, properties = {}) {
+                // Console log for demo purposes - replace with actual analytics
+                console.log(`Analytics Event: ${eventName}`, properties);
+                
+                // Example integration:
+                // if (window.gtag) {
+                //     window.gtag('event', eventName, properties);
+                // }
+            }
+
+            getButtonLocation(button) {
+                if (button.closest('.hero')) return 'hero';
+                if (button.closest('.cta-section')) return 'cta_section';
+                if (button.closest('.navbar')) return 'navbar';
+                return 'other';
+            }
+
+            showNotification(message, type = 'info') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                // Add styles
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'var(--success)' : 'var(--primary-teal)'};
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: var(--shadow-lg);
+                    z-index: 10000;
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease;
+                `;
+
+                document.body.appendChild(notification);
+
+                // Animate in
+                requestAnimationFrame(() => {
+                    notification.style.transform = 'translateX(0)';
+                });
+
+                // Auto remove
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 4000);
+            }
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                new PickTaskUI();
+            });
+        } else {
+            new PickTaskUI();
+        }
+
+        // Service Worker registration for PWA capabilities (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // navigator.registerServiceWorker('/sw.js')
+                //     .then(registration => console.log('SW registered'))
+                //     .catch(error => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
