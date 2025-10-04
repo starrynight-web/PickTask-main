@@ -8,6 +8,7 @@ from workspace.models import Task, Project, Workspace
 from workspace.forms import TaskForm
 from workspace.decorators import workspace_required
 
+
 @method_decorator([login_required, workspace_required], name='dispatch')
 class TaskCreateView(CreateView):
     model = Task
@@ -22,12 +23,25 @@ class TaskCreateView(CreateView):
             kwargs['workspace'] = workspace
         return kwargs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        workspace_id = self.kwargs.get('workspace_id')
+        if workspace_id:
+            context['workspace'] = get_object_or_404(
+                Workspace, id=workspace_id)
+        return context
+
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        workspace_id = self.kwargs.get('workspace_id')
+        if workspace_id:
+            form.instance.workspace = get_object_or_404(
+                Workspace, id=workspace_id)
         return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('task:task-detail', kwargs={'pk': self.object.pk})
+
 
 @method_decorator([login_required, workspace_required], name='dispatch')
 class TaskUpdateView(UpdateView):
@@ -41,8 +55,14 @@ class TaskUpdateView(UpdateView):
         kwargs['workspace'] = workspace
         return kwargs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['workspace'] = self.object.project.workspace
+        return context
+
     def get_success_url(self):
         return reverse_lazy('task:task-detail', kwargs={'pk': self.object.pk})
+
 
 @method_decorator(login_required, name='dispatch')
 class TaskDetailView(DetailView):
