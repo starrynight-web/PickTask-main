@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Groups - {{ workspace.name }}{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h1>Team Groups</h1>
+        <p class="text-gray-600">{{ workspace.name }}</p>
+    </div>
+    {% if user_membership.role == 'admin' %}
+    <button class="btn btn-primary" onclick="openCreateGroupModal()">
+        👥 Create Group
+    </button>
+    {% endif %}
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Groups ({{ groups.count }})</h2>
+    </div>
+    <div class="card-body">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for group in groups %}
+            <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full" style="background-color: {{ group.color }}"></span>
+                        <h3 class="font-semibold">{{ group.name }}</h3>
+                    </div>
+                    <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                        {{ group.member_count }} members
+                    </span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">{{ group.description|default:"No description" }}</p>
+                <div class="flex gap-2">
+                    <a href="{% url 'team:group-detail' workspace.id group.id %}" class="btn btn-outline btn-sm flex-1 text-center">
+                        View
+                    </a>
+                    {% if user_membership.role == 'admin' %}
+                    <a href="{% url 'team:group-detail' workspace.id group.id %}" class="btn btn-outline btn-sm">
+                        Edit
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-8">
+                <div class="text-4xl mb-4">👥</div>
+                <p class="text-gray-500 text-lg mb-2">No groups created yet</p>
+                <p class="text-gray-400 text-sm mb-4">Create groups to organize your team members</p>
+                {% if user_membership.role == 'admin' %}
+                <button class="btn btn-primary mt-2" onclick="openCreateGroupModal()">
+                    Create Your First Group
+                </button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Create Group Modal -->
+<div id="createGroupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <h3 class="text-lg font-semibold mb-4">Create New Group</h3>
+        <form method="post" action="{% url 'team:groups' workspace.id %}">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div>
+                    <label class="form-label">Group Name</label>
+                    <input type="text" name="name" class="form-input" placeholder="e.g., Developers, Design Team" required>
+                </div>
+                <div>
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-textarea" rows="3" placeholder="What is this group for?"></textarea>
+                </div>
+                <div>
+                    <label class="form-label">Group Color</label>
+                    <input type="color" name="color" value="#6B7280" class="form-color h-10 w-full">
+                </div>
+            </div>
+            <div class="flex gap-4 mt-6">
+                <button type="submit" class="btn btn-primary">Create Group</button>
+                <button type="button" class="btn btn-outline" onclick="closeCreateGroupModal()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openCreateGroupModal() {
+    document.getElementById('createGroupModal').classList.remove('hidden');
+}
+
+function closeCreateGroupModal() {
+    document.getElementById('createGroupModal').classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('createGroupModal').addEventListener('click', function(e) {
+    if (e.target.id === 'createGroupModal') {
+        closeCreateGroupModal();
+    }
+});
+</script>
+{% endblock %}

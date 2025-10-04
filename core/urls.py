@@ -13,11 +13,34 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+    from django.urls import path, include
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+from workspace.views import dashboard
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', dashboard, name='home'),
+    path('auth/', include('authentication.urls')),
+    path('workspace/', include('workspace.urls')),
+    path('kanban/', include('kanban.urls')),
+    path('team/', include('team.urls')),
+    path('task/', include('task.urls')),
+    path('activity/', include('activity.urls')),
+]
 """
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')) 
+    path('', include('home.urls')),
+    path('auth/', include('authentication.urls')),
+    path('workspace/', include('workspace.urls', namespace='workspace')),
+     path('kanban/', include('kanban.urls')), 
+     path('task/', include('task.urls')),
+      path('team/', include('team.urls')),
+      path('activity/', include('activity.urls')),
+   
 ]

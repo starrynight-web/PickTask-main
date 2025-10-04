@@ -1,0 +1,984 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - PickTask Task Management</title>
+    <meta name="description" content="All PickTask features are currently free during our beta phase. Join now for special access when we launch.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <style>
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-teal);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:focus {
+            color: var(--primary-teal);
+            background: var(--gray-50);
+            outline: none;
+        }
+
+        .nav-menu a.active {
+            color: var(--primary-teal);
+            background: var(--gray-100);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .mobile-menu-toggle:hover,
+        .mobile-menu-toggle:focus {
+            background: var(--gray-100);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .cta-nav {
+            background: var(--primary-teal);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-nav:hover,
+        .cta-nav:focus {
+            background: #2bb5ad;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* Hero Section */
+        .pricing-hero {
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+            padding: 6rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--primary-teal) 1px, transparent 1px),
+                radial-gradient(circle at 60% 70%, var(--primary-green) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, var(--primary-teal) 1px, transparent 1px),
+                radial-gradient(circle at 40% 80%, var(--primary-green) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px, 80px 80px, 120px 120px;
+            animation: floatPattern 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .pricing-hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pricing-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .pricing-hero p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        /* Beta Notice Section */
+        .beta-notice {
+            padding: 4rem 1rem;
+            background: var(--white);
+        }
+
+        .beta-notice-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .beta-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--primary-green);
+            color: var(--primary-dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .beta-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .beta-notice h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .beta-notice p {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-item {
+            background: var(--gray-50);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .benefit-item h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-item p {
+            color: var(--gray-600);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Free Plan Section */
+        .free-plan {
+            padding: 6rem 1rem;
+            background: var(--gray-50);
+        }
+
+        .free-plan-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .free-plan-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 4rem 3rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .free-plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-teal), var(--primary-green));
+        }
+
+        .price-tag {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary-teal);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .price-period {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+        }
+
+        .free-plan-card h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 3rem;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list i {
+            color: var(--primary-teal);
+            font-size: 1.25rem;
+        }
+
+        .cta-large {
+            background: var(--primary-teal);
+            color: white;
+            padding: 1.25rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-large:hover,
+        .cta-large:focus {
+            background: #2bb5ad;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 1rem;
+            background: var(--white);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: var(--gray-50);
+            color: var(--primary-teal);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: var(--primary-teal);
+        }
+
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            color: var(--gray-600);
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
+            padding: 0 1rem;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            margin-top: 0.5rem;
+            padding: 0 1rem 1rem 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 1rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-teal);
+        }
+
+        .footer-brand p {
+            line-height: 1.6;
+            color: var(--gray-400);
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--gray-400);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--primary-teal);
+            outline: none;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+        }
+
+        /* Animations */
+        @keyframes floatPattern {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-10px) translateX(5px);
+            }
+            50% {
+                transform: translateY(5px) translateX(-10px);
+            }
+            75% {
+                transform: translateY(10px) translateX(-5px);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: 1px solid var(--gray-200);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 1rem;
+                border-radius: 6px;
+                text-align: center;
+            }
+
+            .pricing-hero {
+                padding: 2rem 1rem 4rem;
+                min-height: auto;
+            }
+
+            .pricing-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pricing-hero p {
+                font-size: 1.125rem;
+            }
+
+            .beta-notice h2 {
+                font-size: 2rem;
+            }
+
+            .free-plan-card {
+                padding: 3rem 1.5rem;
+            }
+
+            .price-tag {
+                font-size: 3rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-container h2 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricing-hero h1 {
+                font-size: 2rem;
+            }
+
+            .beta-notice h2 {
+                font-size: 1.75rem;
+            }
+
+            .free-plan-card h2 {
+                font-size: 2rem;
+            }
+
+            .price-tag {
+                font-size: 2.5rem;
+            }
+
+            .cta-large {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+   <!-- Navigation -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/index/" class="logo" aria-label="PickTask home">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                PickTask
+            </a>
+            
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="/feature/" role="menuitem">Features</a></li>
+                <li role="none"><a href="/pricing/" role="menuitem">Pricing</a></li>
+                <li role="none"><a href="/tutorial/" role="menuitem">Tutorials</a></li>
+                <li role="none"><a href="/contact/" role="menuitem">Contact</a></li>
+            </ul>
+            
+            <a href="/auth/login/" class="cta-nav" id="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pricing-hero" aria-labelledby="pricing-hero-heading">
+        <div class="pricing-hero-container">
+            <h1 id="pricing-hero-heading">Simple, Transparent Pricing</h1>
+            <p>All features are completely free during our beta phase. Join now and get special access when we officially launch!</p>
+        </div>
+    </section>
+
+    <!-- Beta Notice Section -->
+    <section class="beta-notice" id="main" tabindex="-1" aria-labelledby="beta-notice-heading">
+        <div class="beta-notice-container">
+            <div class="beta-badge">
+                <i class="fas fa-flask"></i>
+                <span>Beta Program</span>
+            </div>
+            <h2 id="beta-notice-heading">We're Currently in Beta</h2>
+            <p>During our beta phase, all PickTask features are completely free to use. We're focused on making our product the best it can be, and your feedback is invaluable to us.</p>
+            <p>When the beta phase ends, pricing will be updated, but all beta users will receive special access and benefits as a thank you for helping us improve.</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-unlock"></i>
+                    </div>
+                    <h3>Full Access</h3>
+                    <p>Access all features without limitations during the beta period.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Priority Support</h3>
+                    <p>Get priority customer support as a beta user.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Special Perks</h3>
+                    <p>Receive exclusive benefits when we officially launch.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Plan Section -->
+    <section class="free-plan" aria-labelledby="free-plan-heading">
+        <div class="free-plan-container">
+            <div class="free-plan-card">
+                <div class="price-tag">$0</div>
+                <div class="price-period">During Beta Period</div>
+                <h2 id="free-plan-heading">Beta Tester Plan</h2>
+                
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Unlimited Projects & Tasks</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>All Collaboration Features</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Advanced Analytics & Reports</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Custom Workflows & Automation</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Priority Customer Support</span>
+                    </li>
+                </ul>
+                
+                <a href="#" class="cta-large">Join Beta Program</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" aria-labelledby="faq-heading">
+        <div class="faq-container">
+            <div class="section-header">
+                <h2 id="faq-heading">Frequently Asked Questions</h2>
+                <p>Everything you need to know about our pricing and beta program</p>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" id="faq1-question" aria-expanded="false" aria-controls="faq1-answer">
+                        <span>How long will the beta phase last?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq1-answer" aria-labelledby="faq1-question" role="region">
+                        We haven't set an exact end date for our beta phase. We want to ensure PickTask is fully polished and meets all user needs before we officially launch. We'll provide at least 60 days notice before any pricing changes take effect.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" id="faq2-question" aria-expanded="false" aria-controls="faq2-answer">
+                        <span>What happens when the beta ends?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq2-answer" aria-labelledby="faq2-question" role="region">
+                        When the beta phase ends, we'll introduce our official pricing plans. However, all beta users will receive special perks, which may include permanent discounts, extended free access, or premium features at no additional cost.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" id="faq3-question" aria-expanded="false" aria-controls="faq3-answer">
+                        <span>Will my data be safe during the beta?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq3-answer" aria-labelledby="faq3-question" role="region">
+                        Absolutely. We take data security seriously. All user data is encrypted and backed up regularly. When we transition from beta to our official launch, your data will be preserved and seamlessly migrated.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" id="faq4-question" aria-expanded="false" aria-controls="faq4-answer">
+                        <span>How can I provide feedback during the beta?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer" id="faq4-answer" aria-labelledby="faq4-question" role="region">
+                        We welcome all feedback! You can use the feedback button within the app, join our beta community forum, or contact our support team directly. Your suggestions help us improve PickTask for everyone.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>PickTask</h3>
+                    <p>Empowering teams worldwide with intelligent task management solutions. Built for the modern workplace, designed for maximum productivity and seamless collaboration.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <nav aria-label="Product links">
+                        <a href="/feature.html/">Features</a>
+                        <a href="/pricing.html/">Pricing</a>
+                        <a href="/integrations/">Integrations</a>
+                        <a href="/documentation/">Documentation</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <nav aria-label="Resource links">
+                        <a href="/tutorial/">Tutorials</a>
+                        <a href="/help_support/">Help & Support</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <nav aria-label="Company links">
+                        <a href="/about_us/">About Us</a>
+                        <a href="/blog/">Blog</a>
+                        <a href="/contact/">Contact</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PickTask. All rights reserved. Built with <i class="fas fa-heart" style="color: var(--primary-teal);" aria-hidden="true"></i> for productive teams.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced UX-focused JavaScript for Pricing Page
+        class PickTaskPricingUI {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupNavigation();
+                this.setupMobileMenu();
+                this.setupSmoothScrolling();
+                this.setupAccessibility();
+                this.setupFAQ();
+                this.setupPerformanceOptimizations();
+            }
+
+            // Navigation with scroll behavior
+            setupNavigation() {
+                const navbar = document.getElementById('navbar');
+                let lastScrollY = window.scrollY;
+                let ticking = false;
+
+                const updateNavbar = () => {
+                    const scrollY = window.scrollY;
+                    
+                    // Add shadow when scrolled
+                    if (scrollY > 10) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+
+                    lastScrollY = scrollY;
+                    ticking = false;
+                };
+
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateNavbar);
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            // Mobile menu with proper ARIA states
+            setupMobileMenu() {
+                const toggle = document.getElementById('mobile-menu-toggle');
+                const menu = document.getElementById('nav-menu');
+
+                if (toggle && menu) {
+                    toggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const isOpen = menu.classList.contains('open');
+                        
+                        menu.classList.toggle('open');
+                        toggle.setAttribute('aria-expanded', !isOpen);
+                        toggle.querySelector('i').className = isOpen ? 'fas fa-bars' : 'fas fa-times';
+                        
+                        // Prevent body scroll when menu is open
+                        document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+                    });
+
+                    // Close menu when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+                            menu.classList.remove('open');
+                            toggle.setAttribute('aria-expanded', 'false');
+                            toggle.querySelector('i').className = 'fas fa-bars';
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                }
+            }
+
+            // Smooth scrolling for anchor links
+            setupSmoothScrolling() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(anchor.getAttribute('href'));
+                        
+                        if (target) {
+                            // Calculate offset for fixed navbar
+                            const navbar = document.getElementById('navbar');
+                            const offset = navbar ? navbar.offsetHeight + 20 : 20;
+                            
+                            const targetPosition = target.offsetTop - offset;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+
+                            // Manage focus for accessibility
+                            target.focus({ preventScroll: true });
+                            
+                            // Close mobile menu if open
+                            const menu = document.getElementById('nav-menu');
+                            if (menu && menu.classList.contains('open')) {
+                                menu.classList.remove('open');
+                                document.getElementById('mobile-menu-toggle').setAttribute('aria-expanded', 'false');
+                                document.body.style.overflow = 'auto';
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Enhanced accessibility
+            setupAccessibility() {
+                // Skip link functionality
+                const skipLink = document.querySelector('.skip-link');
+                if (skipLink) {
+                    skipLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(skipLink.getAttribute('href'));
+                        if (target) {
+                            target.focus();
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                }
+
+                // Keyboard navigation for mobile menu
+                const menu = document.getElementById('nav-menu');
+                if (menu) {
+                    menu.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') {
+                            menu.classList.remove('open');
+                            document.getElementById('mobile-menu-toggle').setAttribute('aria-expanded', 'false');
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                }
+            }
+        
+        // FAQ accordion functionality
+            setupFAQ() {
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = document.getElementById(question.getAttribute('aria-controls'));
+                const isExpanded = question.getAttribute('aria-expanded') === 'true';
+                
+                        // Close other open FAQs
+                        faqQuestions.forEach(q => {
+                            if (q !== question) {
+                                q.classList.remove('active');
+                                q.setAttribute('aria-expanded', 'false');
+                                const otherAnswer = document.getElementById(q.getAttribute('aria-controls'));
+                                if (otherAnswer) otherAnswer.classList.remove('active');
+                            }
+                        });
+                        
+                        // Toggle current FAQ
+                        question.classList.toggle('active');
+                        if (answer) answer.classList.toggle('active');
+                question.setAttribute('aria-expanded', !isExpanded);
+            });
+        });
+            }
+
+            // Performance optimizations
+            setupPerformanceOptimizations() {
+                // Lazy load images if any
+                if ('IntersectionObserver' in window) {
+                    const imageObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                if (img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                    img.removeAttribute('data-src');
+                                    observer.unobserve(img);
+                                }
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('img[data-src]').forEach(img => {
+                        imageObserver.observe(img);
+                    });
+                }
+            }
+        }
+
+        // Initialize the UI when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new PickTaskPricingUI();
+        });
+    </script>
+</body>
+</html>

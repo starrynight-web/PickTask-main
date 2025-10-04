@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Team - {{ workspace.name }}{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h1>Team Management</h1>
+        <p class="text-gray-600">{{ workspace.name }}</p>
+    </div>
+    {% if user_membership.role == 'admin' %}
+    <a href="{% url 'team:invite' workspace.id %}" class="btn btn-primary">
+        👥 Invite Member
+    </a>
+    {% endif %}
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Team Members ({{ memberships.count }})</h2>
+    </div>
+    <div class="card-body">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-gray-200">
+                        <th class="text-left py-3 px-4">Member</th>
+                        <th class="text-left py-3 px-4">Role</th>
+                        <th class="text-left py-3 px-4">Joined</th>
+                        {% if user_membership.role == 'admin' %}
+                        <th class="text-left py-3 px-4">Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for membership in memberships %}
+                    <tr class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50">
+                        <td class="py-3 px-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
+                                    {{ membership.user.username|first|upper }}
+                                </div>
+                                <div>
+                                    <div class="font-medium">{{ membership.user.get_full_name|default:membership.user.username }}</div>
+                                    <div class="text-gray-500 text-sm">{{ membership.user.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="status-badge {% if membership.role == 'admin' %}status-in_progress{% else %}status-todo{% endif %}">
+                                {{ membership.get_role_display }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-gray-600">{{ membership.joined_at|date:"M d, Y" }}</td>
+                        {% if user_membership.role == 'admin' %}
+                        <td class="py-3 px-4">
+                            <div class="flex gap-2">
+                                <a href="{% url 'team:edit-role' workspace.id membership.id %}" class="btn btn-outline btn-sm">
+                                    Edit Role
+                                </a>
+                                {% if membership.user != request.user %}
+                                <a href="{% url 'team:remove-member' workspace.id membership.id %}" 
+                                   class="btn btn-outline btn-sm text-danger hover:bg-red-50"
+                                   onclick="return confirm('Are you sure you want to remove {{ membership.user.email }} from this workspace?')">
+                                    Remove
+                                </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+    <div class="card text-center">
+        <div class="card-body">
+            <h3 class="text-2xl font-bold text-primary">{{ memberships.count }}</h3>
+            <p class="text-gray-600">Total Members</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body">
+            <h3 class="text-2xl font-bold text-success">{{ memberships.filter|length }}</h3>
+            <p class="text-gray-600">Admins</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body">
+            <h3 class="text-2xl font-bold text-warning">{{ memberships.filter|length }}</h3>
+            <p class="text-gray-600">Regular Members</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

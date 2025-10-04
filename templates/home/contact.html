@@ -1,0 +1,1060 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - PickTask Task Management</title>
+    <meta name="description" content="Get in touch with the PickTask team. We're here to help you with any questions about our task management platform.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <style>
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-teal);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:focus {
+            color: var(--primary-teal);
+            background: var(--gray-50);
+            outline: none;
+        }
+
+        .nav-menu a.active {
+            color: var(--primary-teal);
+            background: var(--gray-100);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .mobile-menu-toggle:hover,
+        .mobile-menu-toggle:focus {
+            background: var(--gray-100);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .cta-nav {
+            background: var(--primary-teal);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-nav:hover,
+        .cta-nav:focus {
+            background: #2bb5ad;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* Contact Hero Section */
+        .contact-hero {
+            background: linear-gradient(125deg, var(--gray-50) 0%, var(--white) 60%, var(--gray-50) 100%);
+            padding: 4rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 40%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, rgba(49, 201, 193, 0.05) 0%, transparent 70%);
+            transform: rotate(15deg);
+        }
+
+        .contact-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .contact-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .contact-hero p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contact Content Section */
+        .contact-content {
+            padding: 4rem 1rem;
+            background: var(--white);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 2rem;
+            border-left: 4px solid var(--primary-teal);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            color: var(--gray-900);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .contact-detail i {
+            color: var(--primary-teal);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .contact-detail p {
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        .contact-detail a {
+            color: var(--gray-700);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-detail a:hover {
+            color: var(--primary-teal);
+        }
+
+        /* Contact Form */
+        .contact-form-container {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--gray-200);
+        }
+
+        .contact-form-container h2 {
+            font-size: 1.75rem;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-teal);
+            box-shadow: 0 0 0 3px rgba(49, 201, 193, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            background: var(--primary-teal);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .form-submit:hover,
+        .form-submit:focus {
+            background: #2bb5ad;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 1rem;
+            background: var(--gray-50);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: var(--gray-50);
+            color: var(--primary-teal);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: var(--primary-teal);
+        }
+
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            color: var(--gray-600);
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
+            padding: 0 1rem;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            margin-top: 0.5rem;
+            padding: 0 1rem 1rem 1rem;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 4rem 1rem;
+            background: var(--white);
+        }
+
+        .map-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            height: 400px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 1rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-teal);
+        }
+
+        .footer-brand p {
+            line-height: 1.6;
+            color: var(--gray-400);
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--gray-400);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--primary-teal);
+            outline: none;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+        }
+
+        /* Animations */
+        @keyframes floatPattern {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(5px) translateY(-5px);
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px);
+            }
+            75% {
+                transform: translateX(-10px) translateY(-5px);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 968px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .contact-info {
+                order: 2;
+            }
+            
+            .contact-form-container {
+                order: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: 1px solid var(--gray-200);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 1rem;
+                border-radius: 6px;
+                text-align: center;
+            }
+
+            .contact-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.75rem;
+            }
+            
+            .contact-card {
+                padding: 1.5rem;
+            }
+            
+            .contact-form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+   <!-- Navigation -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/index/" class="logo" aria-label="PickTask home">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                PickTask
+            </a>
+            
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="/feature/" role="menuitem">Features</a></li>
+                <li role="none"><a href="/pricing/" role="menuitem">Pricing</a></li>
+                <li role="none"><a href="/tutorial/" role="menuitem">Tutorials</a></li>
+                <li role="none"><a href="/contact/" role="menuitem">Contact</a></li>
+            </ul>
+            
+            <a href="/auth/login/" class="cta-nav" id="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <section class="contact-hero" id="main-content">
+        <div class="contact-hero-container">
+            <h1>Get in Touch with PickTask</h1>
+            <p>We're here to help you streamline your workflow and boost productivity. Have questions or need support? Reach out to our team.</p>
+        </div>
+    </section>
+
+    <!-- Contact Content Section -->
+    <section class="contact-content">
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Our Location</h3>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <i class="fas fa-building"></i>
+                            <p>123 Productivity Avenue<br>San Francisco, CA 94103<br>United States</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>Phone Support</h3>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <i class="fas fa-phone"></i>
+                            <p><a href="tel:+18005551234">+1 (800) 555-1234</a></p>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-clock"></i>
+                            <p>Monday - Friday: 9am - 6pm EST<br>Saturday: 10am - 4pm EST</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email & Online</h3>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <i class="fas fa-envelope"></i>
+                            <p><a href="mailto:support@picktask.com">support@picktask.com</a></p>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-globe"></i>
+                            <p><a href="https://www.picktask.com">www.picktask.com</a></p>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fab fa-twitter"></i>
+                            <p><a href="https://twitter.com/picktask">@picktask</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-container">
+                <h2>Send Us a Message</h2>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" class="form-input" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" class="form-input" placeholder="Your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" id="subject" class="form-input" placeholder="What is this regarding?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100940.17073743772!2d-122.50764021274996!3d37.75767927550766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1652979950678!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find quick answers to common questions about PickTask</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I get started with PickTask?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Getting started is easy! Simply sign up for an account, choose a plan that fits your needs, and start creating tasks and projects. You can invite team members, set deadlines, and customize your workflow in just a few clicks.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I change my plan later?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, you can upgrade or downgrade your plan at any time from your account settings. Changes to your plan will be reflected in your next billing cycle, and we'll prorate any differences in cost.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is my data secure with PickTask?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely. We take security seriously. All data is encrypted in transit and at rest, and we regularly perform security audits. We're also compliant with GDPR and other major privacy regulations.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Do you offer team or enterprise plans?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we offer customized enterprise plans with additional features like advanced permissions, dedicated support, and enhanced security. Contact our sales team for more information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>PickTask</h3>
+                    <p>Empowering teams worldwide with intelligent task management solutions. Built for the modern workplace, designed for maximum productivity and seamless collaboration.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <nav aria-label="Product links">
+                        <a href="/feature.html/">Features</a>
+                        <a href="/pricing.html/">Pricing</a>
+                        <a href="/integrations/">Integrations</a>
+                        <a href="/documentation/">Documentation</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <nav aria-label="Resource links">
+                        <a href="/tutorial/">Tutorials</a>
+                        <a href="/help_support/">Help & Support</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <nav aria-label="Company links">
+                        <a href="/about_us/">About Us</a>
+                        <a href="/blog/">Blog</a>
+                        <a href="/contact/">Contact</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PickTask. All rights reserved. Built with <i class="fas fa-heart" style="color: var(--primary-teal);" aria-hidden="true"></i> for productive teams.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Enhanced UX-focused JavaScript
+        class PickTaskContactUI {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupNavigation();
+                this.setupMobileMenu();
+                this.setupSmoothScrolling();
+                this.setupAccessibility();
+                this.setupFAQ();
+                this.setupFormValidation();
+            }
+
+            // Navigation with scroll behavior
+            setupNavigation() {
+                const navbar = document.getElementById('navbar');
+                let lastScrollY = window.scrollY;
+                let ticking = false;
+
+                const updateNavbar = () => {
+                    const scrollY = window.scrollY;
+                    
+                    // Add shadow when scrolled
+                    if (scrollY > 10) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+
+                    lastScrollY = scrollY;
+                    ticking = false;
+                };
+
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateNavbar);
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            // Mobile menu with proper ARIA states
+            setupMobileMenu() {
+                const toggle = document.getElementById('mobile-menu-toggle');
+                const menu = document.getElementById('nav-menu');
+
+                if (toggle && menu) {
+                    toggle.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const isOpen = menu.classList.contains('open');
+                        
+                        menu.classList.toggle('open');
+                        toggle.setAttribute('aria-expanded', !isOpen);
+                        toggle.querySelector('i').className = isOpen ? 'fas fa-bars' : 'fas fa-times';
+                        
+                        // Prevent scroll when menu is open
+                        document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+                    });
+
+                    // Close menu when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                            menu.classList.remove('open');
+                            toggle.setAttribute('aria-expanded', 'false');
+                            toggle.querySelector('i').className = 'fas fa-bars';
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+
+                    // Close menu on escape key
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && menu.classList.contains('open')) {
+                            menu.classList.remove('open');
+                            toggle.setAttribute('aria-expanded', 'false');
+                            toggle.querySelector('i').className = 'fas fa-bars';
+                            document.body.style.overflow = 'auto';
+                            toggle.focus();
+                        }
+                    });
+                }
+            }
+
+            // Smooth scrolling with proper focus management
+            setupSmoothScrolling() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = anchor.getAttribute('href').substring(1);
+                        const target = document.getElementById(targetId);
+                        
+                        if (target) {
+                            // Calculate offset for fixed navbar
+                            const navbar = document.getElementById('navbar');
+                            const offset = navbar ? navbar.offsetHeight + 20 : 20;
+                            
+                            const targetPosition = target.offsetTop - offset;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+
+                            // Manage focus for accessibility
+                            target.focus({ preventScroll: true });
+                            
+                            // Close mobile menu if open
+                            const menu = document.getElementById('nav-menu');
+                            if (menu && menu.classList.contains('open')) {
+                                menu.classList.remove('open');
+                                document.getElementById('mobile-menu-toggle').setAttribute('aria-expanded', 'false');
+                                document.body.style.overflow = 'auto';
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Enhanced accessibility features
+            setupAccessibility() {
+                // Skip link functionality
+                const skipLink = document.querySelector('.skip-link');
+                if (skipLink) {
+                    skipLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(skipLink.getAttribute('href'));
+                        if (target) {
+                            target.focus();
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                }
+
+                // Reduced motion preferences
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.documentElement.style.scrollBehavior = 'auto';
+                }
+            }
+
+            // FAQ functionality
+            setupFAQ() {
+                const faqQuestions = document.querySelectorAll('.faq-question');
+                
+                faqQuestions.forEach((question, index) => {
+                    question.addEventListener('click', () => {
+                        this.toggleFAQ(index);
+                    });
+
+                    // Add keyboard support
+                    question.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.toggleFAQ(index);
+                        }
+                    });
+
+                    // Set initial state
+                    question.setAttribute('tabindex', '0');
+                    question.setAttribute('role', 'button');
+                    question.setAttribute('aria-expanded', 'false');
+                });
+            }
+
+            toggleFAQ(index) {
+                const question = document.querySelectorAll('.faq-question')[index];
+                const answer = document.querySelectorAll('.faq-answer')[index];
+                const icon = question.querySelector('i');
+                
+                const isActive = question.classList.contains('active');
+                
+                // Close all other FAQs (optional - remove if you want multiple open)
+                document.querySelectorAll('.faq-question').forEach((q, i) => {
+                    if (i !== index) {
+                        q.classList.remove('active');
+                        q.setAttribute('aria-expanded', 'false');
+                        const a = document.querySelectorAll('.faq-answer')[i];
+                        a.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current FAQ
+                if (isActive) {
+                    question.classList.remove('active');
+                    answer.classList.remove('active');
+                    question.setAttribute('aria-expanded', 'false');
+                } else {
+                    question.classList.add('active');
+                    answer.classList.add('active');
+                    question.setAttribute('aria-expanded', 'true');
+                }
+            }
+
+            // Form validation and user feedback
+            setupFormValidation() {
+                const contactForm = document.getElementById('contact-form');
+                if (contactForm) {
+                    contactForm.addEventListener('submit', this.handleFormSubmit.bind(this));
+                }
+            }
+
+            handleFormSubmit(e) {
+                e.preventDefault();
+                const form = e.target;
+                const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+                
+                if (submitBtn) {
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Processing...';
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('loading');
+
+                    // Simulate form processing
+                    setTimeout(() => {
+                        this.showNotification('Thank you for your message! We will get back to you soon.', 'success');
+                        form.reset();
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('loading');
+                    }, 2000);
+                }
+            }
+
+            // Utility method for notifications
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'var(--success)' : 'var(--primary-teal)'};
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: var(--shadow-lg);
+                    z-index: 10000;
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease, opacity 0.3s ease;
+                    opacity: 0.95;
+                `;
+
+                document.body.appendChild(notification);
+
+                requestAnimationFrame(() => {
+                    notification.style.transform = 'translateX(0)';
+                });
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3500);
+            }
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                new PickTaskContactUI();
+            });
+        } else {
+            new PickTaskContactUI();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Activity Log - {{ workspace.name }}{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h1>Activity Log</h1>
+        <p class="text-gray-600">{{ workspace.name }}</p>
+    </div>
+    <div class="flex gap-3">
+        <a href="{% url 'activity:summary' workspace.id %}" class="btn btn-outline">
+            📊 View Summary
+        </a>
+    </div>
+</div>
+
+<!-- Activity Statistics -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <h3 class="text-2xl font-bold text-primary">{{ total_activities }}</h3>
+            <p class="text-gray-600 text-sm">Total Activities</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <h3 class="text-2xl font-bold text-success">{{ workspace_users|length }}</h3>
+            <p class="text-gray-600 text-sm">Active Users</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <h3 class="text-2xl font-bold text-warning">{{ page_obj.paginator.num_pages }}</h3>
+            <p class="text-gray-600 text-sm">Pages</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <h3 class="text-2xl font-bold text-secondary">24/7</h3>
+            <p class="text-gray-600 text-sm">Activity Tracking</p>
+        </div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="card mb-6">
+    <div class="card-header">
+        <h2 class="card-title">Filters</h2>
+    </div>
+    <div class="card-body">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+                <label class="form-label">User</label>
+                <select name="user" class="form-select">
+                    <option value="">All Users</option>
+                    {% for username, user_id in workspace_users %}
+                    <option value="{{ username }}" {% if filter_user == username %}selected{% endif %}>
+                        {{ username }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label class="form-label">Action Contains</label>
+                <input type="text" name="action" value="{{ filter_action|default:'' }}" 
+                       class="form-input" placeholder="e.g., created, updated">
+            </div>
+            <div>
+                <label class="form-label">From Date</label>
+                <input type="date" name="date_from" value="{{ date_from|default:'' }}" class="form-input">
+            </div>
+            <div>
+                <label class="form-label">To Date</label>
+                <input type="date" name="date_to" value="{{ date_to|default:'' }}" class="form-input">
+            </div>
+            <div class="md:col-span-4 flex gap-3">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a href="{% url 'activity:activity' workspace.id %}" class="btn btn-outline">Clear Filters</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Activity List -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Recent Activity</h2>
+        <span class="text-sm text-gray-500">Showing {{ activities|length }} of {{ total_activities }} activities</span>
+    </div>
+    <div class="card-body p-0">
+        {% for activity in activities %}
+        <div class="activity-item border-b border-gray-200 last:border-b-0 p-4 hover:bg-gray-50">
+            <div class="flex items-start gap-4">
+                <!-- User Avatar -->
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+                    {{ activity.user.username|first|upper }}
+                </div>
+                
+                <!-- Activity Content -->
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between mb-1">
+                        <div>
+                            <span class="font-semibold text-gray-900">{{ activity.user.username }}</span>
+                            <span class="text-gray-600">{{ activity.action }}</span>
+                        </div>
+                        <span class="text-sm text-gray-500 whitespace-nowrap ml-4">
+                            {{ activity.timestamp|timesince }} ago
+                        </span>
+                    </div>
+                    
+                    <div class="text-sm text-gray-500">
+                        <span class="bg-gray-100 px-2 py-1 rounded">{{ activity.timestamp|date:"M d, Y g:i A" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-12">
+            <div class="text-4xl mb-4">📝</div>
+            <h3 class="text-lg font-semibold text-gray-600 mb-2">No activities found</h3>
+            <p class="text-gray-500">
+                {% if filter_user or filter_action or date_from or date_to %}
+                Try adjusting your filters to see more results.
+                {% else %}
+                Activity will appear here as team members work on tasks and projects.
+                {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="flex justify-center items-center mt-6 space-x-2">
+    {% if page_obj.has_previous %}
+        <a href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+           class="btn btn-outline btn-sm">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+           class="btn btn-outline btn-sm">Previous</a>
+    {% endif %}
+
+    <span class="text-sm text-gray-600">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+           class="btn btn-outline btn-sm">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+           class="btn btn-outline btn-sm">Last</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

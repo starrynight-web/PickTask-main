@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ target_user.username }}'s Activity - {{ workspace.name }}{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h1>{{ target_user.get_full_name|default:target_user.username }}'s Activity</h1>
+        <p class="text-gray-600">{{ workspace.name }}</p>
+    </div>
+    <div class="flex gap-3">
+        <a href="{% url 'activity:activity' workspace.id %}" class="btn btn-outline">
+            ← Back to All Activity
+        </a>
+    </div>
+</div>
+
+<!-- User Summary -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <h3 class="text-2xl font-bold text-primary">{{ total_activities }}</h3>
+            <p class="text-gray-600 text-sm">Total Activities</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-semibold text-lg mx-auto mb-2">
+                {{ target_user.username|first|upper }}
+            </div>
+            <p class="text-gray-600 text-sm">User</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <h3 class="text-2xl font-bold text-warning">{{ page_obj.paginator.num_pages }}</h3>
+            <p class="text-gray-600 text-sm">Pages</p>
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-body p-4">
+            <h3 class="text-2xl font-bold text-success">{{ target_user.email }}</h3>
+            <p class="text-gray-600 text-sm">Email</p>
+        </div>
+    </div>
+</div>
+
+<!-- User Activity List -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Activity History</h2>
+        <span class="text-sm text-gray-500">{{ total_activities }} total activities</span>
+    </div>
+    <div class="card-body p-0">
+        {% for activity in activities %}
+        <div class="activity-item border-b border-gray-200 last:border-b-0 p-4 hover:bg-gray-50">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <p class="text-gray-700">{{ activity.action }}</p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {{ activity.timestamp|date:"M d, Y g:i A" }}
+                        ({{ activity.timestamp|timesince }} ago)
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-12">
+            <div class="text-4xl mb-4">👤</div>
+            <h3 class="text-lg font-semibold text-gray-600 mb-2">No activities found</h3>
+            <p class="text-gray-500">{{ target_user.username }} hasn't performed any actions in this workspace yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="flex justify-center items-center mt-6 space-x-2">
+    {% if page_obj.has_previous %}
+        <a href="?page=1" class="btn btn-outline btn-sm">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline btn-sm">Previous</a>
+    {% endif %}
+
+    <span class="text-sm text-gray-600">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline btn-sm">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline btn-sm">Last</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

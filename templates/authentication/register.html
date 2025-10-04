@@ -1,0 +1,66 @@
+{% extends 'authentication/base_auth.html' %}
+
+{% block title %}Register - PickTask{% endblock %}
+{% block header_text %}Create Your Account{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+        <div class="error-list">
+            {{ form.username.errors }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+        <div class="error-list">
+            {{ form.email.errors }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="{{ form.first_name.id_for_label }}">First Name</label>
+        {{ form.first_name }}
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="{{ form.last_name.id_for_label }}">Last Name</label>
+        {{ form.last_name }}
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+        <div class="error-list">
+            {{ form.password1.errors }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+        <div class="error-list">
+            {{ form.password2.errors }}
+        </div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Account</button>
+</form>
+
+<div class="auth-footer">
+    <p>Already have an account? <a href="{% url 'authentication:login' %}">Sign In</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ task.title }} - PickTask{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Task detail content will go here -->
+    <div class="flex justify-between items-start mb-6">
+        <div>
+            <h1>{{ task.title }}</h1>
+            <p class="text-gray-600">in {{ task.project.name }}</p>
+        </div>
+        <a href="{% url 'task:edit-task' task.project.workspace.id task.id %}" class="btn btn-primary">
+            Edit Task
+        </a>
+    </div>
+    
+    <!-- Add task details display -->
+</div>
+{% endblock %}

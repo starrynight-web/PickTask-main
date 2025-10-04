@@ -1,0 +1,25 @@
+<!-- templates/authentication/email_verification_failed.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Failed</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #e74c3c; }
+        .icon { font-size: 60px; margin-bottom: 20px; }
+        p { font-size: 16px; color: #555; }
+        a { color: #3498db; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">❌</div>
+        <h1>Verification Failed</h1>
+        <p>The verification link is invalid or has expired.</p>
+        <p><a href="{% url 'authentication:register' %}">Create a new account</a> or <a href="{% url 'authentication:login' %}">log in</a> if you already have one.</p>
+    </div>
+</body>
+</html>

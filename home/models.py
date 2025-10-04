@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
@@ -121,3 +122,14 @@ class TimeLog(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    """
+# home/models.py
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+class User(AbstractUser):
+    # You can add extra fields here later, e.g.:
+    # profile_picture = models.ImageField(upload_to='profiles/', null=True, blank=True)
+    # bio = models.TextField(max_length=500, blank=True)
+    pass
+"""

@@ -8,6 +8,8 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
+
+
 """
 
 from pathlib import Path
@@ -32,7 +34,12 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'home',
-    'accounts',
+    'workspace',
+    'authentication',
+    'kanban',
+    'task',
+    'team',
+    'activity',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -56,13 +64,14 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'workspace.context_processors.workspace_context',
             ],
         },
     },
@@ -126,3 +135,27 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#log in system
+AUTHENTICATION_BACKENDS = [
+    'authentication.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'hemzamtodo96@gmail.com'
+EMAIL_HOST_PASSWORD = 'opkkhbajhulgelpw'
+DEFAULT_FROM_EMAIL = 'hemzamtodo96@gmail.com'
+
+# Log in URLs
+LOGIN_URL = 'authentication:login'
+LOGIN_REDIRECT_URL = 'workspace:dashboard'
+LOGOUT_REDIRECT_URL = 'authentication:login'
+
+
+SITE_URL = 'http://localhost:8000'

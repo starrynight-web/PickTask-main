@@ -1,0 +1,650 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - PickTask Task Management</title>
+    <meta name="description" content="PickTask documentation and resources. Learn how to use our task management platform effectively.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <style>
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary-teal);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:focus {
+            color: var(--primary-teal);
+            background: var(--gray-50);
+            outline: none;
+        }
+
+        .nav-menu a.active {
+            color: var(--primary-teal);
+            background: var(--gray-100);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .mobile-menu-toggle:hover,
+        .mobile-menu-toggle:focus {
+            background: var(--gray-100);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        .cta-nav {
+            background: var(--primary-teal);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-nav:hover,
+        .cta-nav:focus {
+            background: #2bb5ad;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* Documentation Hero Section */
+        .docs-hero {
+            background: linear-gradient(125deg, var(--gray-50) 0%, var(--white) 60%, var(--gray-50) 100%);
+            padding: 4rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .docs-hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 40%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, rgba(49, 201, 193, 0.05) 0%, transparent 70%);
+            transform: rotate(15deg);
+        }
+
+        .docs-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .docs-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .docs-hero p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+            padding: 6rem 1rem;
+            background: var(--white);
+            text-align: center;
+        }
+
+        .coming-soon-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .coming-soon-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .coming-soon h2 {
+            font-size: 2.5rem;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+        }
+
+        .coming-soon p {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .notify-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .notify-input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .notify-input:focus {
+            outline: none;
+            border-color: var(--primary-teal);
+            box-shadow: 0 0 0 3px rgba(49, 201, 193, 0.1);
+        }
+
+        .notify-btn {
+            background: var(--primary-teal);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .notify-btn:hover,
+        .notify-btn:focus {
+            background: #2bb5ad;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            outline: 2px solid var(--primary-teal);
+            outline-offset: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 4rem 1rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-teal);
+        }
+
+        .footer-brand p {
+            line-height: 1.6;
+            color: var(--gray-400);
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--gray-400);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover,
+        .footer-section a:focus {
+            color: var(--primary-teal);
+            outline: none;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-700);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-400);
+        }
+
+        /* Animations */
+        @keyframes floatPattern {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(5px) translateY(-5px);
+            }
+            50% {
+                transform: translateX(-5px) translateY(-10px);
+            }
+            75% {
+                transform: translateX(-10px) translateY(-5px);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                border-top: 1px solid var(--gray-200);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 1rem;
+                border-radius: 6px;
+                text-align: center;
+            }
+
+            .docs-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .coming-soon h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .notify-form {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .docs-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .coming-soon h2 {
+                font-size: 1.75rem;
+            }
+            
+            .coming-soon-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/index/" class="logo" aria-label="PickTask home">
+                <i class="fas fa-tasks" aria-hidden="true"></i>
+                PickTask
+            </a>
+            
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            
+            <ul class="nav-menu" id="nav-menu" role="menubar">
+                <li role="none"><a href="/feature/" role="menuitem">Features</a></li>
+                <li role="none"><a href="/pricing/" role="menuitem">Pricing</a></li>
+                <li role="none"><a href="/tutorial/" role="menuitem">Tutorials</a></li>
+                <li role="none"><a href="/contact/" role="menuitem">Contact</a></li>
+            </ul>
+            
+            <a href="/auth/login/" class="cta-nav" id="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Documentation Hero Section -->
+    <section class="docs-hero" id="main-content">
+        <div class="docs-hero-container">
+            <h1>PickTask Documentation</h1>
+            <p>Learn how to use PickTask effectively with our comprehensive guides, tutorials, and API documentation.</p>
+        </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="coming-soon">
+        <div class="coming-soon-container">
+            <div class="coming-soon-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <h2>Documentation Coming Soon</h2>
+            <p>We're working hard to create comprehensive documentation to help you get the most out of PickTask. Our team is preparing detailed guides, tutorials, and API references.</p>
+            <p>In the meantime, if you need assistance, please don't hesitate to <a href="contact_deepseek.html" style="color: var(--primary-teal); text-decoration: none;">contact our support team</a>.</p>
+            
+            <form class="notify-form">
+                <input type="email" class="notify-input" placeholder="Enter your email to get notified" required>
+                <button type="submit" class="notify-btn">Notify Me</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>PickTask</h3>
+                    <p>Empowering teams worldwide with intelligent task management solutions. Built for the modern workplace, designed for maximum productivity and seamless collaboration.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <nav aria-label="Product links">
+                        <a href="/feature.html/">Features</a>
+                        <a href="/pricing.html/">Pricing</a>
+                        <a href="/integrations/">Integrations</a>
+                        <a href="/documentation/">Documentation</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <nav aria-label="Resource links">
+                        <a href="/tutorial/">Tutorials</a>
+                        <a href="/help_support/">Help & Support</a>
+                    </nav>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <nav aria-label="Company links">
+                        <a href="/about_us/">About Us</a>
+                        <a href="/blog/">Blog</a>
+                        <a href="/contact/">Contact</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PickTask. All rights reserved. Built with <i class="fas fa-heart" style="color: var(--primary-teal);" aria-hidden="true"></i> for productive teams.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Enhanced UX-focused JavaScript
+        class PickTaskDocsUI {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupNavigation();
+                this.setupMobileMenu();
+                this.setupSmoothScrolling();
+                this.setupNavScrollEffect();
+                this.setupFormValidation();
+            }
+
+            setupNavigation() {
+                // Add aria-current to active links
+                const currentPage = window.location.pathname.split('/').pop();
+                const navLinks = document.querySelectorAll('.nav-menu a');
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+                        link.setAttribute('aria-current', 'page');
+                    }
+                });
+            }
+
+            setupMobileMenu() {
+                const menuToggle = document.getElementById('mobile-menu-toggle');
+                const navMenu = document.getElementById('nav-menu');
+                
+                if (menuToggle && navMenu) {
+                    menuToggle.addEventListener('click', () => {
+                        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                        menuToggle.setAttribute('aria-expanded', !isExpanded);
+                        navMenu.classList.toggle('open');
+                        
+                        // Update icon
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.className = isExpanded ? 'fas fa-bars' : 'fas fa-times';
+                        }
+                    });
+                }
+            }
+
+            setupSmoothScrolling() {
+                // Handle anchor links with smooth scrolling
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        if (targetId === '#') return;
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const headerOffset = 80;
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Update URL without jumping
+                            history.pushState(null, null, targetId);
+                            
+                            // Close mobile menu if open
+                            const navMenu = document.getElementById('nav-menu');
+                            const menuToggle = document.getElementById('mobile-menu-toggle');
+                            if (navMenu && navMenu.classList.contains('open')) {
+                                navMenu.classList.remove('open');
+                                menuToggle.setAttribute('aria-expanded', 'false');
+                                menuToggle.querySelector('i').className = 'fas fa-bars';
+                            }
+                        }
+                    });
+                });
+            }
+
+            setupNavScrollEffect() {
+                // Add shadow to navbar on scroll
+                const navbar = document.getElementById('navbar');
+                if (navbar) {
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 10) {
+                            navbar.classList.add('scrolled');
+                        } else {
+                            navbar.classList.remove('scrolled');
+                        }
+                    });
+                }
+            }
+
+            setupFormValidation() {
+                // Simple form validation for the notify form
+                const notifyForm = document.querySelector('.notify-form');
+                if (notifyForm) {
+                    notifyForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        
+                        const emailInput = notifyForm.querySelector('.notify-input');
+                        const email = emailInput.value.trim();
+                        
+                        if (!this.isValidEmail(email)) {
+                            this.showError(emailInput, 'Please enter a valid email address');
+                            return;
+                        }
+                        
+                        // In a real application, you would submit the form here
+                        this.showSuccess(emailInput, 'Thank you! We\'ll notify you when documentation is available.');
+                        emailInput.value = '';
+                    });
+                }
+            }
+
+            isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            showError(input, message) {
+                // Remove any existing error messages
+                this.removeError(input);
+                
+                // Add error styling
+                input.style.borderColor = 'var(--error)';
+                
+                // Create and show error message
+                const error = document.createElement('p');
+                error.className = 'input-error';
+                error.style.color = 'var(--error)';
+                error.style.marginTop = '0.5rem';
+                error.style.fontSize = '0.875rem';
+                error.textContent = message;
+                
+                input.parentNode.insertBefore(error, input.nextSibling);
+                
+                // Focus the input
+                input.focus();
+            }
+
+            showSuccess(input, message) {
+                // Remove any existing messages
+                this.removeError(input);
+                
+                // Reset border color
+                input.style.borderColor = '';
+                
+                // Create and show success message
+                const success = document.createElement('p');
+                success.className = 'input-success';
+                success.style.color = 'var(--success)';
+                success.style.marginTop = '0.5rem';
+                success.style.fontSize = '0.875rem';
+                success.textContent = message;
+                
+                input.parentNode.insertBefore(success, input.nextSibling);
+                
+                // Remove success message after 3 seconds
+                setTimeout(() => {
+                    if (success.parentNode) {
+                        success.parentNode.removeChild(success);
+                    }
+                }, 3000);
+            }
+
+            removeError(input) {
+                // Remove error styling
+                input.style.borderColor = '';
+                
+                // Remove any existing error messages
+                const existingError = input.parentNode.querySelector('.input-error');
+                if (existingError) {
+                    existingError.parentNode.removeChild(existingError);
+                }
+                
+                // Remove any existing success messages
+                const existingSuccess = input.parentNode.querySelector('.input-success');
+                if (existingSuccess) {
+                    existingSuccess.parentNode.removeChild(existingSuccess);
+                }
+            }
+        }
+
+        // Initialize the UI when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new PickTaskDocsUI();
+        });
+    </script>
+</body>
+</html>
