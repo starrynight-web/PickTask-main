@@ -97,6 +97,21 @@ body {
   color: var(--primary-teal);
 }
 
+/* Add this right after the .logo styles */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-100); /* Different color for footer */
+  text-decoration: none;
+}
+
+.footer-logo i {
+  margin-right: 0.5rem;
+  color: var(--primary-teal);
+}
+
 .nav-menu {
   display: flex;
   list-style: none;

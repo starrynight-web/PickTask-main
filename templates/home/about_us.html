@@ -1,811 +1,905 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us - PickTask Task Management</title>
-    <meta name="description"
-        content="Learn about PickTask's mission, our team, and how we're revolutionizing task management for teams everywhere.">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <meta
+      name="description"
+      content="Learn about PickTask's mission, our team, and how we're revolutionizing task management for teams everywhere."
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
     <style>
+      .logo i {
+        margin-right: 0.5rem;
+        color: var(--primary-teal);
+      }
 
-        .logo i {
-            margin-right: 0.5rem;
-            color: var(--primary-teal);
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        margin: 0;
+      }
+
+      .nav-menu a {
+        text-decoration: none;
+        color: var(--gray-700);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-menu a:hover,
+      .nav-menu a:focus {
+        color: var(--primary-teal);
+        background: var(--gray-50);
+        outline: none;
+      }
+
+      .nav-menu a.active {
+        color: var(--primary-teal);
+        background: var(--gray-100);
+      }
+
+      .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--gray-700);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 6px;
+      }
+
+      .mobile-menu-toggle:hover,
+      .mobile-menu-toggle:focus {
+        background: var(--gray-100);
+        outline: 2px solid var(--primary-teal);
+        outline-offset: 2px;
+      }
+
+      .cta-nav {
+        background: var(--primary-teal);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .cta-nav:hover,
+      .cta-nav:focus {
+        background: #2bb5ad;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lg);
+        outline: 2px solid var(--primary-teal);
+        outline-offset: 2px;
+      }
+
+      /* Hero Section */
+      .about-hero {
+        background: linear-gradient(
+          135deg,
+          var(--gray-50) 0%,
+          var(--white) 100%
+        );
+        padding: 6rem 1rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .about-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.05;
+        background-image: radial-gradient(
+            circle at 20% 30%,
+            var(--primary-teal) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 60% 70%,
+            var(--primary-green) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            var(--primary-teal) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            var(--primary-green) 1px,
+            transparent 1px
+          );
+        background-size: 100px 100px, 150px 150px, 80px 80px, 120px 120px;
+        animation: floatPattern 20s ease-in-out infinite;
+        z-index: 0;
+      }
+
+      .about-hero-container {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .about-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--gray-900);
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+      }
+
+      .about-hero p {
+        font-size: 1.25rem;
+        color: var(--gray-600);
+        margin-bottom: 2rem;
+        line-height: 1.7;
+      }
+
+      /* Mission Section */
+      .mission {
+        padding: 6rem 1rem;
+        background: var(--white);
+      }
+
+      .mission-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .mission-content h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.025em;
+      }
+
+      .mission-content p {
+        font-size: 1.125rem;
+        color: var(--gray-600);
+        margin-bottom: 2rem;
+        line-height: 1.7;
+      }
+
+      .mission-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-teal);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: var(--gray-600);
+      }
+
+      .mission-image {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .mission-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Story Section */
+      .story {
+        padding: 6rem 1rem;
+        background: var(--gray-50);
+      }
+
+      .story-container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .story-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .story-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+      }
+
+      .story-header p {
+        font-size: 1.25rem;
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .story-timeline {
+        position: relative;
+        padding-left: 3rem;
+      }
+
+      .story-timeline::before {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--primary-teal);
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+      }
+
+      .timeline-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .timeline-dot {
+        position: absolute;
+        left: -3rem;
+        top: 0;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--primary-teal);
+      }
+
+      .timeline-content {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        border-left: 4px solid var(--primary-teal);
+      }
+
+      .timeline-content h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-content .timeline-date {
+        color: var(--primary-teal);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .timeline-content p {
+        color: var(--gray-600);
+        line-height: 1.6;
+      }
+
+      /* Values Section */
+      .values {
+        padding: 6rem 1rem;
+        background: var(--white);
+      }
+
+      .values-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .values-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .values-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+      }
+
+      .values-header p {
+        font-size: 1.25rem;
+        color: var(--gray-600);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .value-card {
+        background: var(--gray-50);
+        padding: 2.5rem 2rem;
+        border-radius: 12px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .value-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .value-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-teal),
+          var(--primary-green)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+      }
+
+      .value-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin-bottom: 1rem;
+      }
+
+      .value-card p {
+        color: var(--gray-600);
+        line-height: 1.6;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--gray-900);
+        color: white;
+        padding: 4rem 1rem 2rem;
+      }
+      /* Add this right after the .logo styles */
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--gray-100); /* Different color for footer */
+        text-decoration: none;
+      }
+
+      .footer-logo i {
+        margin-right: 0.5rem;
+        color: var(--primary-teal);
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-brand h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--primary-teal);
+      }
+
+      .footer-brand p {
+        line-height: 1.6;
+        color: var(--gray-400);
+      }
+
+      .footer-section h4 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: white;
+      }
+
+      .footer-section a {
+        display: block;
+        color: var(--gray-400);
+        text-decoration: none;
+        margin-bottom: 0.75rem;
+        transition: color 0.2s ease;
+        padding: 0.25rem 0;
+      }
+
+      .footer-section a:hover,
+      .footer-section a:focus {
+        color: var(--primary-teal);
+        outline: none;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid var(--gray-700);
+        padding-top: 2rem;
+        text-align: center;
+        color: var(--gray-400);
+      }
+
+      /* Animations */
+      @keyframes floatPattern {
+        0%,
+        100% {
+          transform: translateY(0) translateX(0);
         }
 
+        25% {
+          transform: translateY(-10px) translateX(5px);
+        }
+
+        50% {
+          transform: translateY(5px) translateX(-10px);
+        }
+
+        75% {
+          transform: translateY(10px) translateX(-5px);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .mission-container {
+          gap: 3rem;
+        }
+      }
+
+      @media (max-width: 768px) {
         .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            margin: 0;
+          position: fixed;
+          top: 72px;
+          left: 0;
+          right: 0;
+          background: var(--white);
+          flex-direction: column;
+          padding: 1rem;
+          gap: 0.5rem;
+          box-shadow: var(--shadow-lg);
+          transform: translateY(-100%);
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.3s ease;
+          z-index: 999;
         }
 
-        .nav-menu a {
-            text-decoration: none;
-            color: var(--gray-700);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a:focus {
-            color: var(--primary-teal);
-            background: var(--gray-50);
-            outline: none;
-        }
-
-        .nav-menu a.active {
-            color: var(--primary-teal);
-            background: var(--gray-100);
+        .nav-menu.active {
+          transform: translateY(0);
+          opacity: 1;
+          pointer-events: auto;
         }
 
         .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--gray-700);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 6px;
-        }
-
-        .mobile-menu-toggle:hover,
-        .mobile-menu-toggle:focus {
-            background: var(--gray-100);
-            outline: 2px solid var(--primary-teal);
-            outline-offset: 2px;
-        }
-
-        .cta-nav {
-            background: var(--primary-teal);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .cta-nav:hover,
-        .cta-nav:focus {
-            background: #2bb5ad;
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
-            outline: 2px solid var(--primary-teal);
-            outline-offset: 2px;
-        }
-
-        /* Hero Section */
-        .about-hero {
-            background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
-            padding: 6rem 1rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0.05;
-            background-image:
-                radial-gradient(circle at 20% 30%, var(--primary-teal) 1px, transparent 1px),
-                radial-gradient(circle at 60% 70%, var(--primary-green) 1px, transparent 1px),
-                radial-gradient(circle at 80% 20%, var(--primary-teal) 1px, transparent 1px),
-                radial-gradient(circle at 40% 80%, var(--primary-green) 1px, transparent 1px);
-            background-size: 100px 100px, 150px 150px, 80px 80px, 120px 120px;
-            animation: floatPattern 20s ease-in-out infinite;
-            z-index: 0;
-        }
-
-        .about-hero-container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
+          display: block;
         }
 
         .about-hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            letter-spacing: -0.025em;
-        }
-
-        .about-hero p {
-            font-size: 1.25rem;
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        /* Mission Section */
-        .mission {
-            padding: 6rem 1rem;
-            background: var(--white);
+          font-size: 2.5rem;
         }
 
         .mission-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .mission-content h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.025em;
-        }
-
-        .mission-content p {
-            font-size: 1.125rem;
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-            line-height: 1.7;
+          grid-template-columns: 1fr;
+          gap: 3rem;
         }
 
         .mission-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-teal);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--gray-600);
-        }
-
-        .mission-image {
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .mission-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Story Section */
-        .story {
-            padding: 6rem 1rem;
-            background: var(--gray-50);
-        }
-
-        .story-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .story-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .story-header h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
-            letter-spacing: -0.025em;
-        }
-
-        .story-header p {
-            font-size: 1.25rem;
-            color: var(--gray-600);
-            max-width: 600px;
-            margin: 0 auto;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
 
         .story-timeline {
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .story-timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--primary-teal);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
+          padding-left: 2rem;
         }
 
         .timeline-dot {
-            position: absolute;
-            left: -3rem;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--primary-teal);
-        }
-
-        .timeline-content {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary-teal);
-        }
-
-        .timeline-content h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-content .timeline-date {
-            color: var(--primary-teal);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .timeline-content p {
-            color: var(--gray-600);
-            line-height: 1.6;
-        }
-
-        /* Values Section */
-        .values {
-            padding: 6rem 1rem;
-            background: var(--white);
-        }
-
-        .values-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .values-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .values-header h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
-            letter-spacing: -0.025em;
-        }
-
-        .values-header p {
-            font-size: 1.25rem;
-            color: var(--gray-600);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .value-card {
-            background: var(--gray-50);
-            padding: 2.5rem 2rem;
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .value-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .value-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 2rem;
-        }
-
-        .value-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 1rem;
-        }
-
-        .value-card p {
-            color: var(--gray-600);
-            line-height: 1.6;
-        }
-
-
-
-        /* Footer */
-        .footer {
-            background: var(--gray-900);
-            color: white;
-            padding: 4rem 1rem 2rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
+          left: -2rem;
         }
 
         .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 2rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .about-hero h1 {
+          font-size: 2rem;
         }
 
-        .footer-brand h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--primary-teal);
+        .about-hero p {
+          font-size: 1.125rem;
         }
 
-        .footer-brand p {
-            line-height: 1.6;
-            color: var(--gray-400);
+        .mission-content h2,
+        .story-header h2,
+        .values-header h2 {
+          font-size: 2rem;
         }
 
-        .footer-section h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: white;
+        .footer-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
         }
 
-        .footer-section a {
-            display: block;
-            color: var(--gray-400);
-            text-decoration: none;
-            margin-bottom: 0.75rem;
-            transition: color 0.2s ease;
-            padding: 0.25rem 0;
+        .newsletter-form {
+          flex-direction: column;
         }
-
-        .footer-section a:hover,
-        .footer-section a:focus {
-            color: var(--primary-teal);
-            outline: none;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--gray-700);
-            padding-top: 2rem;
-            text-align: center;
-            color: var(--gray-400);
-        }
-
-        /* Animations */
-        @keyframes floatPattern {
-
-            0%,
-            100% {
-                transform: translateY(0) translateX(0);
-            }
-
-            25% {
-                transform: translateY(-10px) translateX(5px);
-            }
-
-            50% {
-                transform: translateY(5px) translateX(-10px);
-            }
-
-            75% {
-                transform: translateY(10px) translateX(-5px);
-            }
-        }
-
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .mission-container {
-                gap: 3rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-menu {
-                position: fixed;
-                top: 72px;
-                left: 0;
-                right: 0;
-                background: var(--white);
-                flex-direction: column;
-                padding: 1rem;
-                gap: 0.5rem;
-                box-shadow: var(--shadow-lg);
-                transform: translateY(-100%);
-                opacity: 0;
-                pointer-events: none;
-                transition: all 0.3s ease;
-                z-index: 999;
-            }
-
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: auto;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .about-hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .mission-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .mission-stats {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .story-timeline {
-                padding-left: 2rem;
-            }
-
-            .timeline-dot {
-                left: -2rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .about-hero h1 {
-                font-size: 2rem;
-            }
-
-            .about-hero p {
-                font-size: 1.125rem;
-            }
-
-            .mission-content h2,
-            .story-header h2,
-            .values-header h2 {
-                font-size: 2rem;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .newsletter-form {
-                flex-direction: column;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Navigation -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-        <div class="nav-container">
-            <a href="/index/" class="logo" aria-label="PickTask home">
-                <i class="fas fa-tasks" aria-hidden="true"></i>
-                PickTask
-            </a>
-            
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                <i class="fas fa-bars" aria-hidden="true"></i>
-            </button>
-            
-            <ul class="nav-menu" id="nav-menu" role="menubar">
-                <li role="none"><a href="/feature/" role="menuitem">Features</a></li>
-                <li role="none"><a href="/pricing/" role="menuitem">Pricing</a></li>
-                <li role="none"><a href="/tutorial/" role="menuitem">Tutorials</a></li>
-                <li role="none"><a href="/contact/" role="menuitem">Contact</a></li>
-            </ul>
-            
-            <a href="/auth/login/" class="cta-nav" id="nav-cta">Get Started</a>
-        </div>
+    <nav
+      class="navbar"
+      id="navbar"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div class="nav-container">
+        <a href="/index/" class="logo" aria-label="PickTask home">
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+          PickTask
+        </a>
+
+        <button
+          class="mobile-menu-toggle"
+          id="mobile-menu-toggle"
+          aria-label="Toggle mobile menu"
+          aria-expanded="false"
+        >
+          <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+
+        <ul class="nav-menu" id="nav-menu" role="menubar">
+          <li role="none"><a href="/feature/" role="menuitem">Features</a></li>
+          <li role="none"><a href="/pricing/" role="menuitem">Pricing</a></li>
+          <li role="none">
+            <a href="/tutorial/" role="menuitem">Tutorials</a>
+          </li>
+          <li role="none"><a href="/contact/" role="menuitem">Contact</a></li>
+        </ul>
+
+        <a href="/auth/login/" class="cta-nav" id="nav-cta">Get Started</a>
+      </div>
     </nav>
 
     <!-- Main Content -->
     <main id="main-content">
-        <!-- Hero Section -->
-        <section class="about-hero">
-            <div class="about-hero-container">
-                <h1>Our mission is to simplify task management</h1>
-                <p>PickTask was created to help teams of all sizes work more efficiently, collaborate seamlessly, and
-                    achieve their goals faster.</p>
+      <!-- Hero Section -->
+      <section class="about-hero">
+        <div class="about-hero-container">
+          <h1>Our mission is to simplify task management</h1>
+          <p>
+            PickTask was created to help teams of all sizes work more
+            efficiently, collaborate seamlessly, and achieve their goals faster.
+          </p>
+        </div>
+      </section>
+
+      <!-- Mission Section -->
+      <section class="mission">
+        <div class="mission-container">
+          <div class="mission-content">
+            <h2>Why PickTask Exists</h2>
+            <p>
+              At PickTask, we believe that effective task management should be
+              accessible to everyone. Founded in 2025 as a product of
+              UNLEFT.LLC, our platform was designed to eliminate the complexity
+              that often comes with productivity tools.
+            </p>
+            <p>
+              We've created an intuitive, powerful solution that helps teams
+              focus on what truly matters—getting work done and achieving their
+              objectives.
+            </p>
+
+            <div class="mission-stats">
+              <div class="stat-item">
+                <span class="stat-number">50K+</span>
+                <span class="stat-label">Active Users</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">12K+</span>
+                <span class="stat-label">Teams</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Satisfaction Rate</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Support</span>
+              </div>
             </div>
-        </section>
+          </div>
 
-        <!-- Mission Section -->
-        <section class="mission">
-            <div class="mission-container">
-                <div class="mission-content">
-                    <h2>Why PickTask Exists</h2>
-                    <p>At PickTask, we believe that effective task management should be accessible to everyone. Founded
-                        in 2025 as a product of UNLEFT.LLC, our platform was designed to eliminate the complexity that
-                        often comes with productivity tools.</p>
-                    <p>We've created an intuitive, powerful solution that helps teams focus on what truly
-                        matters—getting work done and achieving their objectives.</p>
+          <div class="mission-image">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&h=500"
+              alt="Team collaborating using PickTask"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
 
-                    <div class="mission-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">50K+</span>
-                            <span class="stat-label">Active Users</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">12K+</span>
-                            <span class="stat-label">Teams</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">98%</span>
-                            <span class="stat-label">Satisfaction Rate</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">24/7</span>
-                            <span class="stat-label">Support</span>
-                        </div>
-                    </div>
-                </div>
+      <!-- Story Section -->
+      <section class="story">
+        <div class="story-container">
+          <div class="story-header">
+            <h2>Our Journey</h2>
+            <p>From concept to leading task management solution</p>
+          </div>
 
-                <div class="mission-image">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&h=500"
-                        alt="Team collaborating using PickTask" loading="lazy">
-                </div>
+          <div class="story-timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3>Foundation</h3>
+                <span class="timeline-date">January 2025</span>
+                <p>
+                  UNLEFT.LLC was established with a vision to create
+                  productivity tools that actually work for people.
+                </p>
+              </div>
             </div>
-        </section>
 
-        <!-- Story Section -->
-        <section class="story">
-            <div class="story-container">
-                <div class="story-header">
-                    <h2>Our Journey</h2>
-                    <p>From concept to leading task management solution</p>
-                </div>
-
-                <div class="story-timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>Foundation</h3>
-                            <span class="timeline-date">January 2025</span>
-                            <p>UNLEFT.LLC was established with a vision to create productivity tools that actually work
-                                for people.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>Concept Development</h3>
-                            <span class="timeline-date">March 2025</span>
-                            <p>After extensive research, we identified the need for a more intuitive task management
-                                system and began developing PickTask.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>Beta Launch</h3>
-                            <span class="timeline-date">July 2025</span>
-                            <p>We launched PickTask to a select group of beta testers who helped us refine the platform
-                                with their valuable feedback.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>Official Release</h3>
-                            <span class="timeline-date">October 2025</span>
-                            <p>PickTask was officially launched to the public, quickly gaining traction among teams
-                                looking for a better way to manage tasks.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>Growth</h3>
-                            <span class="timeline-date">Present</span>
-                            <p>Today, PickTask continues to evolve with new features and improvements, serving thousands
-                                of teams worldwide.</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3>Concept Development</h3>
+                <span class="timeline-date">March 2025</span>
+                <p>
+                  After extensive research, we identified the need for a more
+                  intuitive task management system and began developing
+                  PickTask.
+                </p>
+              </div>
             </div>
-        </section>
 
-        <!-- Values Section -->
-        <section class="values">
-            <div class="values-container">
-                <div class="values-header">
-                    <h2>Our Values</h2>
-                    <p>The principles that guide everything we do</p>
-                </div>
-
-                <div class="values-grid">
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <h3>Innovation</h3>
-                        <p>We constantly seek new ways to improve task management and help teams work smarter, not
-                            harder.</p>
-                    </div>
-
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h3>Collaboration</h3>
-                        <p>We believe that great things happen when people work together effectively and transparently.
-                        </p>
-                    </div>
-
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <h3>User-Centric</h3>
-                        <p>Our users are at the heart of everything we do. We listen, adapt, and evolve based on their
-                            needs.</p>
-                    </div>
-
-                    <div class="value-card">
-                        <div class="value-icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <h3>Security</h3>
-                        <p>We prioritize the protection of our users' data with industry-leading security measures.</p>
-                    </div>
-                </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3>Beta Launch</h3>
+                <span class="timeline-date">July 2025</span>
+                <p>
+                  We launched PickTask to a select group of beta testers who
+                  helped us refine the platform with their valuable feedback.
+                </p>
+              </div>
             </div>
-        </section>
 
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3>Official Release</h3>
+                <span class="timeline-date">October 2025</span>
+                <p>
+                  PickTask was officially launched to the public, quickly
+                  gaining traction among teams looking for a better way to
+                  manage tasks.
+                </p>
+              </div>
+            </div>
 
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3>Growth</h3>
+                <span class="timeline-date">Present</span>
+                <p>
+                  Today, PickTask continues to evolve with new features and
+                  improvements, serving thousands of teams worldwide.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Values Section -->
+      <section class="values">
+        <div class="values-container">
+          <div class="values-header">
+            <h2>Our Values</h2>
+            <p>The principles that guide everything we do</p>
+          </div>
+
+          <div class="values-grid">
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <h3>Innovation</h3>
+              <p>
+                We constantly seek new ways to improve task management and help
+                teams work smarter, not harder.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <h3>Collaboration</h3>
+              <p>
+                We believe that great things happen when people work together
+                effectively and transparently.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-heart"></i>
+              </div>
+              <h3>User-Centric</h3>
+              <p>
+                Our users are at the heart of everything we do. We listen,
+                adapt, and evolve based on their needs.
+              </p>
+            </div>
+
+            <div class="value-card">
+              <div class="value-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <h3>Security</h3>
+              <p>
+                We prioritize the protection of our users' data with
+                industry-leading security measures.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <footer class="footer" id="contact" role="contentinfo">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>PickTask</h3>
-                    <p>Empowering teams worldwide with intelligent task management solutions. Built for the modern workplace, designed for maximum productivity and seamless collaboration.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Product</h4>
-                    <nav aria-label="Product links">
-                        <a href="/feature.html/">Features</a>
-                        <a href="/pricing.html/">Pricing</a>
-                        <a href="/integrations/">Integrations</a>
-                        <a href="/documentation/">Documentation</a>
-                    </nav>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <nav aria-label="Resource links">
-                        <a href="/tutorial/">Tutorials</a>
-                        <a href="/help_support/">Help & Support</a>
-                    </nav>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <nav aria-label="Company links">
-                        <a href="/about_us/">About Us</a>
-                        <a href="/blog/">Blog</a>
-                        <a href="/contact/">Contact</a>
-                    </nav>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 PickTask. All rights reserved. Built with <i class="fas fa-heart" style="color: var(--primary-teal);" aria-hidden="true"></i> for productive teams.</p>
-            </div>
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <a href="/index/" class="footer-logo" aria-label="PickTask home">
+              <i class="fas fa-tasks" aria-hidden="true"></i>
+              PickTask
+            </a>
+            <p>
+              Empowering teams worldwide with intelligent task management
+              solutions. Built for the modern workplace, designed for maximum
+              productivity and seamless collaboration.
+            </p>
+          </div>
+
+          <div class="footer-section">
+            <h4>Product</h4>
+            <nav aria-label="Product links">
+              <a href="/feature/">Features</a>
+              <a href="/pricing/">Pricing</a>
+              <a href="/integrations/">Integrations</a>
+              <a href="/documentation/">Documentation</a>
+            </nav>
+          </div>
+
+          <div class="footer-section">
+            <h4>Resources</h4>
+            <nav aria-label="Resource links">
+              <a href="/tutorial/">Tutorials</a>
+              <a href="/help_support/">Help & Support</a>
+            </nav>
+          </div>
+
+          <div class="footer-section">
+            <h4>Company</h4>
+            <nav aria-label="Company links">
+              <a href="/about_us/">About Us</a>
+              <a href="/blog/">Blog</a>
+              <a href="/contact/">Contact</a>
+            </nav>
+          </div>
         </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 PickTask. All rights reserved. Built with
+            <i
+              class="fas fa-heart"
+              style="color: var(--primary-teal)"
+              aria-hidden="true"
+            ></i>
+            for productive teams.
+          </p>
+        </div>
+      </div>
     </footer>
 
-
     <script>
-        // Mobile menu toggle functionality
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const navMenu = document.getElementById('nav-menu');
+      // Mobile menu toggle functionality
+      const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+      const navMenu = document.getElementById("nav-menu");
 
-        mobileMenuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const isExpanded = navMenu.classList.contains('active');
-            mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
-        });
+      mobileMenuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+        const isExpanded = navMenu.classList.contains("active");
+        mobileMenuToggle.setAttribute("aria-expanded", isExpanded);
+      });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-                mobileMenuToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !navMenu.contains(e.target) &&
+          !mobileMenuToggle.contains(e.target)
+        ) {
+          navMenu.classList.remove("active");
+          mobileMenuToggle.setAttribute("aria-expanded", "false");
+        }
+      });
 
-        // Navbar shadow on scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 10) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+      // Navbar shadow on scroll
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 10) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>

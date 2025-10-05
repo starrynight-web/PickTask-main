@@ -242,6 +242,20 @@
         padding: 4rem 1rem 2rem;
       }
 
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--gray-100); /* Different color for footer */
+        text-decoration: none;
+      }
+
+      .footer-logo i {
+        margin-right: 0.5rem;
+        color: var(--primary-teal);
+      }
+
       .footer-container {
         max-width: 1200px;
         margin: 0 auto;
@@ -473,7 +487,10 @@
       <div class="footer-container">
         <div class="footer-content">
           <div class="footer-brand">
-            <h3>PickTask</h3>
+            <a href="/index/" class="footer-logo" aria-label="PickTask home">
+              <i class="fas fa-tasks" aria-hidden="true"></i>
+              PickTask
+            </a>
             <p>
               Empowering teams worldwide with intelligent task management
               solutions. Built for the modern workplace, designed for maximum
@@ -484,17 +501,17 @@
           <div class="footer-section">
             <h4>Product</h4>
             <nav aria-label="Product links">
-              <a href="/feature.html/">Features</a>
-              <a href="/pricing.html/">Pricing</a>
-              <a href="/#integrations/">Integrations</a>
-              <a href="/documentation/l">Documentation</a>
+              <a href="/feature/">Features</a>
+              <a href="/pricing/">Pricing</a>
+              <a href="/integrations/">Integrations</a>
+              <a href="/documentation/">Documentation</a>
             </nav>
           </div>
 
           <div class="footer-section">
             <h4>Resources</h4>
             <nav aria-label="Resource links">
-              <a href="/tutorial/l">Tutorials</a>
+              <a href="/tutorial/">Tutorials</a>
               <a href="/help_support/">Help & Support</a>
             </nav>
           </div>
