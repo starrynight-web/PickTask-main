@@ -9,15 +9,11 @@ from workspace.forms import TaskForm
 @login_required
 @workspace_required
 def kanban_board(request, workspace_id):
-    """
-    Main kanban board view - shows tasks in columns by status
-    """
+ 
     workspace = get_object_or_404(Workspace, id=workspace_id)
-    
-    # Get projects for this workspace (for filtering)
+ 
     projects = Project.objects.filter(workspace=workspace)
-    
-    # Get selected project from query params
+
     project_id = request.GET.get('project')
     if project_id:
         tasks = Task.objects.filter(project__id=project_id, project__workspace=workspace)
@@ -25,8 +21,7 @@ def kanban_board(request, workspace_id):
     else:
         tasks = Task.objects.filter(project__workspace=workspace)
         current_project = None
-    
-    # Group tasks by status for kanban columns
+ 
     tasks_by_status = {
         'todo': tasks.filter(status='todo').select_related('project', 'assigned_to'),
         'in_progress': tasks.filter(status='in_progress').select_related('project', 'assigned_to'),
@@ -86,9 +81,7 @@ def update_task_status(request, workspace_id):
 @login_required
 @workspace_required
 def quick_create_task(request, workspace_id):
-    """
-    Quick task creation from kanban board - FIXED VERSION
-    """
+  
     workspace = get_object_or_404(Workspace, id=workspace_id)
     
     if request.method == 'POST':
@@ -121,5 +114,4 @@ def quick_create_task(request, workspace_id):
         else:
             messages.error(request, "Please provide both title and project")
     
-    # If there's any error, redirect back to kanban
     return redirect('kanban:kanban', workspace_id=workspace_id)

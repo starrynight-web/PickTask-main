@@ -5,7 +5,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-# Import models and utilities from the workspace app
 from workspace.models import (
     Workspace, Membership, ActivityLog,
     Group, GroupMembership
@@ -22,15 +21,11 @@ User = get_user_model()
 @login_required
 @workspace_required
 def team_management(request, workspace_id):
-    """
-    Main team management page - shows all workspace members
-    """
+    
     workspace = get_object_or_404(Workspace, id=workspace_id)
     
-    # Get all memberships for this workspace
     memberships = Membership.objects.filter(workspace=workspace).select_related('user')
     
-    # Get current user's membership for permission checks
     user_membership = Membership.objects.get(user=request.user, workspace=workspace)
     
     context = {
@@ -45,9 +40,7 @@ def team_management(request, workspace_id):
 @login_required
 @workspace_admin_required
 def invite_member(request, workspace_id):
-    """
-    Invite new members to workspace via email
-    """
+    
     workspace = get_object_or_404(Workspace, id=workspace_id)
     
     if request.method == 'POST':
@@ -55,8 +48,7 @@ def invite_member(request, workspace_id):
         if form.is_valid():
             email = form.cleaned_data['email']
             role = form.cleaned_data['role']
-            
-            # Check if user exists in system
+       
             try:
                 user = User.objects.get(email=email)
                 
@@ -71,7 +63,6 @@ def invite_member(request, workspace_id):
                         role=role
                     )
                     
-                    # Log activity
                     ActivityLog.objects.create(
                         workspace=workspace,
                         user=request.user,
@@ -81,10 +72,9 @@ def invite_member(request, workspace_id):
                     messages.success(request, f"Successfully added {user.username} to the workspace")
                     
             except User.DoesNotExist:
-                # User doesn't exist in system - send invitation email
+              
                 invitation_link = f"{settings.SITE_URL}/workspace/{workspace.id}/"
-                
-                # Send invitation email
+               
                 send_mail(
                     f"Invitation to join {workspace.name} on PickTask",
                     f"You've been invited to join {workspace.name} on PickTask. "
@@ -99,7 +89,6 @@ def invite_member(request, workspace_id):
                     f"Invitation sent to {email}. They'll need to register first."
                 )
                 
-                # Log activity
                 ActivityLog.objects.create(
                     workspace=workspace,
                     user=request.user,
@@ -120,13 +109,10 @@ def invite_member(request, workspace_id):
 @login_required
 @workspace_admin_required
 def edit_role(request, workspace_id, membership_id):
-    """
-    Edit a member's role in the workspace
-    """
+
     workspace = get_object_or_404(Workspace, id=workspace_id)
     membership = get_object_or_404(Membership, id=membership_id, workspace=workspace)
-    
-    # Prevent users from editing their own admin status (optional safety)
+
     if membership.user == request.user:
         messages.error(request, "You cannot change your own role")
         return redirect('team:team', workspace_id=workspace_id)
@@ -135,8 +121,7 @@ def edit_role(request, workspace_id, membership_id):
         form = RoleAssignmentForm(request.POST, instance=membership)
         if form.is_valid():
             form.save()
-            
-            # Log activity
+   
             ActivityLog.objects.create(
                 workspace=workspace,
                 user=request.user,
@@ -159,18 +144,14 @@ def edit_role(request, workspace_id, membership_id):
 @login_required
 @workspace_admin_required
 def remove_member(request, workspace_id, membership_id):
-    """
-    Remove a member from workspace (admin only)
-    """
+    
     workspace = get_object_or_404(Workspace, id=workspace_id)
     membership = get_object_or_404(Membership, id=membership_id, workspace=workspace)
-    
-    # Prevent users from removing themselves
+   
     if membership.user == request.user:
         messages.error(request, "You cannot remove yourself from the workspace")
         return redirect('team:team', workspace_id=workspace_id)
     
-    # Prevent removing the last admin
     admin_count = Membership.objects.filter(workspace=workspace, role='admin').count()
     if membership.role == 'admin' and admin_count <= 1:
         messages.error(request, "Cannot remove the last admin from workspace")
@@ -179,7 +160,6 @@ def remove_member(request, workspace_id, membership_id):
     user_email = membership.user.email
     membership.delete()
     
-    # Log activity
     ActivityLog.objects.create(
         workspace=workspace,
         user=request.user,
@@ -193,13 +173,10 @@ def remove_member(request, workspace_id, membership_id):
 @login_required
 @workspace_required
 def groups(request, workspace_id):
-    """
-    Group management - list all groups and handle creation
-    """
+   
     workspace = get_object_or_404(Workspace, id=workspace_id)
     groups_list = Group.objects.filter(workspace=workspace).prefetch_related('memberships__user')
     
-    # Get current user's membership for permission checks
     user_membership = Membership.objects.get(user=request.user, workspace=workspace)
     
     if request.method == 'POST':
@@ -213,8 +190,7 @@ def groups(request, workspace_id):
             group.workspace = workspace
             group.created_by = request.user
             group.save()
-            
-            # Log activity
+           
             ActivityLog.objects.create(
                 workspace=workspace,
                 user=request.user,
@@ -238,13 +214,10 @@ def groups(request, workspace_id):
 @login_required
 @workspace_admin_required
 def group_detail(request, workspace_id, group_id):
-    """
-    Group detail page - view and manage group members
-    """
+
     workspace = get_object_or_404(Workspace, id=workspace_id)
     group = get_object_or_404(Group, id=group_id, workspace=workspace)
-    
-    # Get all workspace members not in this group
+  
     workspace_members = User.objects.filter(
         memberships__workspace=workspace
     ).exclude(
@@ -298,9 +271,7 @@ def group_detail(request, workspace_id, group_id):
 @login_required
 @workspace_admin_required
 def remove_group_member(request, workspace_id, group_id, membership_id):
-    """
-    Remove a member from a group
-    """
+ 
     workspace = get_object_or_404(Workspace, id=workspace_id)
     group = get_object_or_404(Group, id=group_id, workspace=workspace)
     group_membership = get_object_or_404(GroupMembership, id=membership_id, group=group)
@@ -321,9 +292,7 @@ def remove_group_member(request, workspace_id, group_id, membership_id):
 @login_required
 @workspace_admin_required
 def delete_group(request, workspace_id, group_id):
-    """
-    Delete a group entirely
-    """
+ 
     workspace = get_object_or_404(Workspace, id=workspace_id)
     group = get_object_or_404(Group, id=group_id, workspace=workspace)
     group_name = group.name

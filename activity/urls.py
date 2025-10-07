@@ -1,8 +1,6 @@
 from django.urls import path
 from . import views
-
 app_name = 'activity'
-
 urlpatterns = [
     # Main activity log
     path('<int:workspace_id>/', views.activity_log, name='activity'),

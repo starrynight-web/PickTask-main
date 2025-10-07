@@ -5,7 +5,7 @@ from django.utils.crypto import get_random_string
 import uuid
 
 class EmailVerification(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # ✅ Updated
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  
     token = models.UUIDField(default=uuid.uuid4, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
@@ -14,7 +14,7 @@ class EmailVerification(models.Model):
         return f"Email verification for {self.user.email}"
 
 class PasswordResetToken(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # ✅ Updated
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
     token = models.UUIDField(default=uuid.uuid4, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_used = models.BooleanField(default=False)

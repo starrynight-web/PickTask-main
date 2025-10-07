@@ -1,4 +1,3 @@
-# authentication/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout, get_user_model  # ✅ Updated
 from django.contrib.auth.decorators import login_required
@@ -26,11 +25,9 @@ def register_view(request):
             user = form.save(commit=False)
             user.is_active = False  # Deactivate until email verification
             user.save()
-            
-            # Create email verification record
+         
             verification = EmailVerification.objects.create(user=user)
-            
-            # Send verification email
+        
             send_verification_email(request, user, verification.token)
             
             messages.success(
@@ -51,8 +48,7 @@ def login_view(request):
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            
-            # Check if email is verified
+          
             try:
                 verification = EmailVerification.objects.get(user=user)
                 if not verification.is_verified:
@@ -92,8 +88,7 @@ def verify_email_view(request, token):
         else:
             verification.is_verified = True
             verification.save()
-            
-            # Activate user
+        
             user = verification.user
             user.is_active = True
             user.save()

@@ -7,9 +7,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('index/', views.home, name='index'),
     path('index.html', RedirectView.as_view(pattern_name='index')),
-    # path('workspaces/', views.workspaces, name="workspaces"),
     path('feature/', views.feature, name="feature"),
-    # path('tasks/', views.tasks, name="tasks"),
     path('feature.html', RedirectView.as_view(pattern_name='feature')),
 
     path('about_us/', views.about_us, name='about_us'),

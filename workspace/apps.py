@@ -6,5 +6,4 @@ class WorkspaceConfig(AppConfig):
     verbose_name = 'Workspace Management'
     
     def ready(self):
-        # This import will now work because signals.py exists
         import workspace.signals

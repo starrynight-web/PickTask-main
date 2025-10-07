@@ -13,22 +13,17 @@ from .decorators import workspace_required, workspace_admin_required
 
 @login_required
 def dashboard(request):
-    """
-    Main dashboard - shows user's workspaces and overview
-    """
-    # The context processor now handles current_workspace automatically
-    # Just get the additional data needed for dashboard
-
+  
     current_workspace = getattr(request, 'current_workspace', None)
 
     context = {}
 
     if current_workspace:
-        # Get workspace statistics
+       
         projects = Project.objects.filter(workspace=current_workspace)
         tasks = Task.objects.filter(project__workspace=current_workspace)
 
-        # Task counts by status
+     
         task_counts = {
             'total': tasks.count(),
             'todo': tasks.filter(status='todo').count(),
@@ -37,7 +32,7 @@ def dashboard(request):
             'done': tasks.filter(status='done').count(),
         }
 
-        # Recent activities
+    
         recent_activities = ActivityLog.objects.filter(
             workspace=current_workspace
         ).select_related('user').order_by('-timestamp')[:10]
@@ -54,20 +49,14 @@ def dashboard(request):
 
 @login_required
 def workspace_detail(request, workspace_id):
-    """
-    Specific workspace overview
-    """
+   
     workspace = get_object_or_404(Workspace, id=workspace_id)
 
-    # Check if user has access to this workspace
+ 
     if not Membership.objects.filter(user=request.user, workspace=workspace).exists():
         messages.error(request, "You don't have access to this workspace")
         return redirect('workspace:dashboard')
 
-    # The context processor will automatically set this as current workspace
-    # because it's in the URL
-
-    # Get workspace statistics
     projects = Project.objects.filter(workspace=workspace)
     tasks = Task.objects.filter(project__workspace=workspace)
 
@@ -91,18 +80,17 @@ class WorkspaceCreateView(CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         response = super().form_valid(form)
-
-        # Create membership for creator as admin
+  
         Membership.objects.create(
             user=self.request.user,
             workspace=form.instance,
             role='admin'
         )
 
-        # Set the newly created workspace as current in session
+       
         self.request.session['current_workspace_id'] = self.object.id
 
-        # Log activity
+        
         ActivityLog.objects.create(
             workspace=form.instance,
             user=self.request.user,
@@ -119,36 +107,27 @@ class WorkspaceCreateView(CreateView):
 
 @login_required
 def confirm_workspace(request, pk):
-    """
-    Confirmation page after workspace creation
-    """
+    
     workspace = get_object_or_404(Workspace, pk=pk)
 
-    # Verify user has access
+   
     if not Membership.objects.filter(user=request.user, workspace=workspace).exists():
         messages.error(request, "You don't have access to this workspace")
         return redirect('workspace:dashboard')
 
-    # The context processor will handle setting this as current workspace
-    # because we're storing it in session during creation
 
     return render(request, 'workspace/confirm-workspace.html', {'workspace': workspace})
 
 
 @login_required
 def create_project(request, workspace_id):
-    """
-    Create a new project in a workspace
-    """
+   
     workspace = get_object_or_404(Workspace, id=workspace_id)
 
-    # Check if user has access
+   
     if not Membership.objects.filter(user=request.user, workspace=workspace).exists():
         messages.error(request, "You don't have access to this workspace")
         return redirect('workspace:dashboard')
-
-    # The context processor will automatically set this as current workspace
-    # because it's in the URL
 
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -158,7 +137,6 @@ def create_project(request, workspace_id):
             project.created_by = request.user
             project.save()
 
-            # Log activity
             ActivityLog.objects.create(
                 workspace=workspace,
                 user=request.user,
@@ -180,9 +158,7 @@ def create_project(request, workspace_id):
 
 @login_required
 def workspace_list(request):
-    """
-    Simple list of user's workspaces
-    """
+    
     memberships = Membership.objects.filter(
         user=request.user).select_related('workspace')
 

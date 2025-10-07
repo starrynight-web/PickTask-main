@@ -1,11 +1,9 @@
-# authentication/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth import get_user_model  # ✅ Critical for custom user
 from django.core.exceptions import ValidationError
 
 User = get_user_model()  # ✅ Points to 'home.User'
-
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(

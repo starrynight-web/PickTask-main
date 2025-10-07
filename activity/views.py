@@ -8,10 +8,9 @@ from workspace.decorators import workspace_required
 
 @login_required
 @workspace_required
+
 def activity_log(request, workspace_id):
-    """
-    Main activity log view with filtering and pagination
-    """
+    
     workspace = get_object_or_404(Workspace, id=workspace_id)
     
     # Get all activities for this workspace
@@ -60,12 +59,9 @@ def activity_log(request, workspace_id):
 @login_required
 @workspace_required
 def activity_summary(request, workspace_id):
-    """
-    Activity summary with statistics and insights
-    """
+    
     workspace = get_object_or_404(Workspace, id=workspace_id)
     
-    # Get recent activities (last 30 days)
     from django.utils import timezone
     from datetime import timedelta
     
@@ -75,21 +71,17 @@ def activity_summary(request, workspace_id):
         timestamp__gte=thirty_days_ago
     )
     
-    # Calculate statistics
     total_activities = recent_activities.count()
     
-    # Most active users
     from django.db.models import Count
     active_users = recent_activities.values('user__username').annotate(
         activity_count=Count('id')
     ).order_by('-activity_count')[:5]
     
-    # Common activity types
     common_actions = recent_activities.values('action').annotate(
         count=Count('id')
     ).order_by('-count')[:10]
     
-    # Daily activity trend (last 7 days)
     from django.db.models.functions import TruncDate
     daily_activity = recent_activities.filter(
         timestamp__gte=timezone.now() - timedelta(days=7)
@@ -113,22 +105,17 @@ def activity_summary(request, workspace_id):
 @login_required
 @workspace_required
 def user_activity(request, workspace_id, user_id):
-    """
-    Activity log for a specific user in the workspace
-    """
+  
     workspace = get_object_or_404(Workspace, id=workspace_id)
-    
-    # Verify the user is a member of this workspace
+ 
     from workspace.models import Membership
     user_membership = get_object_or_404(Membership, workspace=workspace, user_id=user_id)
-    
-    # Get activities for this specific user
+ 
     user_activities = ActivityLog.objects.filter(
         workspace=workspace,
         user_id=user_id
     ).select_related('user').order_by('-timestamp')
-    
-    # Pagination
+ 
     paginator = Paginator(user_activities, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
