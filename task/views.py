@@ -2,10 +2,11 @@ from django.views.generic import CreateView, UpdateView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 from workspace.models import Task, Project, Workspace
-from workspace.forms import TaskForm
+from workspace.forms import TaskForm, CommentForm
 from workspace.decorators import workspace_required
 
 
@@ -72,3 +73,34 @@ class TaskDetailView(DetailView):
 
     def get_queryset(self):
         return Task.objects.filter(project__workspace__memberships__user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task = self.get_object()
+        context['workspace'] = task.project.workspace
+        context['comment_form'] = CommentForm()
+        context['comments'] = task.comments.select_related('author').all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.task = self.object
+            comment.author = request.user
+            comment.save()
+
+            # Log activity
+            from workspace.models import ActivityLog
+            ActivityLog.objects.create(
+                workspace=self.object.project.workspace,
+                user=request.user,
+                action=f"commented on task '{self.object.title}'"
+            )
+
+            messages.success(request, "Comment added successfully!")
+        else:
+            messages.error(request, "Failed to add comment.")
+
+        return self.get(request, *args, **kwargs)  # ← Redirect to same page

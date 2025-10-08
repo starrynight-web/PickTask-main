@@ -1,5 +1,5 @@
 from django import forms
-from .models import Workspace, Project, Task, Membership
+from .models import Workspace, Project, Task, Membership, Comment
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -92,4 +92,22 @@ class RoleAssignmentForm(forms.ModelForm):
         fields = ['role']
         widgets = {
             'role': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-textarea w-full',
+                'rows': 3,
+                'placeholder': 'Write a comment...',
+                'required': True
+            }),
+        }
+        labels = {
+            'content': ''
         }
