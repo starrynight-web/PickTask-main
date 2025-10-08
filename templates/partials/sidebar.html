@@ -55,8 +55,14 @@
   >
     {{ project.name }}
   </a>
+  {% empty %}
+  <span class="sidebar-link text-muted">No projects yet</span>
   {% endfor %}
-  <a href="{% url 'kanban:kanban' current_workspace.id %}" class="sidebar-link">
+  <!-- ✅ FIXED: Link to create-project, not kanban -->
+  <a 
+    href="{% url 'workspace:create-project' current_workspace.id %}" 
+    class="sidebar-link"
+  >
     + New Project
   </a>
 </div>

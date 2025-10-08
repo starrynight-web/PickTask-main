@@ -36,6 +36,7 @@ def kanban_board(request, workspace_id):
         'tasks_by_status': tasks_by_status,
         'status_choices': Task.STATUS_CHOICES,
         'priority_choices': Task.PRIORITY_CHOICES,
+        'has_projects': projects.exists(),
     }
     
     return render(request, 'kanban/kanban.html', context)

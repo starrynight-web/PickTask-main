@@ -97,6 +97,23 @@
     border-radius: var(--border-radius);
     margin-bottom: 1.5rem;
 }
+
+/* Message styling */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1rem;
+}
+.alert-success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border-left: 4px solid #10b981;
+}
+.alert-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-left: 4px solid #ef4444;
+}
 </style>
 {% endblock %}
 
@@ -108,14 +125,25 @@
         <p class="text-gray-600">{{ workspace.name }}{% if current_project %} - {{ current_project.name }}{% endif %}</p>
     </div>
     <div class="flex gap-3">
-      <a href="{% url 'task:create-task' workspace.id %}" class="btn btn-primary">
+        <a href="{% url 'task:create-task' workspace.id %}" class="btn btn-primary">
             + New Task
         </a>
- 
     </div>
 </div>
 
-<!-- Project Filter -->
+<!-- ✅ MESSAGES DISPLAY -->
+{% if messages %}
+<div class="mb-6">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- ✅ PROJECT FILTER OR CREATE PROJECT PROMPT -->
+{% if has_projects %}
 <div class="project-filter">
     <div class="flex items-center gap-4">
         <span class="font-medium text-gray-700">Filter by Project:</span>
@@ -126,13 +154,24 @@
             </a>
             {% for project in projects %}
             <a href="{% url 'kanban:kanban' workspace.id %}?project={{ project.id }}" 
-               class="btn btn-outline btn-sm {% if current_project.id == project.id %}btn-primary{% endif %}">
+               class="btn btn-outline btn-sm {% if current_project and current_project.id == project.id %}btn-primary{% endif %}">
                 {{ project.name }}
             </a>
             {% endfor %}
         </div>
     </div>
 </div>
+{% else %}
+<!-- No projects? Show helpful prompt -->
+<div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 text-center">
+    <h3 class="text-lg font-medium text-blue-800 mb-2">No projects yet</h3>
+    <p class="text-blue-600 mb-4">Create your first project to start organizing tasks</p>
+    <a href="{% url 'workspace:create-project' workspace.id %}" 
+       class="btn btn-primary inline-flex items-center">
+        + Create Project
+    </a>
+</div>
+{% endif %}
 
 <!-- Kanban Board -->
 <div class="kanban-board">
@@ -175,7 +214,7 @@
                 {% endif %}
                 
                 <div class="flex gap-2">
-                <a href="{% url 'task:task-detail' task.id %}" class="text-xs btn btn-outline py-1 px-2 flex-1 text-center">
+                    <a href="{% url 'task:task-detail' task.id %}" class="text-xs btn btn-outline py-1 px-2 flex-1 text-center">
                         View
                     </a>    
                 </div>
@@ -186,9 +225,10 @@
                 <p class="text-xs mt-1">Drag tasks here or create new ones</p>
             </div>
             {% endfor %}
-       </div>  <!-- Close kanban-column-content -->
+        </div>  <!-- Close kanban-column-content -->
         
-        <!-- Quick Add Task Form - FIXED -->
+        <!-- ✅ QUICK ADD TASK (ONLY IF PROJECTS EXIST) -->
+        {% if has_projects %}
         <div class="quick-add-task">
             <form method="post" action="{% url 'kanban:quick-create-task' workspace.id %}" class="flex gap-2">
                 {% csrf_token %}
@@ -204,8 +244,13 @@
                 <button type="submit" class="btn btn-success btn-sm">Add</button>
             </form>
         </div>
+        {% else %}
+        <div class="quick-add-task text-center text-gray-500 py-4">
+            <p class="text-sm">Create a project first to add tasks</p>
+        </div>
+        {% endif %}
     </div>  <!-- Close kanban-column -->
-    {% endfor %}  <!-- This should close the status_choices loop -->
+    {% endfor %}  <!-- Close status_choices loop -->
 </div>  <!-- Close kanban-board -->
 {% endblock %}
 

@@ -121,10 +121,8 @@ def confirm_workspace(request, pk):
 
 @login_required
 def create_project(request, workspace_id):
-   
     workspace = get_object_or_404(Workspace, id=workspace_id)
 
-   
     if not Membership.objects.filter(user=request.user, workspace=workspace).exists():
         messages.error(request, "You don't have access to this workspace")
         return redirect('workspace:dashboard')
@@ -143,9 +141,15 @@ def create_project(request, workspace_id):
                 action=f"created project '{project.name}'"
             )
 
-            messages.success(
-                request, f"Project '{project.name}' created successfully!")
+            messages.success(request, f"Project '{project.name}' created successfully!")
             return redirect('workspace:workspace-detail', workspace_id=workspace_id)
+        else:
+            # ✅ CRITICAL: Re-render with invalid form to show errors
+            context = {
+                'workspace': workspace,
+                'form': form,
+            }
+            return render(request, 'workspace/create-project.html', context)
     else:
         form = ProjectForm()
 
@@ -155,12 +159,12 @@ def create_project(request, workspace_id):
     }
     return render(request, 'workspace/create-project.html', context)
 
-
 @login_required
 def workspace_list(request):
-    
+   
     memberships = Membership.objects.filter(
-        user=request.user).select_related('workspace')
+        user=request.user
+    ).select_related('workspace')
 
     context = {
         'memberships': memberships,

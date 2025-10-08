@@ -1,0 +1,23 @@
+<!-- templates/workspace/workspace_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1>Your Workspaces</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        {% for membership in memberships %}
+        <div class="card">
+            <div class="card-body">
+                <h3 class="text-xl font-semibold">{{ membership.workspace.name }}</h3>
+                <p class="text-gray-600">Role: {{ membership.get_role_display }}</p>
+                <a href="{% url 'kanban:kanban' membership.workspace.id %}" class="btn btn-primary mt-3">
+                    Open Board
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p>You are not a member of any workspace.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
