@@ -5,7 +5,9 @@
     href="{% url 'workspace:workspace-detail' membership.workspace.id %}"
     class="sidebar-link {% if current_workspace.id == membership.workspace.id %}active{% endif %}"
   >
-    <span>{{ membership.workspace.name }}</span>
+    <span
+      ><i class="fa-solid fa-building"></i>{{membership.workspace.name}}</span
+    >
   </a>
   {% endfor %}
   <a
@@ -23,26 +25,22 @@
   <a
     href="{% url 'workspace:workspace-detail' current_workspace.id %}"
     class="sidebar-link {% if request.resolver_match.url_name == 'workspace-detail' %}active{% endif %}"
-  >
-    Dashboard
+    ><i class="fa-solid fa-grip"></i>Dashboard
   </a>
-  <a 
-    href="{% url 'kanban:kanban' current_workspace.id %}" 
+  <a
+    href="{% url 'kanban:kanban' current_workspace.id %}"
     class="sidebar-link {% if request.resolver_match.url_name == 'kanban' %}active{% endif %}"
-  >
-    Kanban Board
+    ><i class="fa-solid fa-table-columns"></i>Kanban Board
   </a>
-  <a 
-    href="{% url 'team:team' current_workspace.id %}" 
+  <a
+    href="{% url 'team:team' current_workspace.id %}"
     class="sidebar-link {% if request.resolver_match.url_name == 'team' %}active{% endif %}"
-  >
-    Team
+    ><i class="fa-solid fa-sitemap"></i>Team
   </a>
-  <a 
-    href="{% url 'activity:activity' current_workspace.id %}" 
+  <a
+    href="{% url 'activity:activity' current_workspace.id %}"
     class="sidebar-link {% if request.resolver_match.url_name == 'activity' %}active{% endif %}"
-  >
-    Activity
+    ><i class="fa-solid fa-chart-line"></i>Activity
   </a>
 </div>
 
@@ -52,15 +50,14 @@
   <a
     href="{% url 'kanban:kanban' current_workspace.id %}?project={{ project.id }}"
     class="sidebar-link"
-  >
-    {{ project.name }}
+    ><i class="fa-solid fa-list-check"></i>{{ project.name }}
   </a>
   {% empty %}
   <span class="sidebar-link text-muted">No projects yet</span>
   {% endfor %}
   <!-- ✅ FIXED: Link to create-project, not kanban -->
-  <a 
-    href="{% url 'workspace:create-project' current_workspace.id %}" 
+  <a
+    href="{% url 'workspace:create-project' current_workspace.id %}"
     class="sidebar-link"
   >
     + New Project
