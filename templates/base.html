@@ -852,13 +852,13 @@
 
         <div class="nav-links" id="nav-links">
           {% if user.is_authenticated %}
-          <a
+          <!-- <a
             href="{% url 'workspace:dashboard' %}"
             class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
           >
             <i class="fas fa-home"></i>
             Dashboard
-          </a>
+          </a> -->
           <span class="user-greeting">
             <i class="fas fa-user"></i>
             {{ user.username }}
