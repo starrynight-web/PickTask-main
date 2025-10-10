@@ -10,6 +10,12 @@
 *.userosscache
 *.sln.docstates
 *.env
+# Ignore database
+db.sqlite3
+
+# Or any similar DB files
+*.sqlite3
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
