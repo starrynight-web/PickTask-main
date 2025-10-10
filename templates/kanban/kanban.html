@@ -520,32 +520,89 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    function updateTaskStatus(taskId, newStatus) {
-        const formData = new FormData();
-        formData.append('task_id', taskId);
-        formData.append('status', newStatus);
-        
-        fetch(`/kanban/{{ workspace.id }}/update-status/`, {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': getCookie('csrftoken'),
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Error moving task: ' + data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error moving task');
-        });
+function updateTaskStatus(taskId, newStatus) {
+    // ✅ 1. Get elements
+    const taskCard = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+    const oldColumn = taskCard.closest('.kanban-column');
+    const newColumn = document.querySelector(`.kanban-column[data-status="${newStatus}"]`);
+
+    if (!taskCard || !newColumn) return;
+
+    const oldContent = oldColumn.querySelector('.kanban-column-content');
+    const newContent = newColumn.querySelector('.kanban-column-content');
+
+    // ✅ 2. Optimistic UI: Move the task
+    newContent.appendChild(taskCard);
+
+    // ✅ 3. Toggle placeholders based on task count
+    toggleEmptyPlaceholder(oldContent);
+    toggleEmptyPlaceholder(newContent);
+
+    // ✅ 4. Update task count badges
+    updateTaskCountBadge(oldColumn);
+    updateTaskCountBadge(newColumn);
+
+    // ✅ 5. Sync with server in background
+    const formData = new FormData();
+    formData.append('task_id', taskId);
+    formData.append('status', newStatus);
+
+    fetch(`/kanban/{{ workspace.id }}/update-status/`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+        body: formData
+    })
+    .catch(error => {
+        // ❌ Revert on failure
+        console.error('Update failed, reverting:', error);
+        oldContent.appendChild(taskCard);
+
+        // Re-toggle placeholders
+        toggleEmptyPlaceholder(oldContent);
+        toggleEmptyPlaceholder(newContent);
+
+        // Re-update counts
+        updateTaskCountBadge(oldColumn);
+        updateTaskCountBadge(newColumn);
+
+        alert('Failed to update task. Please try again.');
+    });
+}
+
+// ✅ Helper: Toggle empty placeholder based on child task cards
+function toggleEmptyPlaceholder(columnContent) {
+    const taskCards = columnContent.querySelectorAll('.task-card');
+    const existingPlaceholder = columnContent.querySelector('.empty-column');
+
+    if (taskCards.length === 0) {
+        if (!existingPlaceholder) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'empty-column';
+            placeholder.innerHTML = `
+                <i class="fas fa-inbox text-2xl mb-2"></i>
+                <p>No tasks</p>
+                <p class="text-xs mt-1">Drag tasks here or create new ones</p>
+            `;
+            columnContent.appendChild(placeholder);
+        }
+    } else {
+        if (existingPlaceholder) {
+            existingPlaceholder.remove();
+        }
     }
+}
+
+// ✅ Helper: Update task count badge
+function updateTaskCountBadge(column) {
+    const countBadge = column.querySelector('.task-count');
+    if (countBadge) {
+        const taskCards = column.querySelectorAll('.task-card');
+        countBadge.textContent = taskCards.length;
+    }
+}
 
     function getCookie(name) {
         let cookieValue = null;

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +9,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
       :root {
         --primary-dark: #071727;
@@ -881,6 +883,78 @@
       </div>
     </nav>
 
+   <!-- Full-Screen Loading Screen -->
+<div id="global-loading-screen" style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+">
+  <!-- Animated Logo Container -->
+  <div id="loading-logo-container" style="
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  ">
+    <!-- We'll toggle between img and i -->
+    <img id="loading-logo-img" src="{% static 'images/logo.png' %}" 
+         alt="PickTask" 
+         style="
+           width: 100%;
+           height: 100%;
+           object-fit: contain;
+           transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.4s ease;
+           display: block;
+         ">
+
+    <i id="loading-icon" class="fa-solid fa-calendar-days" 
+       style="
+         font-size: 48px;
+         color: #6B68EE;
+         transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.4s ease;
+         display: none;
+       "></i>
+  </div>
+
+  <div style="
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 1rem;
+    text-align: center;
+  ">Loading PickTask...</div>
+  
+  <div style="
+    width: 320px;
+    height: 8px;
+    background: #f3f4f6;
+    border-radius: 9999px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
+  ">
+    <div id="loading-progress-bar" style="
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-teal), var(--primary-green));
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+    "></div>
+  </div>
+</div>
     <!-- Main Layout -->
     <div class="app-layout">
       {% if user.is_authenticated %}
@@ -1026,6 +1100,157 @@
         // Add any additional interactive element initialization here
         console.log("Professional PickTask interface initialized");
       }
+  
+// The loading screen
+
+const userIsAuthenticated = "{% if user.is_authenticated %}true{% else %}false{% endif %}" === "true";
+
+if (userIsAuthenticated) {
+  const navEntries = performance.getEntriesByType('navigation');
+  const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
+  const isFirstLoadAfterLogin = !sessionStorage.getItem('picktask_authenticated_session');
+
+  if (isFirstLoadAfterLogin || isReload) {
+    sessionStorage.setItem('picktask_authenticated_session', 'active');
+
+    const loader = document.getElementById('global-loading-screen');
+    const bar = document.getElementById('loading-progress-bar');
+    const logoImg = document.getElementById('loading-logo-img');
+    const icon = document.getElementById('loading-icon');
+    const iconContainer = document.getElementById('loading-logo-container');
+
+    if (loader && bar && logoImg && icon) {
+      // Show loader
+      loader.style.opacity = '1';
+      loader.style.visibility = 'visible';
+
+      // ✅ Start smooth animation sequence
+      let currentIcon = 'logo'; // 'logo' → 'calendar' → 'docs' → 'logo'
+      const icons = {
+        calendar: 'fa-calendar-days',
+        docs: 'fa-file-lines'
+      };
+
+      // Initial pulse-in for logo
+      logoImg.style.transform = 'scale(1.2)';
+      logoImg.style.opacity = '0.8';
+      setTimeout(() => {
+        logoImg.style.transform = 'scale(1)';
+        logoImg.style.opacity = '1';
+      }, 300);
+
+      // Animate morphing every 2 seconds
+      const animateIcons = () => {
+        setTimeout(() => {
+          if (currentIcon === 'logo') {
+            // Fade out logo
+            logoImg.style.opacity = '0';
+            setTimeout(() => {
+              logoImg.style.display = 'none';
+              icon.className = 'fa-solid ' + icons.calendar;
+              icon.style.display = 'block';
+              icon.style.opacity = '0';
+              icon.style.transform = 'scale(0.8) rotate(-10deg)';
+              setTimeout(() => {
+                icon.style.opacity = '1';
+                icon.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                  icon.style.transform = 'scale(1)';
+                  currentIcon = 'calendar';
+                  animateIcons(); // Loop
+                }, 300);
+              }, 300);
+            }, 300);
+          } else if (currentIcon === 'calendar') {
+            // Fade out calendar
+            icon.style.opacity = '0';
+            setTimeout(() => {
+              icon.className = 'fa-solid ' + icons.docs;
+              icon.style.opacity = '0';
+              icon.style.transform = 'scale(0.8) rotate(-10deg)';
+              setTimeout(() => {
+                icon.style.opacity = '1';
+                icon.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                  icon.style.transform = 'scale(1)';
+                  currentIcon = 'docs';
+                  animateIcons(); // Loop
+                }, 300);
+              }, 300);
+            }, 300);
+          } else if (currentIcon === 'docs') {
+            // Fade out docs, show logo
+            icon.style.opacity = '0';
+            setTimeout(() => {
+              icon.style.display = 'none';
+              logoImg.style.display = 'block';
+              logoImg.style.opacity = '0';
+              logoImg.style.transform = 'scale(0.8) rotate(-10deg)';
+              setTimeout(() => {
+                logoImg.style.opacity = '1';
+                logoImg.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                  logoImg.style.transform = 'scale(1)';
+                  currentIcon = 'logo';
+                  animateIcons(); // Loop
+                }, 300);
+              }, 300);
+            }, 300);
+          }
+        }, 2000);
+      };
+
+      animateIcons();
+
+      // Keep all your existing loading logic
+      let isLoaded = false;
+      let hasMetMinTime = false;
+
+      window.addEventListener('load', () => {
+        isLoaded = true;
+        checkReady();
+      });
+
+      setTimeout(() => {
+        hasMetMinTime = true;
+        checkReady();
+      }, 2500);
+
+      setTimeout(() => {
+        isLoaded = true;
+        hasMetMinTime = true;
+        checkReady();
+      }, 8000);
+
+      let progress = 0;
+      const animate = () => {
+        if (progress >= 95) return;
+        const inc = isLoaded ? 5 : Math.random() * 3 + 1;
+        progress = Math.min(95, progress + inc);
+        bar.style.width = progress + '%';
+        if (!isLoaded || progress < 95) {
+          setTimeout(animate, isLoaded ? 50 : 120);
+        }
+      };
+      animate();
+
+      function checkReady() {
+        if (isLoaded && hasMetMinTime) {
+          bar.style.transition = 'width 0.3s ease';
+          bar.style.width = '100%';
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+              if (loader.parentNode) loader.remove();
+            }, 300);
+          }, 300);
+        }
+      }
+    }
+  }
+} else {
+  sessionStorage.removeItem('picktask_authenticated_session');
+}
     </script>
 
     {% block extra_js %}{% endblock %}

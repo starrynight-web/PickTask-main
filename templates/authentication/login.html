@@ -34,4 +34,8 @@
     <p><a href="{% url 'authentication:password_reset' %}">Forgot your password?</a></p>
     <p>Don't have an account? <a href="{% url 'authentication:register' %}">Sign Up</a></p>
 </div>
+<script>
+  // Clear the authenticated session flag when on login page
+  sessionStorage.removeItem('picktask_authenticated_session');
+</script>
 {% endblock %}
