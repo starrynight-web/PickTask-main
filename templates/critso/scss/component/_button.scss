@@ -1,0 +1,101 @@
+.tf-button {
+    width: max-content;
+    color: var(--Black);
+    background-color: var(--White);
+    @include flex(center,center);
+    padding: 8px;
+    gap: 6px;
+    border-radius: 4px;
+    overflow: hidden;
+    @include transition3();
+    .icon {
+        font-size: 16px;
+    }
+    .icon-send {
+        transform: rotateY(180deg);
+    }
+    &:hover {
+        background-color: var(--Black) !important;
+        color: var(--White);
+    }
+    &.style-1 {
+        padding: 7px;
+        border: 1px solid var(--Primary);
+        background-color: var(--Primary);
+        color: var(--White);
+        &:hover {
+            background-color: var(--White) !important;
+            color: var(--Black);
+        }
+    }
+    &.style-default {
+        background-color: transparent;
+        padding: 0;
+        &:hover {
+            background-color: transparent !important;
+            color: var(--Black) !important;
+        }
+        &.type-white {
+            color: var(--White) !important;
+            &:hover {
+                color: var(--YellowGreen) !important;
+            }
+        }
+    }
+    &.style-2 {
+        padding: 8px 16px;
+        color: var(--Black);
+        background-color: var(--LightSkyBlue);
+        border-radius: 8px;
+        &:hover {
+            background-color: var(--Black) !important;
+            color: var(--LightSkyBlue) !important;
+        }
+        i {
+            font-size: 20px;
+        }
+    }
+    &.style-3 {
+        padding: 8px 16px;
+        background-color: var(--Gainsboro);
+        border-radius: 8px;
+        i {
+            font-size: 20px;
+        }
+    }
+    &.style-4 {
+        gap: 4px;
+        padding: 10px 16px;
+        border-radius: 8px;
+        color: var(--Primary);
+        &:hover {
+            background-color: var(--LightSkyBlue) !important;
+        }
+    }
+    &.gap10 {
+        gap: 10px;
+    }
+}
+
+.tf-btn-default {
+    @include d-flex();
+    align-items: center;
+    gap: 8px;
+    &:hover {
+        color: var(--White);
+    }
+    i {
+        font-size: 14px;
+    }
+    &.style-1 {
+        &:hover {
+            color: var(--Salmon);
+        }
+    }
+    &.style-white {
+        color: var(--White);
+        &:hover {
+            color: var(--Salmon);
+        }
+    }
+}

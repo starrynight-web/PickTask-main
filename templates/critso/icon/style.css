@@ -1,0 +1,186 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?lz4b02');
+  src:  url('fonts/icomoon.eot?lz4b02#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?lz4b02') format('truetype'),
+    url('fonts/icomoon.woff?lz4b02') format('woff'),
+    url('fonts/icomoon.svg?lz4b02#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-send1:before {
+  content: "\e931";
+}
+.icon-sms:before {
+  content: "\e906";
+}
+.icon-check:before {
+  content: "\e932";
+}
+.icon-back:before {
+  content: "\e942";
+}
+.icon-next:before {
+  content: "\e943";
+}
+.icon-view:before {
+  content: "\e917";
+}
+.icon-menu:before {
+  content: "\e903";
+}
+.icon-swap-horizontal:before {
+  content: "\e900";
+}
+.icon-bitcoin-btc:before {
+  content: "\e901";
+}
+.icon-calling:before {
+  content: "\e902";
+}
+.icon-category:before {
+  content: "\e904";
+}
+.icon-close-square:before {
+  content: "\e905";
+}
+.icon-dash:before {
+  content: "\e907";
+}
+.icon-ethereum:before {
+  content: "\e908";
+}
+.icon-facebook:before {
+  content: "\e909";
+}
+.icon-litecoinltc:before {
+  content: "\e90a";
+}
+.icon-message-text:before {
+  content: "\e90b";
+}
+.icon-notification:before {
+  content: "\e90c";
+}
+.icon-search-normal:before {
+  content: "\e90d";
+}
+.icon-setting:before {
+  content: "\e90e";
+}
+.icon-tick-square:before {
+  content: "\e90f";
+}
+.icon-wallet:before {
+  content: "\e910";
+}
+.icon-arrow-down:before {
+  content: "\e911";
+}
+.icon-arrow-left:before {
+  content: "\e912";
+}
+.icon-arrow-right:before {
+  content: "\e913";
+}
+.icon-arrow-swap:before {
+  content: "\e914";
+}
+.icon-arrow-up:before {
+  content: "\e915";
+}
+.icon-category1:before {
+  content: "\e916";
+}
+.icon-dash1:before {
+  content: "\e918";
+}
+.icon-document:before {
+  content: "\e919";
+}
+.icon-edit:before {
+  content: "\e91a";
+}
+.icon-hide:before {
+  content: "\e91b";
+}
+.icon-google:before {
+  content: "\e91c";
+}
+.icon-gps:before {
+  content: "\e91d";
+}
+.icon-login:before {
+  content: "\e91e";
+}
+.icon-message-text1:before {
+  content: "\e91f";
+}
+.icon-minus:before {
+  content: "\e920";
+}
+.icon-more:before {
+  content: "\e921";
+}
+.icon-mouse-square:before {
+  content: "\e922";
+}
+.icon-notification1:before {
+  content: "\e923";
+}
+.icon-paper:before {
+  content: "\e924";
+}
+.icon-person:before {
+  content: "\e925";
+}
+.icon-receive-square:before {
+  content: "\e926";
+}
+.icon-search-normal1:before {
+  content: "\e927";
+}
+.icon-send:before {
+  content: "\e928";
+}
+.icon-setting1:before {
+  content: "\e929";
+}
+.icon-setting-5:before {
+  content: "\e92a";
+}
+.icon-sms-tracking:before {
+  content: "\e92b";
+}
+.icon-sort:before {
+  content: "\e92c";
+}
+.icon-wallet1:before {
+  content: "\e92d";
+}
+.icon-add:before {
+  content: "\e92e";
+}
+.icon-two-arrow:before {
+  content: "\e92f";
+}
+.icon-mastercard:before {
+  content: "\e930";
+}
