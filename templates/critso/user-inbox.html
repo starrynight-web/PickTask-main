@@ -36,6 +36,8 @@
 
 </head>
 
+<body>
+
     <!-- #wrapper -->
     <div id="wrapper">
         <!-- #page -->
@@ -53,7 +55,7 @@
                 <div class="section-menu-left">
                     <div class="box-logo">
                         <a href="index.html" id="site-logo-inner">
-                            <img class="" id="logo_header" alt="" src="images/logo/logo-dark.png" data-light="images/logo/logo.svg" data-dark="images/logo/logo-dark.svg" >
+                            <img class="" id="logo_header" alt="" src="images/logo/logo.svg" data-light="images/logo/logo.svg" data-dark="images/logo/logo-dark.svg" >
                         </a>
                         <div class="button-show-hide">
                             <i class="icon-back"></i>
@@ -74,9 +76,54 @@
                                             <div class="text">Dashboard</div>
                                         </a>
                                     </li>
-                                    
+                                    <li class="menu-item has-children">
+                                        <a href="javascript:void(0);" class="menu-item-button">
+                                            <div class="icon">
+                                                <i class="icon-wallet1"></i>
+                                            </div>
+                                            <div class="text">My Wallet</div>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li class="sub-menu-item">
+                                                <a href="my-wallet.html" class="">
+                                                    <div class="text">My Wallet</div>
+                                                </a>
+                                            </li>
+                                            <li class="sub-menu-item">
+                                                <a href="account.html" class="">
+                                                    <div class="text">Account</div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <li class="menu-item">
-                                        <a href="" class="menu-item-button">
+                                        <a href="transaction.html" class="menu-item-button">
+                                            <div class="icon">
+                                                <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.10866 2.16699H13.8912C16.7253 2.16699 18.3253 3.77449 18.3337 6.60866V14.392C18.3337 17.2253 16.7253 18.8337 13.8912 18.8337H6.10866C3.27449 18.8337 1.66699 17.2253 1.66699 14.392V6.60866C1.66699 3.77449 3.27449 2.16699 6.10866 2.16699ZM10.0412 15.3837C10.4003 15.3837 10.6995 15.117 10.7328 14.7587V6.26699C10.7662 6.00866 10.642 5.74949 10.417 5.60866C10.1828 5.46699 9.89949 5.46699 9.67533 5.60866C9.44949 5.74949 9.32533 6.00866 9.34949 6.26699V14.7587C9.39199 15.117 9.69116 15.3837 10.0412 15.3837ZM13.8753 15.3837C14.2253 15.3837 14.5245 15.117 14.567 14.7587V12.0253C14.5912 11.7578 14.467 11.5087 14.2412 11.367C14.017 11.2253 13.7337 11.2253 13.5003 11.367C13.2745 11.5087 13.1503 11.7578 13.1837 12.0253V14.7587C13.217 15.117 13.5162 15.3837 13.8753 15.3837ZM6.84949 14.7587C6.81616 15.117 6.51699 15.3837 6.15783 15.3837C5.79949 15.3837 5.49949 15.117 5.46699 14.7587V9.00033C5.44199 8.74116 5.56616 8.48366 5.79199 8.34199C6.01616 8.20033 6.30033 8.20033 6.52533 8.34199C6.74949 8.48366 6.87533 8.74116 6.84949 9.00033V14.7587Z" fill="#F8F8F8"/>
+                                                </svg>
+                                            </div>
+                                            <div class="text">Transaction</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="crypto.html" class="menu-item-button">
+                                            <div class="icon">
+                                                <i class="icon-dash1"></i>
+                                            </div>
+                                            <div class="text">Crypto</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="exchange.html" class="menu-item-button">
+                                            <div class="icon">
+                                                <i class="icon-arrow-swap"></i>
+                                            </div>
+                                            <div class="text">Exchange</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="settings.html" class="menu-item-button">
                                             <div class="icon">
                                                 <i class="icon-setting1"></i>
                                             </div>
@@ -94,11 +141,19 @@
                                 </ul>
                             </div>
                         </div>
+                        <div class="bottom">
+                            <div class="image">
+                                <img src="images/item/bot.png" alt="">
+                            </div>
+                            <div class="content">
+                                <p class="f12-regular text-White">For more features</p>
+                                <p class="f12-bold text-White">Upgrade to Pro</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                                   
-     <!-- /section-menu-left -->
-     <!-- section-content-right -->
+                <!-- /section-menu-left -->
+                <!-- section-content-right -->
                 <div class="section-content-right">
                     <!-- header-dashboard -->
                     <div class="header-dashboard">
@@ -130,8 +185,6 @@
                                                 <li>
                                                     <h6>Message</h6>
                                                 </li>
-
-
                                                 <li>
                                                     <div class="message-item w-full wg-user active">
                                                         <div class="image">
@@ -146,8 +199,48 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                          
-                                               
+                                                <li>
+                                                    <div class="message-item w-full wg-user active">
+                                                        <div class="image">
+                                                            <img src="images/avatar/user-2.png" alt="">
+                                                        </div>
+                                                        <div class="flex-grow">
+                                                            <div class="flex items-center justify-between">
+                                                                <a href="#" class="body-title name">Ralph Edwards</a>
+                                                                <div class="time">10:13 PM</div>
+                                                            </div>
+                                                            <div class="text-tiny desc">Are you there?  interested i this...</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="message-item w-full wg-user active">
+                                                        <div class="image">
+                                                            <img src="images/avatar/user-3.png" alt="">
+                                                        </div>
+                                                        <div class="flex-grow">
+                                                            <div class="flex items-center justify-between">
+                                                                <a href="#" class="body-title name">Eleanor Pena</a>
+                                                                <div class="time">10:13 PM</div>
+                                                            </div>
+                                                            <div class="text-tiny desc">Interested in this loads?</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="message-item w-full wg-user active">
+                                                        <div class="image">
+                                                            <img src="images/avatar/user-4.png" alt="">
+                                                        </div>
+                                                        <div class="flex-grow">
+                                                            <div class="flex items-center justify-between">
+                                                                <a href="#" class="body-title name">Jane Cooper</a>
+                                                                <div class="time">10:13 PM</div>
+                                                            </div>
+                                                            <div class="text-tiny desc">Okay...Do we have a deal?</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                                 <li>
                                                     <a href="message.html" class="tf-button style-1 f12-bold w-100">
                                                         View All
@@ -243,33 +336,31 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="message.html" class="user-item">
+                                                <a href="#" class="user-item">
                                                     <div class="body-title-2">Inbox</div>
                                                     <div class="number">27</div>
                                                 </a>
                                             </li>
-                                          
+                                            <li>
+                                                <a href="transaction.html" class="user-item">
+                                                    <div class="body-title-2">Transaction</div>
+                                                </a>
+                                            </li>
                                             <li>
                                                 <a href="settings.html" class="user-item">
                                                     <div class="body-title-2">Setting</div>
                                                 </a>
                                             </li>
-                                            
-                                              <li>
-                                                <a href="#" class="user-item">
-                                                    <div class="body-title-2">If New Function Added</div>
+                                            <li>
+                                                <a href="crypto.html" class="user-item">
+                                                    <div class="body-title-2">Crypto</div>
                                                 </a>
                                             </li>
-
                                             <li>
                                                 <a href="sign-in.html" class="user-item">
                                                     <div class="body-title-2">Log out</div>
                                                 </a>
                                             </li>
-
-
-                                          
-                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -277,6 +368,8 @@
                         </div>
                     </div>
                     <!-- /header-dashboard -->
+
+                    
                     <!-- main-content -->
                     <div class="main-content">
                         <!-- main-content-wrap -->
@@ -284,190 +377,122 @@
                             <!-- main-content-wrap -->
                             <div class="main-content-wrap">
                                 <div class="tf-container">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="flex gap24 mb-32 flex-md-row flex-column">
-                                                <div class="w-100">
-                                                    <div class="wg-card style-1 bg-Primary mb-25">
+                                    <div class="wg-box style-1 bg-Gainsboro shadow-none">
+
+                                        
 
 
-
-                                                        <div class="icon">
-                                                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                              <image href="images\item\task2.png"
-                                                               width="48" height="48" preserveAspectRatio="xMidYMid meet" /> </svg>
-                                                        </div>
-                                                         
-                                                        
-
-    <style>.f12-medium { font-size: 12px; font-weight: 500; }
-.f14-medium { font-size: 14px; font-weight: 500; }
-.f16-medium { font-size: 16px; font-weight: 500; }
-.f18-medium { font-size: 18px; font-weight: 500;} </style>
+<div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+  <!-- Left Table / Message -->
 
 
-                                                        <div class="content">
-                                                            <div>
-                                                                <h6 class="counter text-White">
-                                                                    <span class="number" data-speed="2000" data-to="34" data-inviewport="yes">34</span>
-                                                                </h6>
-                                                            </div>
-                                                            <div class="chart-small">
-                                                                <div id="small-chart-1"></div>
-                                                            </div>
-                                                        </div> <div class="f16-medium text-White">  Total <span class="text-Gray">Task</span></span></div>
-                                                    </div>
-                                                    <div class="wg-card">
-                                                     
-                                                        <div class="icon">
-                                                            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                              <image href="https://tse4.mm.bing.net/th/id/OIP.oFQZrxI_6v-DZfUslxXmJwHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
-                                                               width="36" height="36" preserveAspectRatio="xMidYMid meet" /> </svg>
-                                                        </div>
+<table style="margin: 0px; height: 4px;">
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
+      <a href="message.html" style="
+          text-decoration: none;
+      ">
+        <div style="
+            padding: 10px 2px; 
+            border-radius: 10px; 
+            background:  #9370db; 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgb(0, 0, 0);
+            cursor: pointer;
+
+        ">
+          <h5 style="margin: 0; color: rgb(0, 0, 0); ">Inbox</h5>
+        </div>
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- Middle muted line -->
+<div style="width: 1px; height: 40px; background-color: #ccc; display: inline-block; vertical-align: middle;"></div>
+
+<!-- Right Table / Group -->
+<table style="margin: 0; height: 0px;">
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
+      <a href="team-message.html" style="
+          text-decoration: none;
+      ">
+        <div style="
+           padding: 0px 0px; 
+            border-radius: 12px; 
+            background: rgba(255,255,255,0.2); 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+        ">
+          <h5 style="margin: 0; color: rgb(0, 0, 0); ">Group</h5>
+        </div>
+      </a>
+    </td>
+  </tr>
+</table>
+
+  
+</div>      <div style="width: auto; height: 1px; background-color: #ccc;"></div>
+
+                                        
 
 
-                                                        <div class="content">
-                                                            <div>
-                                                                <h6 class="counter">
-                                                                    <span class="number" data-speed="2000" data-to="34" data-inviewport="yes">34</span>
-                                                                </h6>
-                                                            </div>
-                                                            <div class="chart-small">
-                                                                <div id="small-chart-2"></div>
-                                                            </div>
-                                                        </div> 
-                                                        <div class="f16-medium text-Black">Complete <span class="text-Gray">Task</span></span></div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="w-100">
-                                                    <div class="wg-card mb-25">
-
-                                                        
-                                                         <div class="icon">
-                                                            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                              <image href="https://tse4.mm.bing.net/th/id/OIP.oFQZrxI_6v-DZfUslxXmJwHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
-                                                               width="36" height="36" preserveAspectRatio="xMidYMid meet" /> </svg>
-                                                        </div>
-
-
-                                                        <div class="content">
-                                                            <div>
-                                                                <h6 class="counter">
-                                                                    <span class="number" data-speed="2000" data-to="34" data-inviewport="yes">34</span>
-                                                                </h6> 
-                                                            </div>
-                                                            <div class="chart-small">
-                                                                <div id="small-chart-3"></div>
-                                                            </div>
-                                                        </div> 
-                                                      <div class="f16-medium text-Black">Pending <span class="text-Gray">Task</span></span></div>
-
-                                                    </div>
-                                                    <div class="wg-card style-1 bg-YellowGreen">
-                                                   
-                                                       
-                                                       
-                                                        <div class="icon">
-                                                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                              <image href="images\item\task2.png"
-                                                               width="48" height="48" preserveAspectRatio="xMidYMid meet" /> </svg>
-                                                        </div>
-
-
-                                                        <div class="content">
-                                                            <div>
-                                                                <h6 class="counter">
-                                                                    <span class="number" data-speed="2000" data-to="34" data-inviewport="yes">34</span>
-                                                                </h6>
-                                                            </div>
-                                                            <div class="chart-small">
-                                                                <div id="small-chart-4"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="f16-medium text-White">Today New <span class="text-Gray">Task</span></span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="wg-box style-1 bg-Gainsboro shadow-none widget-tabs mb-32">
-                                                <div>
-
-                                                    <div class="title mb-16">
-                                                        <div class="label-01">Activity Overview</div>
-                                                        <ul class="widget-menu-tab">
-                                                            <li class="item-title f12-medium">
-                                                                <span class="inner">Week</span>
-                                                            </li>
-                                                            <li class="item-title f12-medium active">
-                                                                <span class="inner">Month</span>
-                                                            </li>
-                                                            <li class="item-title f12-medium">
-                                                                <span class="inner">Year</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="widget-content-tab">
-                                                    
-                                                </div>
-                                            </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="wg-box style-1 bg-Primary shadow-none mb-32">
-                                                <div>
-                                                    <div class="title mb-10">
-                                                        <div class="label-01 text-White">Crypto Statistics</div>
-                                                       
-                                                    </div>
-                                                    <div class="flex gap16 items-center">
-                                                       
-                                                      
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div id="" class="line-chart-twoline"></div>
-                                            </div>
-                                            <div class="flex gap24 mb-32 flex-md-row flex-column">
-                                                <div class="wg-box gap16">
-                                                    <div>
-                                                        <div class="title mb-12">
-                                                             <div class="label-01">Sell Order</div> 
-                                                             </div>
-                                                        
-                                                    </div>
-
-
-                                                    <table>
-                                                     
-                                                    </table>
-                                                
-
-                                                </div>
-                                                <div class="wg-box gap16 bg-YellowGreen">
-                                                    <div>
-                                                        <div class="title mb-12">
-                                                            <div class="label-01">Buy Order</div>
-                                                            <div class="dropdown default">
-                                                                </button>
-                                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                                   
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                        
-                                                    </div>
-                                                    <table>
-                                                     
-                                               
-                                                     
-                                                    </table>
-                                               
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
+
+ 
+
+
+
+
+
+  <!-- Input Bar -->
+  <div style="display:flex; padding:10px; border-top:1px solid #ddd; gap:10px; background:#fff;">
+    <input type="text" placeholder="Type a message..." style="flex:1; padding:10px 15px; border-radius:20px; border:1px solid #ddd; outline:none;">
+    <button title="Send" style="background:#0084ff; border:none; color:white; padding:10px 15px; border-radius:50%; cursor:pointer; font-size:18px;">➤</button>
+  </div>
+
+</div>
+
+                                    
                                 </div>
+                                <div style="max-width:600px; margin:auto; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); display:flex; flex-direction:column; height:80vh; overflow:hidden;">
+
+  <!-- Chat Messages -->
+  <div style="flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+    <div style="max-width:70%; padding:10px 15px; border-radius:20px; background:#e4e6eb; align-self:flex-start; font-size:16px;">Hello! How are you?</div>
+    <div style="max-width:70%; padding:10px 15px; border-radius:20px; background:#0084ff; color:white; align-self:flex-end; font-size:16px;">I am good, thanks!</div>
+    <div style="max-width:70%; padding:10px 15px; border-radius:20px; background:#e4e6eb; align-self:flex-start; font-size:16px;">Do you want to attach a file?</div>
+  </div>
+
+  <!-- Input Bar with File & Emoji -->
+  <div style="display:flex; padding:10px; border-top:1px solid #ddd; gap:10px; background:#fff; align-items:center;">
+    
+    <!-- File input hidden -->
+    <input type="file" id="fileInput" style="display:none;">
+    
+    <!-- File button -->
+    <button onclick="document.getElementById('fileInput').click()" style="background:#e4e6eb; border:none; padding:10px 12px; border-radius:50%; cursor:pointer; font-size:18px;">📎</button>
+    
+    <!-- Emoji button -->
+    <button style="background:#e4e6eb; border:none; padding:10px 12px; border-radius:50%; cursor:pointer; font-size:18px;">😊</button>
+    
+    <!-- Text input -->
+    <input type="text" placeholder="Type a message..." style="flex:1; padding:12px 15px; border-radius:20px; border:1px solid #ddd; outline:none; font-size:16px;">
+    
+    <!-- Send button -->
+    <button title="Send" style="background:#0084ff; border:none; color:white; padding:12px 15px; border-radius:50%; cursor:pointer; font-size:18px;">➤</button>
+    
+  </div>
+
+</div>
+
+
                             </div>
                             <!-- /main-content-wrap -->
                         </div>
@@ -486,18 +511,8 @@
 
     <!-- Javascript -->
     <script src="js/jquery.min.js"></script>
-    <script src="js/countto.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-select.min.js"></script>
-    <script src="js/apexcharts/apexcharts.js"></script>
-    <script src="js/apexcharts/small-chart-1.js"></script>
-    <script src="js/apexcharts/small-chart-2.js"></script>
-    <script src="js/apexcharts/small-chart-3.js"></script>
-    <script src="js/apexcharts/small-chart-4.js"></script>
-    <script src="js/apexcharts/line-chart-twoline.js"></script>
-    <script src="js/apexcharts/candlestick-1.js"></script>
-    <script src="js/apexcharts/candlestick-4.js"></script>
-    <script src="js/apexcharts/candlestick-5.js"></script>
     <!-- <script src="js/switcher.js"></script> -->
     <script defer src="js/theme-settings.js"></script>
     <script src="js/main.js"></script>
