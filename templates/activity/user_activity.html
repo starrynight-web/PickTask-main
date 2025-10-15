@@ -3,94 +3,271 @@
 
 {% block title %}{{ target_user.username }}'s Activity - {{ workspace.name }}{% endblock %}
 
-{% block content %}
-<div class="flex justify-between items-center mb-6">
-    <div>
-        <h1>{{ target_user.get_full_name|default:target_user.username }}'s Activity</h1>
-        <p class="text-gray-600">{{ workspace.name }}</p>
-    </div>
-    <div class="flex gap-3">
-        <a href="{% url 'activity:activity' workspace.id %}" class="btn btn-outline">
-            ← Back to All Activity
-        </a>
-    </div>
-</div>
+{% block extra_css %}
+<style>
+.user-activity-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
 
-<!-- User Summary -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <h3 class="text-2xl font-bold text-primary">{{ total_activities }}</h3>
-            <p class="text-gray-600 text-sm">Total Activities</p>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-semibold text-lg mx-auto mb-2">
+/* User Profile Header */
+.user-profile-header {
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+    color: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-profile-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.user-profile-content {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 1.5rem;
+}
+
+.user-avatar-large {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+}
+
+.user-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.user-stat-card {
+    flex: 1;
+    min-width: 150px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Activity Items */
+.user-activity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-100);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.user-activity-item:hover {
+    background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+    border-left: 4px solid var(--primary-teal);
+}
+
+.user-activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.activity-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.activity-time {
+    background: var(--gray-100);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Back Button */
+.back-section {
+    display: flex;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .user-profile-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .user-avatar-large {
+        margin-right: 0;
+    }
+    
+    .user-stats {
+        flex-direction: column;
+    }
+    
+    .user-stat-card {
+        min-width: 100%;
+    }
+    
+    .user-activity-item {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .activity-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="user-activity-container">
+    <!-- User Profile Header -->
+    <div class="user-profile-header">
+        <div class="user-profile-content">
+            <div class="user-avatar-large">
                 {{ target_user.username|first|upper }}
             </div>
-            <p class="text-gray-600 text-sm">User</p>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <h3 class="text-2xl font-bold text-warning">{{ page_obj.paginator.num_pages }}</h3>
-            <p class="text-gray-600 text-sm">Pages</p>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <h3 class="text-2xl font-bold text-success">{{ target_user.email }}</h3>
-            <p class="text-gray-600 text-sm">Email</p>
-        </div>
-    </div>
-</div>
-
-<!-- User Activity List -->
-<div class="card">
-    <div class="card-header">
-        <h2 class="card-title">Activity History</h2>
-        <span class="text-sm text-gray-500">{{ total_activities }} total activities</span>
-    </div>
-    <div class="card-body p-0">
-        {% for activity in activities %}
-        <div class="activity-item border-b border-gray-200 last:border-b-0 p-4 hover:bg-gray-50">
-            <div class="flex items-start justify-between">
-                <div class="flex-1">
-                    <p class="text-gray-700">{{ activity.action }}</p>
-                    <p class="text-sm text-gray-500 mt-1">
-                        {{ activity.timestamp|date:"M d, Y g:i A" }}
-                        ({{ activity.timestamp|timesince }} ago)
-                    </p>
-                </div>
+            <div>
+                <h1 class="text-3xl font-bold">{{ target_user.get_full_name|default:target_user.username }}</h1>
+                <p class="text-white/80 text-lg">{{ workspace.name }} • Team Member</p>
+                <p class="text-white/60 mt-1">{{ target_user.email }}</p>
             </div>
         </div>
-        {% empty %}
-        <div class="text-center py-12">
-            <div class="text-4xl mb-4">👤</div>
-            <h3 class="text-lg font-semibold text-gray-600 mb-2">No activities found</h3>
-            <p class="text-gray-500">{{ target_user.username }} hasn't performed any actions in this workspace yet.</p>
+        
+        <div class="user-stats">
+            <div class="user-stat-card">
+                <div class="text-2xl font-bold">{{ total_activities }}</div>
+                <p class="text-white/80">Total Activities</p>
+            </div>
+            <div class="user-stat-card">
+                <div class="text-2xl font-bold">{{ page_obj.paginator.num_pages }}</div>
+                <p class="text-white/80">Pages</p>
+            </div>
+            <div class="user-stat-card">
+                <div class="text-lg font-bold">Active</div>
+                <p class="text-white/80">Status</p>
+            </div>
         </div>
-        {% endfor %}
     </div>
-</div>
 
-<!-- Pagination -->
-{% if page_obj.paginator.num_pages > 1 %}
-<div class="flex justify-center items-center mt-6 space-x-2">
-    {% if page_obj.has_previous %}
-        <a href="?page=1" class="btn btn-outline btn-sm">First</a>
-        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline btn-sm">Previous</a>
+    <!-- Back Button -->
+    <div class="back-section">
+        <a href="{% url 'activity:activity' workspace.id %}" class="btn btn-outline inline-flex items-center gap-2">
+            <i class="fas fa-arrow-left"></i>
+            Back to All Activity
+        </a>
+    </div>
+
+    <!-- User Activity List -->
+    <div class="filter-card">
+        <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-3">
+                    <i class="fas fa-history text-primary-teal"></i>
+                    Activity History
+                </h2>
+                <span class="text-sm text-gray-500 mt-1">{{ total_activities }} total activities • Sorted by recent</span>
+            </div>
+        </div>
+        <div>
+            {% for activity in activities %}
+            <div class="user-activity-item">
+                <div class="activity-details">
+                    <p class="text-gray-800 font-medium text-lg">{{ activity.action }}</p>
+                    <div class="activity-meta-row">
+                        <span class="activity-time">
+                            <i class="fas fa-clock"></i>
+                            {{ activity.timestamp|date:"M d, Y g:i A" }}
+                        </span>
+                        <span class="activity-time">
+                            <i class="fas fa-hourglass-half"></i>
+                            {{ activity.timestamp|timesince }} ago
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <div class="empty-state-icon">👤</div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">No activities found</h3>
+                <p class="text-gray-500 max-w-md mx-auto">
+                    {{ target_user.username }} hasn't performed any actions in this workspace yet.
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="btn btn-outline btn-sm">
+                <i class="fas fa-angle-double-left mr-2"></i>
+                First
+            </a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-left mr-2"></i>
+                Previous
+            </a>
+        {% endif %}
+
+        <span class="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-full font-medium">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline btn-sm">
+                Next
+                <i class="fas fa-chevron-right ml-2"></i>
+            </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline btn-sm">
+                Last
+                <i class="fas fa-angle-double-right ml-2"></i>
+            </a>
+        {% endif %}
+    </div>
     {% endif %}
-
-    <span class="text-sm text-gray-600">
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-    </span>
-
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline btn-sm">Next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline btn-sm">Last</a>
-    {% endif %}
 </div>
-{% endif %}
 {% endblock %}
