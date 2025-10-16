@@ -9,7 +9,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <style>
       :root {
         --primary-dark: #071727;
@@ -323,6 +326,74 @@
         font-weight: 600;
         box-shadow: var(--shadow-md);
         transform: translateX(4px);
+      }
+
+      /* Enhanced Sidebar Dropdown Styles */
+      .sidebar-dropdown {
+        margin-bottom: 1.5rem;
+      }
+
+      .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        padding: 0 1.5rem;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s ease;
+        user-select: none;
+      }
+
+      .dropdown-toggle:hover {
+        color: var(--primary-teal);
+      }
+
+      .dropdown-arrow {
+        font-size: 0.75rem;
+        transition: transform 0.3s ease;
+        color: var(--gray-500);
+      }
+
+      .dropdown-toggle.active .dropdown-arrow {
+        transform: rotate(180deg);
+        color: var(--primary-teal);
+      }
+
+      .dropdown-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .dropdown-content.active {
+        max-height: 1000px; /* Large enough to accommodate content */
+      }
+
+      /* Ensure consistent icon spacing */
+      .sidebar-link i {
+        width: 18px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      /* No projects message styling */
+      .sidebar-link.text-muted {
+        color: var(--gray-500) !important;
+        cursor: default;
+      }
+
+      .sidebar-link.text-muted:hover {
+        background: transparent !important;
+        color: var(--gray-500) !important;
+        transform: none !important;
+        border-left-color: transparent !important;
+      }
+
+      /* Responsive adjustments for dropdowns */
+      @media (max-width: 768px) {
+        .sidebar-dropdown {
+          margin-bottom: 1rem;
+        }
       }
 
       .fa-solid {
@@ -883,78 +954,105 @@
       </div>
     </nav>
 
-   <!-- Full-Screen Loading Screen -->
-<div id="global-loading-screen" style="
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-">
-  <!-- Animated Logo Container -->
-  <div id="loading-logo-container" style="
-    width: 80px;
-    height: 80px;
-    margin-bottom: 1.5rem;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  ">
-    <!-- We'll toggle between img and i -->
-    <img id="loading-logo-img" src="{% static 'images/logo.png' %}" 
-         alt="PickTask" 
-         style="
-           width: 100%;
-           height: 100%;
-           object-fit: contain;
-           transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.4s ease;
-           display: block;
-         ">
+    <!-- Full-Screen Loading Screen -->
+    <div
+      id="global-loading-screen"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      "
+    >
+      <!-- Animated Logo Container -->
+      <div
+        id="loading-logo-container"
+        style="
+          width: 80px;
+          height: 80px;
+          margin-bottom: 1.5rem;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <!-- We'll toggle between img and i -->
+        <img
+          id="loading-logo-img"
+          src="{% static 'images/logo.png' %}"
+          alt="PickTask"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+              opacity 0.4s ease;
+            display: block;
+          "
+        />
 
-    <i id="loading-icon" class="fa-solid fa-calendar-days" 
-       style="
-         font-size: 48px;
-         color: #6B68EE;
-         transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.4s ease;
-         display: none;
-       "></i>
-  </div>
+        <i
+          id="loading-icon"
+          class="fa-solid fa-calendar-days"
+          style="
+            font-size: 48px;
+            color: #6b68ee;
+            transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+              opacity 0.4s ease;
+            display: none;
+          "
+        ></i>
+      </div>
 
-  <div style="
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #4b5563;
-    margin-bottom: 1rem;
-    text-align: center;
-  ">Loading PickTask...</div>
-  
-  <div style="
-    width: 320px;
-    height: 8px;
-    background: #f3f4f6;
-    border-radius: 9999px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
-  ">
-    <div id="loading-progress-bar" style="
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary-teal), var(--primary-green));
-      border-radius: 9999px;
-      transition: width 0.3s ease;
-    "></div>
-  </div>
-</div>
+      <div
+        style="
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #4b5563;
+          margin-bottom: 1rem;
+          text-align: center;
+        "
+      >
+        Loading PickTask...
+      </div>
+
+      <div
+        style="
+          width: 320px;
+          height: 8px;
+          background: #f3f4f6;
+          border-radius: 9999px;
+          overflow: hidden;
+          box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
+        "
+      >
+        <div
+          id="loading-progress-bar"
+          style="
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(
+              90deg,
+              var(--primary-teal),
+              var(--primary-green)
+            );
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+          "
+        ></div>
+      </div>
+    </div>
     <!-- Main Layout -->
     <div class="app-layout">
       {% if user.is_authenticated %}
@@ -1007,11 +1105,11 @@
           } else {
             navbar.classList.remove("scrolled");
           }
-
+          
           lastScrollY = scrollY;
           ticking = false;
         };
-
+        
         window.addEventListener(
           "scroll",
           () => {
@@ -1022,6 +1120,142 @@
           },
           { passive: true }
         );
+        
+        // Initialize sidebar dropdowns
+        initSidebarDropdowns();
+        
+        // Enhanced sidebar dropdown functionality
+        function initSidebarDropdowns() {
+          const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+          const dropdownItems = document.querySelectorAll(
+            "[data-dropdown-item]"
+          );
+
+          // Function to close all dropdowns except the one specified
+          function closeAllDropdowns(exceptType = null) {
+            dropdownToggles.forEach((toggle) => {
+              const dropdown = toggle.closest(".sidebar-dropdown");
+              const dropdownType = dropdown.getAttribute("data-dropdown-type");
+
+              if (exceptType !== dropdownType) {
+                toggle.classList.remove("active");
+                const content = toggle.nextElementSibling;
+                content.classList.remove("active");
+              }
+            });
+          }
+
+          // Function to open a specific dropdown
+          function openDropdown(dropdownType) {
+            const dropdown = document.querySelector(
+              `[data-dropdown-type="${dropdownType}"]`
+            );
+            if (dropdown) {
+              const toggle = dropdown.querySelector(".dropdown-toggle");
+              const content = dropdown.querySelector(".dropdown-content");
+
+              toggle.classList.add("active");
+              content.classList.add("active");
+            }
+          }
+
+          // Initialize dropdowns based on current active items
+          function initializeDropdownStates() {
+            // Check for active items in each dropdown
+            const workspaceActive = document.querySelector(
+              '[data-dropdown-item="workspace"].active'
+            );
+            const navigationActive = document.querySelector(
+              '[data-dropdown-item="navigation"].active'
+            );
+            const projectActive = document.querySelector(
+              '[data-dropdown-item="project"].active'
+            );
+
+            // Close all dropdowns first
+            closeAllDropdowns();
+
+            // Open dropdowns with active items
+            if (workspaceActive) {
+              openDropdown("workspace");
+            }
+            if (navigationActive) {
+              openDropdown("navigation");
+            }
+            if (projectActive) {
+              openDropdown("project");
+            }
+
+            // If no active items but we have current workspace, open navigation by default
+            if (
+              !workspaceActive &&
+              !navigationActive &&
+              !projectActive &&
+              typeof currentWorkspaceId !== "undefined" &&
+              currentWorkspaceId
+            ) {
+              openDropdown("navigation");
+            }
+          }
+
+          // Handle dropdown toggle clicks
+          dropdownToggles.forEach((toggle) => {
+            toggle.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const dropdown = this.closest(".sidebar-dropdown");
+              const dropdownType = dropdown.getAttribute("data-dropdown-type");
+              const isActive = this.classList.contains("active");
+
+              // Toggle the clicked dropdown
+              if (isActive) {
+                this.classList.remove("active");
+                this.nextElementSibling.classList.remove("active");
+              } else {
+                // Close all other dropdowns except navigation if we're opening navigation
+                if (dropdownType === "navigation") {
+                  closeAllDropdowns("navigation");
+                } else {
+                  closeAllDropdowns();
+                }
+
+                this.classList.add("active");
+                this.nextElementSibling.classList.add("active");
+              }
+            });
+          });
+
+          // Handle dropdown item clicks
+          dropdownItems.forEach((item) => {
+            item.addEventListener("click", function () {
+              const itemType = this.getAttribute("data-dropdown-item");
+
+              // Handle different behaviors based on item type
+              if (itemType === "workspace" || itemType === "project") {
+                // Collapse all dropdowns for workspace and project selections
+                closeAllDropdowns();
+              } else if (itemType === "navigation") {
+                // Keep navigation open, close others
+                closeAllDropdowns("navigation");
+                openDropdown("navigation");
+              }
+
+              // The page will reload due to navigation, so we don't need to do anything else
+            });
+          });
+
+          // Initialize dropdown states
+          initializeDropdownStates();
+
+          // Close dropdowns when clicking outside sidebar
+          document.addEventListener("click", function (e) {
+            if (!e.target.closest(".sidebar")) {
+              closeAllDropdowns();
+            }
+          });
+        }
+
 
         // Enhanced mobile menu functionality
         if (mobileToggle && navLinks) {
@@ -1100,157 +1334,164 @@
         // Add any additional interactive element initialization here
         console.log("Professional PickTask interface initialized");
       }
-  
-// The loading screen
 
-const userIsAuthenticated = "{% if user.is_authenticated %}true{% else %}false{% endif %}" === "true";
+      // The loading screen
 
-if (userIsAuthenticated) {
-  const navEntries = performance.getEntriesByType('navigation');
-  const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
-  const isFirstLoadAfterLogin = !sessionStorage.getItem('picktask_authenticated_session');
+      const userIsAuthenticated =
+        "{% if user.is_authenticated %}true{% else %}false{% endif %}" ===
+        "true";
 
-  if (isFirstLoadAfterLogin || isReload) {
-    sessionStorage.setItem('picktask_authenticated_session', 'active');
+      if (userIsAuthenticated) {
+        const navEntries = performance.getEntriesByType("navigation");
+        const isReload =
+          navEntries.length > 0 && navEntries[0].type === "reload";
+        const isFirstLoadAfterLogin = !sessionStorage.getItem(
+          "picktask_authenticated_session"
+        );
 
-    const loader = document.getElementById('global-loading-screen');
-    const bar = document.getElementById('loading-progress-bar');
-    const logoImg = document.getElementById('loading-logo-img');
-    const icon = document.getElementById('loading-icon');
-    const iconContainer = document.getElementById('loading-logo-container');
+        if (isFirstLoadAfterLogin || isReload) {
+          sessionStorage.setItem("picktask_authenticated_session", "active");
 
-    if (loader && bar && logoImg && icon) {
-      // Show loader
-      loader.style.opacity = '1';
-      loader.style.visibility = 'visible';
+          const loader = document.getElementById("global-loading-screen");
+          const bar = document.getElementById("loading-progress-bar");
+          const logoImg = document.getElementById("loading-logo-img");
+          const icon = document.getElementById("loading-icon");
+          const iconContainer = document.getElementById(
+            "loading-logo-container"
+          );
 
-      // ✅ Start smooth animation sequence
-      let currentIcon = 'logo'; // 'logo' → 'calendar' → 'docs' → 'logo'
-      const icons = {
-        calendar: 'fa-calendar-days',
-        docs: 'fa-file-lines'
-      };
+          if (loader && bar && logoImg && icon) {
+            // Show loader
+            loader.style.opacity = "1";
+            loader.style.visibility = "visible";
 
-      // Initial pulse-in for logo
-      logoImg.style.transform = 'scale(1.2)';
-      logoImg.style.opacity = '0.8';
-      setTimeout(() => {
-        logoImg.style.transform = 'scale(1)';
-        logoImg.style.opacity = '1';
-      }, 300);
+            // ✅ Start smooth animation sequence
+            let currentIcon = "logo"; // 'logo' → 'calendar' → 'docs' → 'logo'
+            const icons = {
+              calendar: "fa-calendar-days",
+              docs: "fa-file-lines",
+            };
 
-      // Animate morphing every 2 seconds
-      const animateIcons = () => {
-        setTimeout(() => {
-          if (currentIcon === 'logo') {
-            // Fade out logo
-            logoImg.style.opacity = '0';
+            // Initial pulse-in for logo
+            logoImg.style.transform = "scale(1.2)";
+            logoImg.style.opacity = "0.8";
             setTimeout(() => {
-              logoImg.style.display = 'none';
-              icon.className = 'fa-solid ' + icons.calendar;
-              icon.style.display = 'block';
-              icon.style.opacity = '0';
-              icon.style.transform = 'scale(0.8) rotate(-10deg)';
-              setTimeout(() => {
-                icon.style.opacity = '1';
-                icon.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                  icon.style.transform = 'scale(1)';
-                  currentIcon = 'calendar';
-                  animateIcons(); // Loop
-                }, 300);
-              }, 300);
+              logoImg.style.transform = "scale(1)";
+              logoImg.style.opacity = "1";
             }, 300);
-          } else if (currentIcon === 'calendar') {
-            // Fade out calendar
-            icon.style.opacity = '0';
+
+            // Animate morphing every 2 seconds
+            const animateIcons = () => {
+              setTimeout(() => {
+                if (currentIcon === "logo") {
+                  // Fade out logo
+                  logoImg.style.opacity = "0";
+                  setTimeout(() => {
+                    logoImg.style.display = "none";
+                    icon.className = "fa-solid " + icons.calendar;
+                    icon.style.display = "block";
+                    icon.style.opacity = "0";
+                    icon.style.transform = "scale(0.8) rotate(-10deg)";
+                    setTimeout(() => {
+                      icon.style.opacity = "1";
+                      icon.style.transform = "scale(1.1)";
+                      setTimeout(() => {
+                        icon.style.transform = "scale(1)";
+                        currentIcon = "calendar";
+                        animateIcons(); // Loop
+                      }, 300);
+                    }, 300);
+                  }, 300);
+                } else if (currentIcon === "calendar") {
+                  // Fade out calendar
+                  icon.style.opacity = "0";
+                  setTimeout(() => {
+                    icon.className = "fa-solid " + icons.docs;
+                    icon.style.opacity = "0";
+                    icon.style.transform = "scale(0.8) rotate(-10deg)";
+                    setTimeout(() => {
+                      icon.style.opacity = "1";
+                      icon.style.transform = "scale(1.1)";
+                      setTimeout(() => {
+                        icon.style.transform = "scale(1)";
+                        currentIcon = "docs";
+                        animateIcons(); // Loop
+                      }, 300);
+                    }, 300);
+                  }, 300);
+                } else if (currentIcon === "docs") {
+                  // Fade out docs, show logo
+                  icon.style.opacity = "0";
+                  setTimeout(() => {
+                    icon.style.display = "none";
+                    logoImg.style.display = "block";
+                    logoImg.style.opacity = "0";
+                    logoImg.style.transform = "scale(0.8) rotate(-10deg)";
+                    setTimeout(() => {
+                      logoImg.style.opacity = "1";
+                      logoImg.style.transform = "scale(1.1)";
+                      setTimeout(() => {
+                        logoImg.style.transform = "scale(1)";
+                        currentIcon = "logo";
+                        animateIcons(); // Loop
+                      }, 300);
+                    }, 300);
+                  }, 300);
+                }
+              }, 2000);
+            };
+
+            animateIcons();
+
+            // Keep all your existing loading logic
+            let isLoaded = false;
+            let hasMetMinTime = false;
+
+            window.addEventListener("load", () => {
+              isLoaded = true;
+              checkReady();
+            });
+
             setTimeout(() => {
-              icon.className = 'fa-solid ' + icons.docs;
-              icon.style.opacity = '0';
-              icon.style.transform = 'scale(0.8) rotate(-10deg)';
-              setTimeout(() => {
-                icon.style.opacity = '1';
-                icon.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                  icon.style.transform = 'scale(1)';
-                  currentIcon = 'docs';
-                  animateIcons(); // Loop
-                }, 300);
-              }, 300);
-            }, 300);
-          } else if (currentIcon === 'docs') {
-            // Fade out docs, show logo
-            icon.style.opacity = '0';
+              hasMetMinTime = true;
+              checkReady();
+            }, 2500);
+
             setTimeout(() => {
-              icon.style.display = 'none';
-              logoImg.style.display = 'block';
-              logoImg.style.opacity = '0';
-              logoImg.style.transform = 'scale(0.8) rotate(-10deg)';
-              setTimeout(() => {
-                logoImg.style.opacity = '1';
-                logoImg.style.transform = 'scale(1.1)';
+              isLoaded = true;
+              hasMetMinTime = true;
+              checkReady();
+            }, 8000);
+
+            let progress = 0;
+            const animate = () => {
+              if (progress >= 95) return;
+              const inc = isLoaded ? 5 : Math.random() * 3 + 1;
+              progress = Math.min(95, progress + inc);
+              bar.style.width = progress + "%";
+              if (!isLoaded || progress < 95) {
+                setTimeout(animate, isLoaded ? 50 : 120);
+              }
+            };
+            animate();
+
+            function checkReady() {
+              if (isLoaded && hasMetMinTime) {
+                bar.style.transition = "width 0.3s ease";
+                bar.style.width = "100%";
                 setTimeout(() => {
-                  logoImg.style.transform = 'scale(1)';
-                  currentIcon = 'logo';
-                  animateIcons(); // Loop
+                  loader.style.opacity = "0";
+                  setTimeout(() => {
+                    if (loader.parentNode) loader.remove();
+                  }, 300);
                 }, 300);
-              }, 300);
-            }, 300);
+              }
+            }
           }
-        }, 2000);
-      };
-
-      animateIcons();
-
-      // Keep all your existing loading logic
-      let isLoaded = false;
-      let hasMetMinTime = false;
-
-      window.addEventListener('load', () => {
-        isLoaded = true;
-        checkReady();
-      });
-
-      setTimeout(() => {
-        hasMetMinTime = true;
-        checkReady();
-      }, 2500);
-
-      setTimeout(() => {
-        isLoaded = true;
-        hasMetMinTime = true;
-        checkReady();
-      }, 8000);
-
-      let progress = 0;
-      const animate = () => {
-        if (progress >= 95) return;
-        const inc = isLoaded ? 5 : Math.random() * 3 + 1;
-        progress = Math.min(95, progress + inc);
-        bar.style.width = progress + '%';
-        if (!isLoaded || progress < 95) {
-          setTimeout(animate, isLoaded ? 50 : 120);
         }
-      };
-      animate();
-
-      function checkReady() {
-        if (isLoaded && hasMetMinTime) {
-          bar.style.transition = 'width 0.3s ease';
-          bar.style.width = '100%';
-          setTimeout(() => {
-            loader.style.opacity = '0';
-            setTimeout(() => {
-              if (loader.parentNode) loader.remove();
-            }, 300);
-          }, 300);
-        }
+      } else {
+        sessionStorage.removeItem("picktask_authenticated_session");
       }
-    }
-  }
-} else {
-  sessionStorage.removeItem('picktask_authenticated_session');
-}
     </script>
 
     {% block extra_js %}{% endblock %}
