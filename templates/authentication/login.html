@@ -4,6 +4,35 @@
 {% block header_text %}Welcome Back{% endblock %}
 
 {% block content %}
+
+<style>
+
+    .btn-signin-with {
+  display: inline-flex;
+
+
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #333;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-signin-with:hover {
+  background-color: #d6d5d7;
+}
+
+</style>
+
+
+
 <form method="post">
     {% csrf_token %}
     
@@ -28,10 +57,81 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Sign In</button>
+
+
+
+
+             <div class="auth-footer">
+
+<div style="display:flex; flex-direction:row; gap: 10px;">
+
+                                    <button type="submit" class="f14-regular btn-signin-with">
+
+                                        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g clip-path="url(#clip0_779_1269)">
+                                            <path d="M23.5938 10.4136L13.8044 10.4131C13.3721 10.4131 13.0217 10.7634 13.0217 11.1957V14.323C13.0217 14.7552 13.3721 15.1056 13.8044 15.1056H19.3171C18.7135 16.6722 17.5868 17.9842 16.1493 18.8178L18.5 22.887C22.2707 20.7062 24.5 16.8799 24.5 12.5965C24.5 11.9866 24.455 11.5506 24.3651 11.0597C24.2968 10.6867 23.9729 10.4136 23.5938 10.4136Z" fill="#167EE6"/>
+                                            <path d="M12.5 19.8042C9.80218 19.8042 7.44699 18.3302 6.18207 16.1489L2.11304 18.4943C4.18374 22.0831 8.06283 24.4998 12.5 24.4998C14.6768 24.4998 16.7307 23.9138 18.5 22.8924V22.8868L16.1494 18.8176C15.0742 19.4412 13.8299 19.8042 12.5 19.8042Z" fill="#2BC155"/>
+                                            <path d="M18.5 22.8927V22.8871L16.1494 18.8179C15.0741 19.4414 13.83 19.8044 12.5 19.8044V24.5001C14.6767 24.5001 16.7308 23.914 18.5 22.8927Z" fill="#2BC155"/>
+                                            <path d="M5.19566 12.4998C5.19566 11.17 5.55856 9.92589 6.18205 8.85071L2.11302 6.50537C1.08603 8.26914 0.5 10.3175 0.5 12.4998C0.5 14.6821 1.08603 16.7304 2.11302 18.4942L6.18205 16.1489C5.55856 15.0737 5.19566 13.8296 5.19566 12.4998Z" fill="#FFD500"/>
+                                            <path d="M12.5 5.19566C14.2593 5.19566 15.8753 5.82078 17.1375 6.86061C17.4488 7.11711 17.9014 7.09859 18.1867 6.81336L20.4024 4.59758C20.7261 4.27395 20.703 3.74422 20.3573 3.44431C18.2425 1.60967 15.491 0.5 12.5 0.5C8.06283 0.5 4.18374 2.91673 2.11304 6.50558L6.18207 8.85092C7.44699 6.66969 9.80218 5.19566 12.5 5.19566Z" fill="#FF4B26"/>
+                                            <path d="M17.1374 6.86061C17.4488 7.11711 17.9015 7.09859 18.1866 6.81336L20.4024 4.59758C20.726 4.27395 20.7029 3.74422 20.3573 3.44431C18.2425 1.60963 15.491 0.5 12.5 0.5V5.19566C14.2592 5.19566 15.8752 5.82078 17.1374 6.86061Z" fill="#D93F21"/>
+                                            </g>
+                                            <defs>
+                                            <clipPath id="clip0_779_1269">
+                                            <rect width="24" height="24" fill="white" transform="translate(0.5 0.5)"/>
+                                            </clipPath>
+                                            </defs>
+                                        </svg>
+
+                                        Sign in with Google
+                                   </button>
+                                    <button type="submit" class="f14-regular btn-signin-with">
+
+                                        <!-- Facebook blue square with white "f" -->
+                          <!-- Facebook 2023 / Recent wordmark logo -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1024 1024"width="24" height="24"  style="enable-background:new 0 0 1024 1024;" xml:space="preserve">
+
+
+     <style type="text/css" > 
+	.st0{fill:#1877F2;}
+	.st1{fill:#FFFFFF;}
+</style>
+<g>
+	<path class="st0" d="M1024,512C1024,229.2,794.8,0,512,0S0,229.2,0,512c0,255.6,187.2,467.4,432,505.8V660H302V512h130V399.2
+		C432,270.9,508.4,200,625.4,200c56,0,114.6,10,114.6,10v126h-64.6c-63.6,0-83.4,39.5-83.4,80v96h142l-22.7,148H592v357.8
+		C836.8,979.4,1024,767.6,1024,512z"/>
+	<path class="st1" d="M711.3,660L734,512H592v-96c0-40.5,19.8-80,83.4-80H740V210c0,0-58.6-10-114.6-10
+		c-117,0-193.4,70.9-193.4,199.2V512H302v148h130v357.8c26.1,4.1,52.8,6.2,80,6.2s53.9-2.1,80-6.2V660H711.3z"/>
+</g>
+
+<defs>
+                                            <clipPath id="clip0_779_1269">
+                                            <rect width="24" height="24" fill="white" transform="translate(0.5 0.5)"/>
+                                            </clipPath>
+                                            </defs>
+</svg>
+
+
+                                        Sign in with Facebook
+                                   </button>
+
+
+</div>
+
+
+
+                                </div>                   
+
 </form>
+
 
 <div class="auth-footer">
     <p><a href="{% url 'authentication:password_reset' %}">Forgot your password?</a></p>
+
+
+
+    
     <p>Don't have an account? <a href="{% url 'authentication:register' %}">Sign Up</a></p>
 </div>
 <script>
