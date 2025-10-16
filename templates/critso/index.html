@@ -16,341 +16,68 @@
     <link rel="apple-touch-icon-precomposed" href="images/favicon.png">
 
 
-    <style>
-                                        :root {
-                                            /* LIGHT THEME */
-                                            --bg: #f6f7fb;
-                                            --panel: #ffffff;
-                                            --muted: #6b7280;
-                                            --text: #0f172a;
-                                            --accent: #6366f1;
-                                            --accent-2: #7c3aed;
-                                            --success: #10b981;
-                                            --danger: #ef4444;
-                                            --glass: rgba(255, 255, 255, 0.6);
-                                            --shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
-                                            --radius: 12px;
-                                        }
+   <style>
 
-                                        body.dark {
-                                            /* DARK THEME */
-                                            --bg: #0b1220;
-                                            --panel: #071028;
-                                            --muted: #94a3b8;
-                                            --text: #e6eef8;
-                                            --accent: #7c3aed;
-                                            --accent-2: #06b6d4;
-                                            --success: #10b981;
-                                            --danger: #fb7185;
-                                            --glass: rgba(255, 255, 255, 0.03);
-                                            --shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
-                                        }
+    .bg-text {
+    position: absolute; 
+    top: 45%;
+    left: 78%;
+    border-radius: 20px;
+    background-color: #41414123;
+    padding: 10px;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: rgb(31, 31, 31); 
+    pointer-events: none;
+    white-space: nowrap;
+}
 
-                                        /* base */
-                                        * {
-                                            box-sizing: border-box
-                                        }
+    .dashboard-container {
+      background: #c443ff00;
+      border-radius: 20px;
+      padding: 20px;
+      border: solid 2px #0000005b;
+      
+      width: 420px;
+      max-width: 90%;
+      box-shadow: 0 0 40px rgba(110, 110, 110, 0.4);
+      text-align: center;
+    }
 
+    .dashboard-chart {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
 
-                                        body {
-                                            margin: 0;
-                                            background: var(--bg);
-                                            color: var(--text);
-                                            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-                                            overflow: hidden
-                                        }
+    .legend-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 15px;
+    }
 
-                                        a {
-                                            color: inherit
-                                        }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #00000021;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #000000;
+      box-shadow: 0 0 10px rgba(56,189,248,0.1);
+    }
 
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+    }
 
-
-
-                                        .dropdown button:hover {
-                                            background: rgba(255, 255, 255, 0.03)
-                                        }
-
-                                        /* layout */
-                                        .app {
-                                            display: flex;
-                                            height: 100vh;
-
-
-                                        }
-
-
-
-                                        main.content {
-                                            flex: 1;
-                                            overflow: auto;
-                                            padding: 18px 18px 40px;
-                                            border-radius: 12px;
-                                            margin-left: 100px;
-                                        }
-
-                                        .container {
-                                            max-width: 1280px;
-                                            margin-top: -18px;
-                                            display: flex;
-                                            flex-direction: column;
-                                            padding: 10px;
-                                            border: #c7c7c7 solid 3px;
-                                            border-radius: 10px;
-
-                                            margin-right: -15px;
-
-
-                                            position: relative;
-                                        }
-
-                                        .grid-4 {
-                                            display: grid;
-                                            grid-template-columns: repeat(4, 1fr);
-                                            gap: 12px
-                                        }
-
-                                        .card {
-                                            background: var(--panel);
-                                            padding: 14px;
-                                            border-radius: 12px;
-                                            box-shadow: var(--shadow)
-                                        }
-
-                                        .card h4 {
-                                            margin: 0;
-                                            font-size: 13px;
-                                            color: var(--muted)
-                                        }
-
-                                        .card .value {
-                                            font-size: 20px;
-                                            font-weight: 700;
-                                            margin-top: 6px
-                                        }
-
-                                        .charts {
-                                            display: grid;
-                                            grid-template-columns: .3fr .3fr;
-                                            gap: 10px;
-                                            margin-top: 10px;
-                                        }
-
-                                        canvas {
-                                            padding: 30px;
-                                            background: rgba(227, 198, 255, 0.957);
-                                            border-radius: 8px
-                                        }
-
-                                        .right-rail {
-                                            width: 320px;
-                                            min-width: 320px;
-                                            display: flex;
-                                            flex-direction: column;
-                                            gap: 12px;
-                                            padding-right: 12px
-                                        }
-
-                                        .rail-card {
-                                            background: var(--panel);
-                                            padding: 12px;
-                                            border-radius: 12px;
-                                            margin-top: 10px;
-                                            box-shadow: var(--shadow)
-                                        }
-
-                                        .messenger-list {
-                                            height: 220px;
-                                            overflow: auto;
-                                            display: flex;
-                                            flex-direction: column;
-                                            gap: 8px
-                                        }
-
-                                        .msg-row {
-                                            display: flex;
-                                            gap: 8px;
-                                            align-items: flex-start
-                                        }
-
-                                        .avatar {
-                                            width: 36px;
-                                            height: 36px;
-                                            border-radius: 50%;
-                                            background: rgba(99, 102, 241, 0.08);
-                                            display: flex;
-                                            align-items: center;
-                                            justify-content: center;
-                                            color: var(--accent);
-                                            font-weight: 700
-                                        }
-
-                                        /* kanban */
-                                        .kanban {
-                                            display: flex;
-                                            gap: 12px;
-                                            align-items: flex-start
-                                        }
-
-                                        .col {
-                                            flex: 1;
-                                            min-width: 240px;
-                                            background: rgba(99, 102, 241, 0.03);
-                                            padding: 12px;
-                                            border-radius: 10px
-                                        }
-
-                                        .task {
-                                            background: var(--panel);
-                                            padding: 10px;
-                                            border-radius: 10px;
-                                            margin-bottom: 10px;
-                                            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.04);
-                                            cursor: grab
-                                        }
-
-                                        .col h5 {
-                                            display: flex;
-                                            justify-content: space-between;
-                                            align-items: center;
-                                            margin: 0 0 8px 0;
-                                            font-size: 14px
-                                        }
-
-                                        .add-btn {
-                                            display: block;
-                                            padding: 8px;
-                                            border-radius: 8px;
-                                            text-align: center;
-                                            border: 2px dashed rgba(15, 23, 42, 0.06);
-                                            cursor: pointer;
-                                            color: var(--muted)
-                                        }
-
-                                        .activity-list {
-                                            max-height: 220px;
-                                            overflow: auto;
-                                            padding-top: 6px
-                                        }
-
-                                        .activity-list li {
-                                            padding: 8px 0;
-                                            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-                                            font-size: 13px;
-                                            color: var(--muted)
-                                        }
-
-                                        .muted {
-                                            color: var(--muted)
-                                        }
-
-                                        .muted- {
-                                            color: white
-                                        }
-
-                                        .btn {
-                                            padding: 8px 12px;
-                                            border-radius: 8px;
-                                            border: 0;
-                                            background: var(--accent);
-                                            color: #fff;
-                                            cursor: pointer
-                                        }
-
-                                        /* small screens */
-                                        @media (max-width:1100px) {
-                                            .grid-4 {
-                                                grid-template-columns: repeat(2, 1fr)
-                                            }
-
-                                            .charts {
-                                                grid-template-columns: .5fr;
-                                                grid-auto-rows: minmax(180px, auto)
-                                            }
-
-                                            .right-rail {
-                                                display: none
-                                            }
-
-                                            aside.drawer {
-                                                display: none
-                                            }
-
-                                            header.header {
-                                                padding: 6px 12px
-                                            }
-                                        }
-
-                                        @media (max-width:600px) {
-                                            .grid-4 {
-                                                grid-template-columns: 1fr
-                                            }
-                                        }
-
-
-
-
-                                        .drawer {
-                                            height: 100vh;
-                                            background-color: var(--panel);
-                                            padding: 12px;
-                                            box-shadow: var(--shadow);
-                                            display: flex;
-                                            flex-direction: column;
-                                            gap: 15px;
-                                            align-items: center;
-                                            transition: width 0.25s;
-                                            position: fixed;
-                                            top: px;
-                                            left: 0px;
-
-                                            z-index: 40;
-                                        }
-
-                                        .drawer.open {
-                                            width: 100px;
-                                            align-items: flex-start;
-                                            padding: 1px;
-                                        }
-
-                                        .drawer .drawer-toggle {
-                                            position: absolute;
-                                            right: -16px;
-                                            top: 0;
-                                            background: rgb(226, 207, 255);
-                                            height: 100vh;
-                                            box-shadow: var(--shadow);
-                                            cursor: pointer;
-                                            transition: 2s;
-                                        }
-
-                                        .nav-item {
-                                            display: flex;
-                                            align-items: center;
-                                            gap: 0px;
-                                            display: flex;
-                                            flex-direction: column;
-                                            padding: px;
-                                            border-radius: 10px;
-                                            width: 100%;
-                                            cursor: pointer;
-                                            color: var(--muted);
-                                            transition: background .3s;
-                                        }
-
-                                        .nav-item .label {
-                                            display: none;
-                                        }
-
-                                        .drawer.open .nav-item .label {
-                                            display: block;
-                                        }
-
-                                        .nav-item:hover {
-                                            background: rgba(99, 102, 241, 0.08);
-                                            color: var(--accent);
-                                        }
-
+    
                                         .f12-medium {
                                             font-size: 12px;
                                             font-weight: 500;
@@ -367,12 +94,14 @@
                                             font-size: 18px;
                                             font-weight: 500;
                                         }
-                                    </style>
 
-
-</head>
-
-<!-- #wrapper -->
+                                                                        
+                                                                        
+   </style>
+                                    
+   </head>
+                                    
+                                    <!-- #wrapper -->
 <div id="wrapper">
     <!-- #page -->
     <div id="page" class="">
@@ -601,15 +330,25 @@
 </div>
 
 
+    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->    <!-- main-content-wrap -->
+
+
 <div class="main-content">
     <!-- main-content-wrap -->
-    <div class="main-content-inner">
-        <!-- main-content-wrap -->
-        <div class="main-content-wrap">
-            <div class="tf-container">
-                <div class="row">
+    <div class="main-content-inner"> 
+       
+
+    <div style="  
+    display: flex; 
+    
+    gap: 75px;  
+   ">
+                    
                     <div class="col-lg-6">
-                        <div class="flex gap24 mb-32 flex-md-row flex-column">
+
+                                    <div style="color: rgb(0, 0, 0); font: 1em sans-serif;  font-size: 30PX ;  margin-top: 5px;"><b>Your Activities :</div>
+
+                        <div class="flex gap24 mb-32 flex-md-row flex-column" style="margin-top: 35px; ">
                             <div class="w-100">
                                 <div class="wg-card style-1 bg-Primary mb-25">
                                     <div class="icon">
@@ -648,6 +387,12 @@
                                     <div class="f16-medium text-Black">Complete <span class="text-Gray">Task</span></span></div>
                                 </div>
                             </div>
+
+
+
+
+
+
                             <div class="w-100">
                                 <div class="wg-card mb-25">
                                     <div class="icon">
@@ -655,6 +400,8 @@
                                             <image href="https://tse4.mm.bing.net/th/id/OIP.oFQZrxI_6v-DZfUslxXmJwHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
                                         </svg>
                                     </div>
+
+
                                     <div class="content">
                                         <div>
                                             <h6 class="counter">
@@ -667,565 +414,149 @@
                                     </div>
                                     <div class="f16-medium text-Black" id="card-pending">Pending <span class="text-Gray">Task</span></span></div>
                                 </div>
-                                <div class="wg-card style-1 bg-YellowGreen">
-                                    <div class="icon">
-                                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <image href="images\item\task2.png" width="48" height="48" preserveAspectRatio="xMidYMid meet" />
-                                        </svg>
-                                    </div>
-                                    <div class="content">
-                                        <div>
-                                            <h6 class="counter">
-                                                <span class="number" data-speed="2000" data-to="34" data-inviewport="yes">34</span>
-                                            </h6>
-                                        </div>
-                                  
-                                    </div>
-                                    <div class="f16-medium text-White" id="card-adopt">Today New <span class="text-Gray">Task</span></span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    
-                    <div class="col-lg-6">
-                        <div class="wg-box style-1  shadow-none mb-32">
-                            <div class="card" style="flex:content; flex-direction: column;">
-                                <div class="label-02 text-Black">Activity Statistics</div>
-                                <div style="width: 435px; height: 440px; padding: 10px; background:rgb(255, 255, 255); border-radius:100px; margin-top:1px;">
-                                    <canvas id="statusChart"></canvas>
-                                </div>
-                                <button class="btn" onclick="openKanbanSection()">Open Kanban</button>
-                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Chart.js -->
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                
-                    <script>
-                        function toggleNuvDrawer() {
-                            const drawer = document.getElementById('nuvDrawer');
-                            drawer.classList.toggle('open');
-                        }
-                    </script>
-                    <div class="grid-4">
-                        <div class="card">
-                            <h4>Tasks </h4>
-                            <div id="card-completed" class="value">0</div>
-                            <div class="muted" style="margin-top:6px">Today</div>
-                        </div>
-                        <div class="card">
-                            <h4>Time Saved</h4>
-                            <div id="card-time" class="value">0 min</div>
-                            <div class="muted" style="margin-top:6px">Daily average</div>
-                        </div>
-                        <div class="card">
-                            <h4>Team Adoption</h4>
-                            <div id="card-adopt" class="value">0%</div>
-                            <div class="muted" style="margin-top:6px">Active users</div>
-                        </div>
-                        <div class="card">
-                            <h4>Pending </h4>
-                            <div id="card-pending" class="value">0</div>
-                            <div class="muted" style="margin-top:6px">Needs attention</div>
-                        </div>
-                    </div>
+                            
+                               <a href="#">
+                                <div class="wg-card style-1 bg-Primary mb-25">
+                                   
+                                    <div class="f16-medium text-White">Go To <span class="text-Gray">The</span></span></div>
+                                 <div style="color: rgb(255, 255, 255); font: 1em sans-serif;  font-size: 30PX ; margin-top: px; height: 72px; margin-top: 40px;">Workspace</div>
 
-                </div>
-                <div class="rail-card">
-                    <h4>Messenger (mini)</h4>
-                    <div id="messengerMini" class="messenger-list"></div>
-                    <div style="display:flex;gap:8px;margin-top:8px">
-                        <input id="miniInput" placeholder="Message..." style="flex:1;padding:8px;border-radius:8px;border:1px solid #eee" onkeydown="if(event.key==='Enter'){sendMiniMsg()}">
-                        <button class="btn" onclick="sendMiniMsg()">Send</button>
-                    </div>
-                </div>
-                <div style="display:flex;gap:12px;align-items:flex-start">
-                    <div style="flex:1">
-                        <div class="card" style="margin-top:12px">
-                            <h4>Reports (by project)</h4>
-                            <div id="reportsArea" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px"></div>
-                                <ul id="activityList" class="activity-list"></ul>
-                        </div>
+                                </div>
+
+                     
+                            </a>
+                                
+                            </div>
+    
+</div> 
+
+
+
+</div> 
 
                         
-                    </div>
-                    <aside class="right-rail">
-                        <div class="rail-card">
-                            <h4>Voice Memos</h4>
-                            <div id="voiceList" style="margin-top:8px"></div>
-                            <div style="margin-top:8px"><button class="btn" onclick="simulateVoice()">Add Voice Memo</button></div>
-                        </div>
-                    </aside>
-                </div>
-                </section>
-                <!-- Kanban Section -->
-                <section id="kanbanSection" style="display:none">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-                        <h3 style="margin:0">Kanban Board</h3>
-                        <div style="display:flex;gap:8px">
-                            <button class="btn" onclick="showSection('dashboard')">Back to Dashboard</button>
-                            <button class="btn" onclick="addQuickTaskPrompt()">+ New Task</button>
-                        </div>
-                    </div>
-                    <div class="kanban" id="kanbanBoard"></div>
-                    <div style="margin-top:12px" class="card">
-                        <h4>Kanban Reports</h4>
-                        <div id="kanbanReports" style="margin-top:8px" class="muted">Summary of columns, lead times, throughput (demo)</div>
-                    </div>
-                </section>
-            </div>
-            </main>
+<bodyss>
+  <div class="dashboard-container">
 
-<style>
-    .bodys {
-      margin: 0;
-      background: #0f172a;
-      font-family: 'Poppins', sans-serif;
-      color: #e2e8f0;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
 
-    h1 {
-      color: #38bdf8;
-      font-size: 28px;
-      margin-bottom: 30px;
-      letter-spacing: 1px;
-    }
+<div class="bg-text">Activity Overview </div>
 
-    .board-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 1200px;
-    }
 
-    .board {
-      background: #1e293b;
-      border-radius: 20px;
-      width: 340px;
-      padding: 20px;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-    }
 
-    .board:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);
-    }
+    <canvas id="pieChart" class="dashboard-chart"></canvas>
 
-    .board-title {
-      width: 100%;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 600;
-      color: #38bdf8;
-      border-top: 2px solid #38bdf8;
-      border-bottom: 2px solid #38bdf8;
-      padding: 10px 0;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-    }
+    <div id="legend" class="legend-container"></div>
 
-    .board p {
-      margin-top: 15px;
-      color: #94a3b8;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    footer {
-      margin-top: 40px;
-      color: #64748b;
-      font-size: 13px;
-    }
-  </style>
-</head>
-<div class="bodys">
-  <h1>📋 Kanban Report Dashboard</h1>
-
-  <div class="board-container">
-    <!-- === Column 1: To Do === -->
-    <div class="board">
-      <div class="board-title">To Do</div>
-      <canvas id="chart1" style="width:100%;height:220px;"></canvas>
-      <p>Tasks yet to start (based on department report)</p>
-    </div>
-
-    <!-- === Column 2: In Progress === -->
-    <div class="board">
-      <div class="board-title">In Progress</div>
-      <canvas id="chart2" style="width:100%;height:220px;"></canvas>
-      <p>Currently running tasks by priority</p>
-    </div>
-
-    <!-- === Column 3: Done === -->
-    <div class="board">
-      <div class="board-title">Done</div>
-      <canvas id="chart3" style="width:100%;height:220px;"></canvas>
-      <p>Completed reports overview</p>
-    </div>
   </div>
 
-  <footer>© 2025 Modern Kanban Dashboard — Designed by Md. Al Imran</footer>
+</bodyss>
 
-  <script>
-    // === Chart 1: To Do ===
-    new Chart(document.getElementById('chart1'), {
-      type: 'doughnut',
-      data: {
-        labels: ['UI Design', 'Testing', 'Planning', 'Bug Fixing'],
-        datasets: [{
-          data: [30, 20, 25, 25],
-          backgroundColor: ['#38bdf8','#a78bfa','#34d399','#f87171'],
-          borderWidth: 4,
-          borderColor: '#1e293b'
-        }]
-      },
-      options: {
-        cutout: '60%',
-        plugins: { legend: { display: false } }
-      }
-    });
 
-    // === Chart 2: In Progress ===
-    new Chart(document.getElementById('chart2'), {
-      type: 'bar',
-      data: {
-        labels: ['High', 'Medium', 'Low'],
-        datasets: [{
-          data: [8, 5, 3],
-          backgroundColor: ['#f87171','#fbbf24','#34d399'],
-          borderRadius: 10
-        }]
-      },
-      options: {
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } },
-          y: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } }
-        }
-      }
-    });
 
-    // === Chart 3: Done ===
-    new Chart(document.getElementById('chart3'), {
-      type: 'pie',
-      data: {
-        labels: ['Completed', 'Reviewed', 'Approved'],
-        datasets: [{
-          data: [40, 25, 35],
-          backgroundColor: ['#34d399','#38bdf8','#a78bfa'],
-          borderWidth: 4,
-          borderColor: '#1e293b'
-        }]
-      },
-      options: {
-        plugins: { legend: { display: false } }
-      }
-    });
-  </script>
-            
-        </div>
+
+
+                     </div>
+
+ 
 
 
 
 
 
 
-        
-<script>
-
-
-             const model = {
-    tasks: {
-        todo: [{
-                id: 't1',
-                title: 'Design landing page',
-                assignee: 'Sarah',
-                due: '2025-10-12'
-            },
-            {
-                id: 't2',
-                title: 'Write hero copy',
-                assignee: 'Michael',
-                due: '2025-10-13'
-            }
-        ],
-        inprogress: [{
-            id: 't3',
-            title: 'Integrate payments API',
-            assignee: 'Amanda',
-            due: '2025-10-18'
-        }],
-        review: [{
-            id: 't4',
-            title: 'QA checkout flow',
-            assignee: 'You',
-            due: '2025-10-14'
-        }],
-        done: [{
-            id: 't5',
-            title: 'Init repo',
-            assignee: 'You',
-            due: '2025-09-30'
-        }]
-    },
-    voiceMemos: [{
-        id: 'v1',
-        summary: 'Schedule client meeting',
-        created: '2025-10-09'
-    }],
-    messages: [{
-            from: 'Sarah',
-            text: 'Design review completed',
-            ts: '09:12'
-        },
-        {
-            from: 'Michael',
-            text: 'Can we postpone deploy?',
-            ts: '08:50'
-        }
-    ],
-    activities: [{
-            text: 'Setup project repo',
-            ts: '2025-10-01'
-        },
-        {
-            text: 'Sarah completed design review',
-            ts: '2025-10-09'
-        },
-        {
-            text: 'Michael pushed API changes',
-            ts: '2025-10-09'
-        }
-    ],
-    reports: [{
-            project: 'Website Redesign',
-            done: 12,
-            inprogress: 3,
-            pending: 2
-        },
-        {
-            project: 'Mobile App',
-            done: 8,
-            inprogress: 4,
-            pending: 5
-        },
-        {
-            project: 'Marketing Campaign',
-            done: 5,
-            inprogress: 2,
-            pending: 6
-        }
-    ]
-};
 
 
 
 
-function renderOverviewCards() {
-    document.getElementById('card-completed').textContent = model.tasks.done.length;
-    document.getElementById('card-pending').textContent = model.tasks.todo.length + model.tasks.inprogress.length + model.tasks.review.length;
-    document.getElementById('card-adopt').textContent = '94%';
-    document.getElementById('card-time').textContent = '15 min';
-}
-
-function renderReports() {
-    const area = document.getElementById('reportsArea');
-    area.innerHTML = '';
-    model.reports.forEach(r => {
-        const el = document.createElement('div');
-        el.className = 'card';
-        el.innerHTML = `<h4 style="margin-bottom:6px">${r.project}</h4>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <div class="muted">Done</div><div style="font-weight:700">${r.done}</div>
-            <div class="muted" style="margin-left:8px">In Progress</div><div style="font-weight:700">${r.inprogress}</div>
-            <div class="muted" style="margin-left:8px">Pending</div><div style="font-weight:700">${r.pending}</div>
-          </div>`;
-        area.appendChild(el);
-    });
-}
-
-function renderActivities() {
-    const list = document.getElementById('activityList');
-    list.innerHTML = '';
-    model.activities.slice().reverse().forEach(a => {
-        const li = document.createElement('li');
-        li.textContent = `${a.text} · ${a.ts}`;
-        list.appendChild(li);
-    });
-}
-
-function renderMessengerMini() {
-    const list = document.getElementById('messengerMini');
-    list.innerHTML = '';
-    model.messages.slice().reverse().forEach(m => {
-        const div = document.createElement('div');
-        div.className = 'msg-row';
-        div.innerHTML = `<div class="avatar">${m.from.charAt(0)}</div><div><strong style="font-size:13px">${m.from}</strong><div class="muted">${m.text}</div></div>`;
-        list.appendChild(div);
-    });
-}
-
-function sendMiniMsg() {
-    const input = document.getElementById('miniInput');
-    const val = input.value.trim();
-    if (!val) return;
-    model.messages.push({
-        from: 'You',
-        text: val,
-        ts: new Date().toLocaleTimeString()
-    });
-    model.activities.push({
-        text: `You: ${val}`,
-        ts: new Date().toLocaleString()
-    });
-    input.value = '';
-    renderMessengerMini();
-    renderActivities();
-    updateChartsAndReports();
-}
-
-function renderVoiceList() {
-    const el = document.getElementById('voiceList');
-    el.innerHTML = '';
-    model.voiceMemos.slice().forEach(v => {
-        const d = document.createElement('div');
-        d.style.marginBottom = '8px';
-        d.innerHTML = `<div style="font-weight:600">${v.summary}</div><div class="muted" style="font-size:12px">${v.created}</div>`;
-        el.appendChild(d);
-    });
-}
 
 
-let statusChart, trendChart;
-
-function createCharts() {
-    const sctx = document.getElementById('statusChart').getContext('2d');
-    statusChart = new Chart(sctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['To Do', 'In Progress', 'Review', 'Done'],
-            datasets: [{
-                data: [],
-                backgroundColor: []
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            },
-            responsive: true
-        }
-    });
 
 
-    updateChartsAndReports();
-}
-
-function updateChartsAndReports() {
-    const counts = [
-        model.tasks.todo.length,
-        model.tasks.inprogress.length,
-        model.tasks.review.length,
-        model.tasks.done.length
-    ];
-    statusChart.data.datasets[0].data = counts;
-    statusChart.data.datasets[0].backgroundColor = getStatusColors();
-    statusChart.update();
-
-    renderOverviewCards();
-    renderReports();
-
-    document.getElementById('kanbanReports').textContent = `To Do: ${model.tasks.todo.length} · In Progress: ${model.tasks.inprogress.length} · Review: ${model.tasks.review.length} · Done: ${model.tasks.done.length}`;
-    updateTrendData();
-}
-
-function getStatusColors() {
-    if (document.body.classList.contains('dark')) return ['#f59e0b', '#60a5fa', '#fb923c', '#10b981'];
-    return ['#fbbf24', '#60a5fa', '#f97316', '#10b981'];
-}
-
-function refreshChartColors() {
-    statusChart.data.datasets[0].backgroundColor = getStatusColors();
-    statusChart.update();
-    // trend
-    trendChart.data.datasets[0].backgroundColor = document.body.classList.contains('dark') ? 'rgba(124,58,237,0.12)' : 'rgba(99,102,241,0.12)';
-    trendChart.data.datasets[0].borderColor = document.body.classList.contains('dark') ? '#7c3aed' : '#6366f1';
-    trendChart.update();
-}
-
-function updateTrendData() {
-    const labels = [];
-    const data = [];
-    for (let i = 6; i >= 0; i--) {
-        const d = new Date();
-        d.setDate(d.getDate() - i);
-        labels.push(d.toLocaleDateString());
-        const count = model.activities.filter(a => {
-            try {
-                return new Date(a.ts).toDateString() === d.toDateString();
-            } catch (e) {
-                return false
-            }
-        }).length || Math.floor(Math.random() * 6);
-        data.push(count);
-    }
-    trendChart.data.labels = labels;
-    trendChart.data.datasets[0].data = data;
-    refreshChartColors();
-}
 
 
-/* ------------------------
 
 
-/* ------------------------
-   small helpers
 
-/* ------------------------
-   Init app
-   ------------------------ */
-function init() {
-    renderOverviewCards();
-    renderReports();
-    renderActivities();
-    renderMessengerMini();
-    createCharts();
-    // ensure chart colors match theme
-    setTimeout(refreshChartColors, 200);
-}
-
-init();
-// expose for buttons
-window.openKanbanSection = openKanbanSection;
-window.showSection = showSection;
-window.addQuickTaskPrompt = addQuickTaskPrompt;
-window.sendMiniMsg = sendMiniMsg;
-window.goHome = goHome;
-                        </script>
-
-                        
-                    </div>
-                    <!-- /layout-wrap -->
-                </div>
-                <!-- /#page -->
-
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 
-            </div>
+
+
+
+
+ <script>
+    const colors = [
+      '#38bdf8', // Blue
+      '#a78bfa', // Purple
+      '#34d399', // Green
+      '#fbbf24', // Yellow
+      '#f87171'  // Red
+    ];
+
+    const data = {
+ labels: [
+    'Backlog',       
+    'To Do',         
+    'In Progress',   
+    'Review',        
+    'Done'           
+  ],      datasets: [{
+        data: [40, 20, 15, 15, 10],
+        backgroundColor: colors,
+        borderWidth: 5,
+        borderColor: '#0f172a',
+        hoverBorderColor: '#38bdf8',
+        hoverOffset: 18
+      }]
+    };
+
+    const config = {
+      type: 'doughnut',
+      data: data,
+      options: {
+        cutout: '65%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1e293b',
+            titleColor: '#38bdf8',
+            bodyColor: '#f8fafc',
+            borderColor: '#38bdf8',
+            borderWidth: 1
+          }
+        },
+        animation: {
+          animateRotate: true,
+          animateScale: true
+        }
+      }
+    };
+
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    const myChart = new Chart(ctx, config);
+
+    // Custom Legend
+    function renderLegend(chart) {
+      const legend = document.getElementById('legend');
+      legend.innerHTML = '';
+      chart.data.labels.forEach((label, i) => {
+        const div = document.createElement('div');
+        div.className = 'legend-item';
+
+        const colorSpan = document.createElement('span');
+        colorSpan.className = 'legend-color';
+        colorSpan.style.backgroundColor = chart.data.datasets[0].backgroundColor[i];
+
+        div.appendChild(colorSpan);
+        div.appendChild(document.createTextNode(`${label} - ${chart.data.datasets[0].data[i]}%`));
+        legend.appendChild(div);
+      });
+    }
+
+    renderLegend(myChart);
+  </script>
+       
+
 
             
             <!-- Javascript -->

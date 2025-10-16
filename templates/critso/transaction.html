@@ -3,164 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Kanban Dashboard</title>
+  <title>Dashboard Pie Chart</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    .bodys {
+    body {
       margin: 0;
       background: #0f172a;
-      font-family: 'Poppins', sans-serif;
       color: #e2e8f0;
-      padding: 40px 20px;
+      font-family: 'Poppins', sans-serif;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
-    h1 {
+    .dashboard-container {
+      background: #1e293b;
+      border-radius: 24px;
+      padding: 40px;
+      width: 420px;
+      max-width: 90%;
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+    .dashboard-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 25px;
       color: #38bdf8;
-      font-size: 28px;
-      margin-bottom: 30px;
       letter-spacing: 1px;
     }
 
-    .board-container {
+    .dashboard-chart {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .legend-container {
       display: flex;
       justify-content: center;
-      gap: 25px;
       flex-wrap: wrap;
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    .board {
-      background: #1e293b;
-      border-radius: 20px;
-      width: 340px;
-      padding: 20px;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-    }
-
-    .board:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);
-    }
-
-    .board-title {
-      width: 100%;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 600;
-      color: #38bdf8;
-      border-top: 2px solid #38bdf8;
-      border-bottom: 2px solid #38bdf8;
-      padding: 10px 0;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-    }
-
-    .board p {
+      gap: 12px;
       margin-top: 15px;
-      color: #94a3b8;
-      font-size: 14px;
-      text-align: center;
     }
 
-    footer {
-      margin-top: 40px;
-      color: #64748b;
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #0f172a;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #e2e8f0;
+      box-shadow: 0 0 10px rgba(56,189,248,0.1);
+    }
+
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .footer-text {
       font-size: 13px;
+      color: #94a3b8;
+      margin-top: 25px;
     }
   </style>
 </head>
-<div class="bodys">
-  <h1>📋 Kanban Report Dashboard</h1>
+<body>
+  <div class="dashboard-container">
+    <h2 class="dashboard-title">Sales Overview (2025)</h2>
 
-  <div class="board-container">
-    <!-- === Column 1: To Do === -->
-    <div class="board">
-      <div class="board-title">To Do</div>
-      <canvas id="chart1" style="width:100%;height:220px;"></canvas>
-      <p>Tasks yet to start (based on department report)</p>
-    </div>
+    <canvas id="pieChart" class="dashboard-chart"></canvas>
 
-    <!-- === Column 2: In Progress === -->
-    <div class="board">
-      <div class="board-title">In Progress</div>
-      <canvas id="chart2" style="width:100%;height:220px;"></canvas>
-      <p>Currently running tasks by priority</p>
-    </div>
+    <div id="legend" class="legend-container"></div>
 
-    <!-- === Column 3: Done === -->
-    <div class="board">
-      <div class="board-title">Done</div>
-      <canvas id="chart3" style="width:100%;height:220px;"></canvas>
-      <p>Completed reports overview</p>
-    </div>
   </div>
 
-  <footer>© 2025 Modern Kanban Dashboard — Designed by Md. Al Imran</footer>
-
   <script>
-    // === Chart 1: To Do ===
-    new Chart(document.getElementById('chart1'), {
-      type: 'doughnut',
-      data: {
-        labels: ['UI Design', 'Testing', 'Planning', 'Bug Fixing'],
-        datasets: [{
-          data: [30, 20, 25, 25],
-          backgroundColor: ['#38bdf8','#a78bfa','#34d399','#f87171'],
-          borderWidth: 4,
-          borderColor: '#1e293b'
-        }]
-      },
-      options: {
-        cutout: '60%',
-        plugins: { legend: { display: false } }
-      }
-    });
+    const colors = [
+      '#38bdf8', // Blue
+      '#a78bfa', // Purple
+      '#34d399', // Green
+      '#fbbf24', // Yellow
+      '#f87171'  // Red
+    ];
 
-    // === Chart 2: In Progress ===
-    new Chart(document.getElementById('chart2'), {
-      type: 'bar',
-      data: {
-        labels: ['High', 'Medium', 'Low'],
-        datasets: [{
-          data: [8, 5, 3],
-          backgroundColor: ['#f87171','#fbbf24','#34d399'],
-          borderRadius: 10
-        }]
-      },
+    const data = {
+ labels: [
+    'Backlog',       
+    'To Do',         
+    'In Progress',   
+    'Review',        
+    'Done'           
+  ],      datasets: [{
+        data: [40, 20, 15, 15, 10],
+        backgroundColor: colors,
+        borderWidth: 5,
+        borderColor: '#0f172a',
+        hoverBorderColor: '#38bdf8',
+        hoverOffset: 18
+      }]
+    };
+
+    const config = {
+      type: 'doughnut',
+      data: data,
       options: {
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } },
-          y: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } }
+        cutout: '65%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#1e293b',
+            titleColor: '#38bdf8',
+            bodyColor: '#f8fafc',
+            borderColor: '#38bdf8',
+            borderWidth: 1
+          }
+        },
+        animation: {
+          animateRotate: true,
+          animateScale: true
         }
       }
-    });
+    };
 
-    // === Chart 3: Done ===
-    new Chart(document.getElementById('chart3'), {
-      type: 'pie',
-      data: {
-        labels: ['Completed', 'Reviewed', 'Approved'],
-        datasets: [{
-          data: [40, 25, 35],
-          backgroundColor: ['#34d399','#38bdf8','#a78bfa'],
-          borderWidth: 4,
-          borderColor: '#1e293b'
-        }]
-      },
-      options: {
-        plugins: { legend: { display: false } }
-      }
-    });
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    const myChart = new Chart(ctx, config);
+
+    // Custom Legend
+    function renderLegend(chart) {
+      const legend = document.getElementById('legend');
+      legend.innerHTML = '';
+      chart.data.labels.forEach((label, i) => {
+        const div = document.createElement('div');
+        div.className = 'legend-item';
+
+        const colorSpan = document.createElement('span');
+        colorSpan.className = 'legend-color';
+        colorSpan.style.backgroundColor = chart.data.datasets[0].backgroundColor[i];
+
+        div.appendChild(colorSpan);
+        div.appendChild(document.createTextNode(`${label} - ${chart.data.datasets[0].data[i]}%`));
+        legend.appendChild(div);
+      });
+    }
+
+    renderLegend(myChart);
   </script>
-</div>
+</body>
 </html>
