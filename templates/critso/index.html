@@ -1,36 +1,17 @@
 <!DOCTYPE html>
-<!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-<!--<![endif]-->
 
 <head>
-    <!-- Basic Page Needs -->
     <meta charset="utf-8">
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-    <title>Shared By NULLPHPSCRIPT.COM - Critso - Crypto Dashboard Template</title>
-
     <meta name="author" content="themesflat.com">
-
-    <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <!-- Theme Style -->
     <link rel="stylesheet" type="text/css" href="css/animate.min.css">
     <link rel="stylesheet" type="text/css" href="css/animation.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-
-
-
-    <!-- Font -->
     <link rel="stylesheet" href="font/fonts.css">
-
-    <!-- Icon -->
     <link rel="stylesheet" href="icon/style.css">
-
-    <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="images/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="images/favicon.png">
 
@@ -618,8 +599,8 @@
         </div>
     </div>
 </div>
-<!-- /header-dashboard -->
-<!-- main-content -->
+
+
 <div class="main-content">
     <!-- main-content-wrap -->
     <div class="main-content-inner">
@@ -718,7 +699,6 @@
                                  </div>
                             </div>
                         </div>
-                        <!-- /main-content-wrap -->
                     </div>
                     <!-- Chart.js -->
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -751,8 +731,7 @@
                             <div class="muted" style="margin-top:6px">Needs attention</div>
                         </div>
                     </div>
-                    <!-- Main content -->
-                    <!-- Dashboard Section -->
+
                 </div>
                 <div class="rail-card">
                     <h4>Messenger (mini)</h4>
@@ -798,6 +777,165 @@
                 </section>
             </div>
             </main>
+
+<style>
+    .bodys {
+      margin: 0;
+      background: #0f172a;
+      font-family: 'Poppins', sans-serif;
+      color: #e2e8f0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #38bdf8;
+      font-size: 28px;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    .board-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .board {
+      background: #1e293b;
+      border-radius: 20px;
+      width: 340px;
+      padding: 20px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .board:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);
+    }
+
+    .board-title {
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #38bdf8;
+      border-top: 2px solid #38bdf8;
+      border-bottom: 2px solid #38bdf8;
+      padding: 10px 0;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .board p {
+      margin-top: 15px;
+      color: #94a3b8;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<div class="bodys">
+  <h1>📋 Kanban Report Dashboard</h1>
+
+  <div class="board-container">
+    <!-- === Column 1: To Do === -->
+    <div class="board">
+      <div class="board-title">To Do</div>
+      <canvas id="chart1" style="width:100%;height:220px;"></canvas>
+      <p>Tasks yet to start (based on department report)</p>
+    </div>
+
+    <!-- === Column 2: In Progress === -->
+    <div class="board">
+      <div class="board-title">In Progress</div>
+      <canvas id="chart2" style="width:100%;height:220px;"></canvas>
+      <p>Currently running tasks by priority</p>
+    </div>
+
+    <!-- === Column 3: Done === -->
+    <div class="board">
+      <div class="board-title">Done</div>
+      <canvas id="chart3" style="width:100%;height:220px;"></canvas>
+      <p>Completed reports overview</p>
+    </div>
+  </div>
+
+  <footer>© 2025 Modern Kanban Dashboard — Designed by Md. Al Imran</footer>
+
+  <script>
+    // === Chart 1: To Do ===
+    new Chart(document.getElementById('chart1'), {
+      type: 'doughnut',
+      data: {
+        labels: ['UI Design', 'Testing', 'Planning', 'Bug Fixing'],
+        datasets: [{
+          data: [30, 20, 25, 25],
+          backgroundColor: ['#38bdf8','#a78bfa','#34d399','#f87171'],
+          borderWidth: 4,
+          borderColor: '#1e293b'
+        }]
+      },
+      options: {
+        cutout: '60%',
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // === Chart 2: In Progress ===
+    new Chart(document.getElementById('chart2'), {
+      type: 'bar',
+      data: {
+        labels: ['High', 'Medium', 'Low'],
+        datasets: [{
+          data: [8, 5, 3],
+          backgroundColor: ['#f87171','#fbbf24','#34d399'],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } },
+          y: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } }
+        }
+      }
+    });
+
+    // === Chart 3: Done ===
+    new Chart(document.getElementById('chart3'), {
+      type: 'pie',
+      data: {
+        labels: ['Completed', 'Reviewed', 'Approved'],
+        datasets: [{
+          data: [40, 25, 35],
+          backgroundColor: ['#34d399','#38bdf8','#a78bfa'],
+          borderWidth: 4,
+          borderColor: '#1e293b'
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } }
+      }
+    });
+  </script>
+            
         </div>
 
 
@@ -807,9 +945,8 @@
 
         
 <script>
-                /* ------------------------
-       Da(in-memory)
-       --------------------- */
+
+
              const model = {
     tasks: {
         todo: [{
@@ -897,10 +1034,6 @@
 
 
 
-
-/*--
-   Render / UI
-   ------------------------ */
 function renderOverviewCards() {
     document.getElementById('card-completed').textContent = model.tasks.done.length;
     document.getElementById('card-pending').textContent = model.tasks.todo.length + model.tasks.inprogress.length + model.tasks.review.length;
@@ -975,12 +1108,7 @@ function renderVoiceList() {
     });
 }
 
-/* ------------------------
 
-
-/* ------------------------
-   Charts (Chart.js)
-   ------------------------ */
 let statusChart, trendChart;
 
 function createCharts() {
@@ -1090,22 +1218,20 @@ window.sendMiniMsg = sendMiniMsg;
 window.goHome = goHome;
                         </script>
 
-
-
-
-                        <!-- /section-content-right -->
+                        
                     </div>
                     <!-- /layout-wrap -->
                 </div>
                 <!-- /#page -->
+
+                
             </div>
 
 
 
 
 
-            <!-- /#wrapper -->
-
+            
             <!-- Javascript -->
             <script src="js/jquery.min.js"></script>
             <script src="js/countto.js"></script>

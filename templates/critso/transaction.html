@@ -1,342 +1,166 @@
 <!DOCTYPE html>
-<!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-<!--<![endif]-->
-
+<html lang="en">
 <head>
-    <!-- Basic Page Needs -->
-    <meta charset="utf-8">
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-    <title>Shared By NULLPHPSCRIPT.COM - Critso - Crypto Dashboard Template</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Kanban Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <meta name="author" content="themesflat.com">
+  <style>
+    .bodys {
+      margin: 0;
+      background: #0f172a;
+      font-family: 'Poppins', sans-serif;
+      color: #e2e8f0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-    <!-- Mobile Specific Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    h1 {
+      color: #38bdf8;
+      font-size: 28px;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
 
-    <!-- Theme Style -->
-    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="css/animation.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    .board-container {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1200px;
+    }
 
+    .board {
+      background: #1e293b;
+      border-radius: 20px;
+      width: 340px;
+      padding: 20px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
 
+    .board:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);
+    }
 
-    <!-- Font -->
-    <link rel="stylesheet" href="font/fonts.css">
+    .board-title {
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #38bdf8;
+      border-top: 2px solid #38bdf8;
+      border-bottom: 2px solid #38bdf8;
+      padding: 10px 0;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
 
-    <!-- Icon -->
-    <link rel="stylesheet" href="icon/style.css">
+    .board p {
+      margin-top: 15px;
+      color: #94a3b8;
+      font-size: 14px;
+      text-align: center;
+    }
 
-    <!-- Favicon and Touch Icons  -->
-    <link rel="shortcut icon" href="images/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="images/favicon.png">
-
+    footer {
+      margin-top: 40px;
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
 </head>
+<div class="bodys">
+  <h1>📋 Kanban Report Dashboard</h1>
 
-<body>
-
-    <!-- #wrapper -->
-    <div id="wrapper">
-        <!-- #page -->
-        <div id="page" class="">
-            <!-- layout-wrap -->
-            <div class="layout-wrap loader-off">
-                <!-- preload -->
-                <div id="preload" class="preload-container">
-                    <div class="preloading">
-                        <span></span>
-                    </div>
-                </div>
-                <!-- /preload -->
-                <!-- section-menu-left -->
-                <div class="section-menu-left">
-                    <div class="box-logo">
-                        <a href="index.html" id="site-logo-inner">
-                            <img class="" id="logo_header" alt="" src="images/logo/logo.svg" data-light="images/logo/logo.svg" data-dark="images/logo/logo-dark.svg" >
-                        </a>
-                        <div class="button-show-hide">
-                            <i class="icon-back"></i>
-                        </div>
-                    </div>
-                    <div class="section-menu-left-wrap">
-                        <div class="center">
-                            <div class="center-item">
-                                <div class="center-heading f14-regular text-Gray menu-heading mb-12">Navigation</div>
-                            </div>
-                            <div class="center-item">
-                                <ul class="">
-                                    <li class="menu-item">
-                                        <a href="index.html" class="menu-item-button">
-                                            <div class="icon">
-                                                <i class="icon-category"></i>
-                                            </div>
-                                            <div class="text">Dashboard</div>
-                                        </a>
-                                    </li>
-                                    
-                                    
-                                    <li class="menu-item">
-                                        <a href="component.html" class="menu-item-button">
-                                            <div class="icon">
-                                                <i class="icon-search-normal"></i>
-                                            </div>
-                                            <div class="text">Component</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /section-menu-left -->
-                <!-- section-content-right -->
-                <div class="section-content-right">
-                    <!-- header-dashboard -->
-                    <div class="header-dashboard">
-                        <div class="wrap">
-                            <div class="header-left">
-                                <div class="button-show-hide">
-                                    <i class="icon-menu"></i>
-                                </div>
-                                <h6>Dashboard</h6>
-                                <form class="form-search flex-grow">
-                                    <fieldset class="name">
-                                        <input type="text" placeholder="Type to search …" class="show-search style-1" name="name" tabindex="2" value="" aria-required="true" required="">
-                                    </fieldset>
-                                    <div class="button-submit">
-                                        <button class="" type="submit"><i class="icon-search-normal1"></i></button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="header-grid">
-                                <div class="header-btn">
-                                    <div class="popup-wrap message type-header">
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span class="header-item">
-                                                    <i class="icon-sms"></i>
-                                                </span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton1" >
-                                                <li>
-                                                    <h6>Message</h6>
-                                                </li>
-                                                <li>
-                                                    <div class="message-item w-full wg-user active">
-                                                        <div class="image">
-                                                            <img src="images/avatar/user-1.png" alt="">
-                                                        </div>
-                                                        <div class="flex-grow">
-                                                            <div class="flex items-center justify-between">
-                                                                <a href="#" class="body-title name">Cameron Williamson</a>
-                                                                <div class="time">10:13 PM</div>
-                                                            </div>
-                                                            <div class="text-tiny desc">Hello?</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="message-item w-full wg-user active">
-                                                        <div class="image">
-                                                            <img src="images/avatar/user-2.png" alt="">
-                                                        </div>
-                                                        <div class="flex-grow">
-                                                            <div class="flex items-center justify-between">
-                                                                <a href="#" class="body-title name">Ralph Edwards</a>
-                                                                <div class="time">10:13 PM</div>
-                                                            </div>
-                                                            <div class="text-tiny desc">Are you there?  interested i this...</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="message-item w-full wg-user active">
-                                                        <div class="image">
-                                                            <img src="images/avatar/user-3.png" alt="">
-                                                        </div>
-                                                        <div class="flex-grow">
-                                                            <div class="flex items-center justify-between">
-                                                                <a href="#" class="body-title name">Eleanor Pena</a>
-                                                                <div class="time">10:13 PM</div>
-                                                            </div>
-                                                            <div class="text-tiny desc">Interested in this loads?</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="message-item w-full wg-user active">
-                                                        <div class="image">
-                                                            <img src="images/avatar/user-4.png" alt="">
-                                                        </div>
-                                                        <div class="flex-grow">
-                                                            <div class="flex items-center justify-between">
-                                                                <a href="#" class="body-title name">Jane Cooper</a>
-                                                                <div class="time">10:13 PM</div>
-                                                            </div>
-                                                            <div class="text-tiny desc">Okay...Do we have a deal?</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <a href="message.html" class="tf-button style-1 f12-bold w-100">
-                                                        View All
-                                                        <i class="icon icon-send"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="popup-wrap noti type-header">
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span class="header-item">
-                                                    <i class="icon-notification1"></i>
-                                                </span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton2" >
-                                                <li>
-                                                    <h6>Notifications</h6>
-                                                </li>
-                                                <li>
-                                                    <div class="notifications-item item-1">
-                                                        <div class="image">
-                                                            <i class="icon-setting-5"></i>
-                                                        </div>
-                                                        <div>
-                                                            <div class="body-title-2">Discount available</div>
-                                                            <div class="text-tiny">Morbi sapien massa, ultricies at rhoncus at, ullamcorper nec diam</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="notifications-item item-2">
-                                                        <div class="image">
-                                                            <i class="icon-person"></i>
-                                                        </div>
-                                                        <div>
-                                                            <div class="body-title-2">Account has been verified</div>
-                                                            <div class="text-tiny">Mauris libero ex, iaculis vitae rhoncus et</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="notifications-item item-3">
-                                                        <div class="image">
-                                                            <i class="icon-message-text1"></i>
-                                                        </div>
-                                                        <div>
-                                                            <div class="body-title-2">Order shipped successfully</div>
-                                                            <div class="text-tiny">Integer aliquam eros nec sollicitudin sollicitudin</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="notifications-item item-4">
-                                                        <div class="image">
-                                                            <i class="icon-sms-tracking"></i>
-                                                        </div>
-                                                        <div>
-                                                            <div class="body-title-2">Order pending: <span>ID 305830</span></div>
-                                                            <div class="text-tiny">Ultricies at rhoncus at ullamcorper</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <a href="notifications.html" class="tf-button style-1 f12-bold w-100">
-                                                        View All
-                                                        <i class="icon icon-send"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="line1"></div>
-                                <div class="popup-wrap user type-header">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="header-user wg-user">
-                                                <span class="image">
-                                                    <img src="images/avatar/user-1.png" alt="">
-                                                </span>
-                                                <span class="content flex flex-column">
-                                                    <span class="label-02 text-Black name">Jonathan</span>
-                                                    <span class="f14-regular text-Gray">Admin</span>
-                                                </span>
-                                            </span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton3" >
-                                            <li>
-                                                <a href="account.html" class="user-item">
-                                                    <div class="body-title-2">Account</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="user-item">
-                                                    <div class="body-title-2">Inbox</div>
-                                                    <div class="number">27</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="transaction.html" class="user-item">
-                                                    <div class="body-title-2">Transaction</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="settings.html" class="user-item">
-                                                    <div class="body-title-2">Setting</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="crypto.html" class="user-item">
-                                                    <div class="body-title-2">Crypto</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="sign-in.html" class="user-item">
-                                                    <div class="body-title-2">Log out</div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /header-dashboard -->
-                    <!-- main-content -->
-                    <div class="main-content">
-                        <!-- main-content-wrap -->
-                        <div class="main-content-inner">
-                            <!-- main-content-wrap -->
-                          
-                             
-                            <!-- /main-content-wrap -->
-                        </div>
-                        <!-- /main-content-wrap -->
-                        
-                    </div>
-                    <!-- /main-content -->
-                </div>
-                <!-- /section-content-right -->
-            </div>
-            <!-- /layout-wrap -->
-        </div>
-        <!-- /#page -->
+  <div class="board-container">
+    <!-- === Column 1: To Do === -->
+    <div class="board">
+      <div class="board-title">To Do</div>
+      <canvas id="chart1" style="width:100%;height:220px;"></canvas>
+      <p>Tasks yet to start (based on department report)</p>
     </div>
-    <!-- /#wrapper -->
 
-    <!-- Javascript -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-select.min.js"></script>
-    <!-- <script src="js/switcher.js"></script> -->
-    <script defer src="js/theme-settings.js"></script>
-    <script src="js/main.js"></script>
+    <!-- === Column 2: In Progress === -->
+    <div class="board">
+      <div class="board-title">In Progress</div>
+      <canvas id="chart2" style="width:100%;height:220px;"></canvas>
+      <p>Currently running tasks by priority</p>
+    </div>
 
-</body>
+    <!-- === Column 3: Done === -->
+    <div class="board">
+      <div class="board-title">Done</div>
+      <canvas id="chart3" style="width:100%;height:220px;"></canvas>
+      <p>Completed reports overview</p>
+    </div>
+  </div>
 
+  <footer>© 2025 Modern Kanban Dashboard — Designed by Md. Al Imran</footer>
+
+  <script>
+    // === Chart 1: To Do ===
+    new Chart(document.getElementById('chart1'), {
+      type: 'doughnut',
+      data: {
+        labels: ['UI Design', 'Testing', 'Planning', 'Bug Fixing'],
+        datasets: [{
+          data: [30, 20, 25, 25],
+          backgroundColor: ['#38bdf8','#a78bfa','#34d399','#f87171'],
+          borderWidth: 4,
+          borderColor: '#1e293b'
+        }]
+      },
+      options: {
+        cutout: '60%',
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // === Chart 2: In Progress ===
+    new Chart(document.getElementById('chart2'), {
+      type: 'bar',
+      data: {
+        labels: ['High', 'Medium', 'Low'],
+        datasets: [{
+          data: [8, 5, 3],
+          backgroundColor: ['#f87171','#fbbf24','#34d399'],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } },
+          y: { ticks: { color:'#94a3b8' }, grid:{ color:'#334155' } }
+        }
+      }
+    });
+
+    // === Chart 3: Done ===
+    new Chart(document.getElementById('chart3'), {
+      type: 'pie',
+      data: {
+        labels: ['Completed', 'Reviewed', 'Approved'],
+        datasets: [{
+          data: [40, 25, 35],
+          backgroundColor: ['#34d399','#38bdf8','#a78bfa'],
+          borderWidth: 4,
+          borderColor: '#1e293b'
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } }
+      }
+    });
+  </script>
+</div>
 </html>

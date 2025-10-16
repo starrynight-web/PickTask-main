@@ -37,25 +37,62 @@
         {{ form.last_name }}
     </div>
 
-    <div class="form-group">
-        <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
-        {{ form.password1 }}
-        {% if form.password1.errors %}
-        <div class="error-list">
-            {{ form.password1.errors }}
-        </div>
-        {% endif %}
-    </div>
+    <style>
 
-    <div class="form-group">
-        <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
-        {{ form.password2 }}
-        {% if form.password2.errors %}
-        <div class="error-list">
-            {{ form.password2.errors }}
-        </div>
-        {% endif %}
-    </div>
+
+  input[type="password"],
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 35px 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+
+  .error-list {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+</style>
+
+<div class="form-group">
+  <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+  {{ form.password1 }}
+  <button type="button" class="toggle-password" onclick="togglePassword('{{ form.password1.id_for_label }}', this)"></button>
+  {% if form.password1.errors %}
+  <div class="error-list">
+    {{ form.password1.errors }}
+  </div>
+  {% endif %}
+</div>
+
+<div class="form-group">
+  <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
+  {{ form.password2 }}
+  <button type="button" class="toggle-password" onclick="togglePassword('{{ form.password2.id_for_label }}', this)"></button>
+  {% if form.password2.errors %}
+  <div class="error-list">
+    {{ form.password2.errors }}
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  function togglePassword(fieldId, button) {
+    const input = document.getElementById(fieldId);
+    if (input.type === "password") {
+      input.type = "text";
+      button.textContent = "Hide";
+    } else {
+      input.type = "password";
+      button.textContent = "Show";
+    }
+  }
+</script>
+
 
     <button type="submit" class="btn btn-primary">Create Account</button>
 </form>
