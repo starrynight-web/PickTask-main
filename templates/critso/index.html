@@ -93,6 +93,13 @@
                                         .f18-medium {
                                             font-size: 18px;
                                             font-weight: 500;
+                                        } 
+                                        
+                                        .f25-medium {
+                                            font-size:20px;
+                                            font-weight: 500;
+                                            margin-top: 10px;
+                                            
                                         }
 
                                                                         
@@ -415,17 +422,43 @@
                                     <div class="f16-medium text-Black" id="card-pending">Pending <span class="text-Gray">Task</span></span></div>
                                 </div>
 
-                            
+                            <style>
+                             .cardds {
+  border: 10px solid rgb(255, 255, 255);
+  background-color: #000000;
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 10px auto;
+  max-width: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.21);
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.cardds:hover {
+  transform: scale(1.03);
+  background-color: #523866;
+}
+
+
+
+
+                            </style>
                                <a href="#">
-                                <div class="wg-card style-1 bg-Primary mb-25">
+                                <div class="wg-card cardds" >
                                    
-                                    <div class="f16-medium text-White">Go To <span class="text-Gray">The</span></span></div>
-                                 <div style="color: rgb(255, 255, 255); font: 1em sans-serif;  font-size: 30PX ; margin-top: px; height: 72px; margin-top: 40px;">Workspace</div>
+                                   <center> <div class="f25-medium text-White" >Go To <span class="text-Gray">The</span></span></div></center>
+                               <center>  <div style="color: rgb(255, 255, 255); font: 1em sans-serif;  font-size: 30PX ; margin-top: px; height: 59px; margin-top: 40px;">Workspace</div></center>
 
                                 </div>
+                            </a>
+                         
 
                      
-                            </a>
+                            
                                 
                             </div>
     
@@ -439,17 +472,15 @@
 <bodyss>
   <div class="dashboard-container">
 
+      <div class="bg-text">Activity Overview 
+      </div>
 
-<div class="bg-text">Activity Overview </div>
+      <canvas id="pieChart" class="dashboard-chart"></canvas>
 
-
-
-    <canvas id="pieChart" class="dashboard-chart"></canvas>
-
-    <div id="legend" class="legend-container"></div>
+      <div id="legend" class="legend-container">
+      </div>
 
   </div>
-
 </bodyss>
 
 
@@ -570,9 +601,6 @@
             <script src="js/apexcharts/small-chart-3.js"></script>
             <script src="js/apexcharts/small-chart-4.js"></script>
             <script src="js/apexcharts/line-chart-twoline.js"></script>
-            <script src="js/apexcharts/candlestick-1.js"></script>
-            <script src="js/apexcharts/candlestick-4.js"></script>
-            <script src="js/apexcharts/candlestick-5.js"></script>
             <!-- <script src="js/switcher.js"></script> -->
             <script defer src="js/theme-settings.js"></script>
             <script src="js/main.js"></script>
