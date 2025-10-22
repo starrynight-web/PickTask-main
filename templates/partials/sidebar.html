@@ -107,7 +107,7 @@
             {% if current_workspace and current_project %}
                 <a href="{% url 'workspace:dashboard' %}" 
                    class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                    <i class="fa-solid fa-grip"></i>
+                    <i class="fas fa-home"></i>
                     <span>Dashboard</span>
                 </a>
                 <a href="{% url 'kanban:kanban' current_workspace.id %}" 
