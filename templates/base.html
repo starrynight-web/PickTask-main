@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,6 +8,10 @@
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <style>
       :root {
@@ -182,6 +187,119 @@
         font-size: 0.9rem;
       }
 
+      /* Enhanced Dropdown Styles */
+      .nav-dropdown {
+        position: relative;
+      }
+
+      .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--gray-700);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.75rem 1.25rem;
+        border-radius: var(--border-radius-sm);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 0.9rem;
+        font-family: inherit;
+      }
+
+      .dropdown-toggle:hover,
+      .dropdown-toggle:focus {
+        color: var(--primary-teal);
+        background: var(--primary-light);
+        transform: translateY(-1px);
+      }
+
+      .dropdown-toggle.active {
+        color: var(--primary-teal);
+        background: var(--primary-light);
+        font-weight: 600;
+      }
+
+      .dropdown-toggle i.fa-chevron-down {
+        transition: transform 0.3s ease;
+        font-size: 0.8rem;
+      }
+
+      .dropdown-toggle.open i.fa-chevron-down {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--white);
+        border: 1px solid var(--gray-200);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-lg);
+        min-width: 200px;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+      }
+
+      .dropdown-menu.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1rem;
+        color: var(--gray-700);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .dropdown-item:hover {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          transparent 100%
+        );
+        color: var(--primary-teal);
+        border-left-color: var(--primary-teal);
+        transform: translateX(4px);
+      }
+
+      .dropdown-item.active {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          rgba(123, 104, 238, 0.1) 100%
+        );
+        border-left-color: var(--primary-teal);
+        color: var(--primary-teal);
+        font-weight: 600;
+      }
+
+      /* Close dropdown when clicking outside */
+      .dropdown-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: transparent;
+        z-index: 1000;
+        display: none;
+      }
+
       .mobile-menu-toggle {
         display: none;
         background: none;
@@ -216,7 +334,7 @@
           var(--gray-50) 100%
         );
         border-right: 1px solid var(--gray-200);
-        padding: 2rem 0;
+        padding: 0;
         position: relative;
         overflow: hidden;
         flex-shrink: 0;
@@ -237,68 +355,111 @@
         opacity: 0.8;
       }
 
-      .sidebar-section {
-        margin-bottom: 2rem;
+      /* Sequential Navigation Styles */
+      .sequential-nav {
         position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
       }
 
-      .sidebar-section::after {
-        content: "";
-        position: absolute;
-        bottom: -1rem;
-        left: 1.5rem;
-        right: 1.5rem;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent 0%,
-          var(--gray-200) 50%,
-          transparent 100%
-        );
-      }
-
-      .sidebar-section:last-child::after {
+      .nav-view {
         display: none;
+        flex-direction: column;
+        height: 100%;
+        animation: fadeIn 0.3s ease;
       }
 
-      .sidebar-title {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        color: var(--gray-500);
-        padding: 0 1.5rem;
-        margin-bottom: 1rem;
+      .nav-view.active {
+        display: flex;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateX(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .nav-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--gray-200);
+        background: var(--white);
+        flex-shrink: 0;
+      }
+
+      .nav-title {
         font-weight: 600;
-        letter-spacing: 0.1em;
+        color: var(--gray-800);
+        font-size: 0.95rem;
+        text-align: center;
+        flex: 1;
+      }
+
+      .nav-arrow {
+        background: var(--gray-100);
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: var(--gray-600);
+        flex-shrink: 0;
       }
 
-      .sidebar-title::before {
-        content: "";
-        width: 12px;
-        height: 2px;
+      .nav-arrow:hover:not(:disabled) {
         background: var(--primary-teal);
-        border-radius: 1px;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
       }
 
-      .sidebar-link {
+      .nav-arrow:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background: var(--gray-100);
+        color: var(--gray-400);
+      }
+
+      .nav-arrow-spacer {
+        width: 32px;
+        visibility: hidden;
+      }
+
+      .nav-content {
+        flex: 1;
+        padding: 1rem 0;
+        overflow-y: auto;
+      }
+
+      .nav-item {
         display: flex;
         align-items: center;
         gap: 0.75rem;
         padding: 0.875rem 1.5rem;
-        color: var(--gray-600);
+        color: var(--gray-700);
         text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s ease;
         border-left: 3px solid transparent;
-        font-weight: 500;
+        cursor: pointer;
         position: relative;
-        margin: 0.125rem 0.5rem;
-        border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+        margin: 0.125rem 0;
+        font-weight: 500;
         font-size: 0.9rem;
       }
 
-      .sidebar-link:hover {
+      .nav-item:hover:not(.empty-state) {
         background: linear-gradient(
           90deg,
           var(--primary-light) 0%,
@@ -307,10 +468,9 @@
         color: var(--primary-teal);
         border-left-color: var(--primary-teal);
         transform: translateX(4px);
-        box-shadow: var(--shadow);
       }
 
-      .sidebar-link.active {
+      .nav-item.selected {
         background: linear-gradient(
           90deg,
           var(--primary-light) 0%,
@@ -319,14 +479,76 @@
         border-left-color: var(--primary-teal);
         color: var(--primary-teal);
         font-weight: 600;
-        box-shadow: var(--shadow-md);
-        transform: translateX(4px);
       }
 
-      .fa-solid {
-        width: 18px;
-        text-align: center;
-        font-size: 0.9rem;
+      .nav-item.active {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          rgba(123, 104, 238, 0.1) 100%
+        );
+        border-left-color: var(--primary-teal);
+        color: var(--primary-teal);
+        font-weight: 600;
+      }
+
+      .nav-item.empty-state {
+        color: var(--gray-500);
+        cursor: default;
+      }
+
+      .nav-item.empty-state:hover {
+        background: transparent;
+        color: var(--gray-500);
+        transform: none;
+        border-left-color: transparent;
+      }
+
+      .nav-item.new-item {
+        color: var(--primary-teal);
+        font-weight: 600;
+      }
+
+      .nav-item.new-item:hover {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          transparent 100%
+        );
+        border-left-color: var(--primary-teal);
+      }
+
+      .selected-check {
+        margin-left: auto;
+        color: var(--success);
+        font-size: 0.8rem;
+      }
+
+      .nav-progress {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1.25rem 1.5rem;
+        border-top: 1px solid var(--gray-200);
+        background: var(--white);
+        flex-shrink: 0;
+      }
+
+      .progress-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--gray-300);
+        transition: all 0.3s ease;
+      }
+
+      .progress-dot.active {
+        background: var(--primary-teal);
+        transform: scale(1.2);
+      }
+
+      .progress-dot.completed {
+        background: var(--success);
       }
 
       /* Enhanced Main Content Area */
@@ -718,7 +940,12 @@
         .sidebar {
           width: 100%;
           order: 2;
-          padding: 1rem 0;
+          height: auto;
+          max-height: 60vh;
+        }
+
+        .sequential-nav {
+          height: auto;
         }
 
         .main-content {
@@ -758,6 +985,37 @@
           padding: 1rem;
           border-radius: var(--border-radius-sm);
           text-align: center;
+        }
+
+        /* Mobile Dropdown Styles */
+        .nav-dropdown {
+          width: 100%;
+        }
+
+        .dropdown-toggle {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .dropdown-menu {
+          position: static;
+          width: 100%;
+          box-shadow: none;
+          border: none;
+          border-top: 1px solid var(--gray-200);
+          opacity: 1;
+          visibility: visible;
+          transform: none;
+          display: none;
+          background: var(--gray-50);
+        }
+
+        .dropdown-menu.open {
+          display: block;
+        }
+
+        .dropdown-overlay {
+          display: none !important;
         }
 
         .mobile-menu-toggle {
@@ -852,13 +1110,58 @@
 
         <div class="nav-links" id="nav-links">
           {% if user.is_authenticated %}
-          <!-- <a
-            href="{% url 'workspace:dashboard' %}"
-            class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
-          >
-            <i class="fas fa-home"></i>
-            Dashboard
-          </a> -->
+          <!-- Navigation Dropdown -->
+          <div class="nav-dropdown">
+            <button
+              class="dropdown-toggle"
+              id="navigation-dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fas fa-compass"></i>
+              Navigation
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+              {% if current_workspace and current_project %}
+              <a
+                href="{% url 'workspace:dashboard' %}"
+                class="dropdown-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+              >
+                <i class="fas fa-home"></i>
+                Dashboard
+              </a>
+              <a
+                href="{% url 'kanban:kanban' current_workspace.id %}"
+                class="dropdown-item {% if request.resolver_match.url_name == 'kanban' %}active{% endif %}"
+              >
+                <i class="fa-solid fa-table-columns"></i>
+                Kanban Board
+              </a>
+              <a
+                href="{% url 'team:team' current_workspace.id %}"
+                class="dropdown-item {% if request.resolver_match.url_name == 'team' %}active{% endif %}"
+              >
+                <i class="fa-solid fa-sitemap"></i>
+                Team
+              </a>
+              <a
+                href="{% url 'activity:activity' current_workspace.id %}"
+                class="dropdown-item {% if request.resolver_match.url_name == 'activity' %}active{% endif %}"
+              >
+                <i class="fa-solid fa-chart-line"></i>
+                Activity
+              </a>
+              {% else %}
+              <div class="dropdown-item" style="cursor: default; color: var(--gray-500);">
+                <i class="fa-solid fa-exclamation-circle"></i>
+                Select workspace and project first
+              </div>
+              {% endif %}
+            </div>
+            <div class="dropdown-overlay" id="dropdown-overlay"></div>
+          </div>
+
           <span class="user-greeting">
             <i class="fas fa-user"></i>
             {{ user.username }}
@@ -881,6 +1184,105 @@
       </div>
     </nav>
 
+    <!-- Full-Screen Loading Screen -->
+    <div
+      id="global-loading-screen"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      "
+    >
+      <!-- Animated Logo Container -->
+      <div
+        id="loading-logo-container"
+        style="
+          width: 80px;
+          height: 80px;
+          margin-bottom: 1.5rem;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <!-- We'll toggle between img and i -->
+        <img
+          id="loading-logo-img"
+          src="{% static 'images/logo.png' %}"
+          alt="PickTask"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+              opacity 0.4s ease;
+            display: block;
+          "
+        />
+
+        <i
+          id="loading-icon"
+          class="fa-solid fa-calendar-days"
+          style="
+            font-size: 48px;
+            color: #6b68ee;
+            transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+              opacity 0.4s ease;
+            display: none;
+          "
+        ></i>
+      </div>
+
+      <div
+        style="
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #4b5563;
+          margin-bottom: 1rem;
+          text-align: center;
+        "
+      >
+        Loading PickTask...
+      </div>
+
+      <div
+        style="
+          width: 320px;
+          height: 8px;
+          background: #f3f4f6;
+          border-radius: 9999px;
+          overflow: hidden;
+          box-shadow: 0 0 20px rgba(123, 104, 238, 0.3);
+        "
+      >
+        <div
+          id="loading-progress-bar"
+          style="
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(
+              90deg,
+              var(--primary-teal),
+              var(--primary-green)
+            );
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+          "
+        ></div>
+      </div>
+    </div>
     <!-- Main Layout -->
     <div class="app-layout">
       {% if user.is_authenticated %}
@@ -915,11 +1317,344 @@
     </div>
 
     <script>
+      // Sequential Navigation State Management
+      class SequentialNav {
+        static instance = null;
+
+        constructor() {
+          if (SequentialNav.instance) {
+            return SequentialNav.instance;
+          }
+
+          this.currentView = "workspace-view";
+          this.selectedWorkspace = {% if current_workspace %}{{ current_workspace.id }}{% else %}null{% endif %};
+          this.selectedProject = {% if current_project %}{{ current_project.id }}{% else %}null{% endif %};
+          this.autoAdvance = true;
+
+          SequentialNav.instance = this;
+          this.init();
+        }
+
+        init() {
+          // Restore state from session storage
+          this.restoreState();
+
+          // Set initial view based on current selections
+          this.updateViewState();
+
+          // Initialize event listeners
+          this.bindEvents();
+
+          console.log("SequentialNav initialized");
+        }
+
+        restoreState() {
+          const savedState = sessionStorage.getItem("picktask_nav_state");
+          if (savedState) {
+            try {
+              const state = JSON.parse(savedState);
+              this.currentView = state.currentView || "workspace-view";
+              this.selectedWorkspace = state.selectedWorkspace || null;
+              this.selectedProject = state.selectedProject || null;
+            } catch (e) {
+              console.warn("Failed to restore nav state:", e);
+            }
+          }
+        }
+
+        saveState() {
+          const state = {
+            currentView: this.currentView,
+            selectedWorkspace: this.selectedWorkspace,
+            selectedProject: this.selectedProject,
+          };
+          sessionStorage.setItem("picktask_nav_state", JSON.stringify(state));
+        }
+
+        static showView(viewId) {
+          if (!SequentialNav.instance) {
+            new SequentialNav();
+          }
+          return SequentialNav.instance.showView(viewId);
+        }
+
+        showView(viewId) {
+          // Hide all views
+          document.querySelectorAll(".nav-view").forEach((view) => {
+            view.classList.remove("active");
+          });
+
+          // Show target view
+          const targetView = document.getElementById(viewId);
+          if (targetView) {
+            targetView.classList.add("active");
+            this.currentView = viewId;
+            this.saveState();
+            this.updateArrowStates();
+            this.updateProgressDots();
+          }
+        }
+
+        static selectWorkspace(
+          workspaceId,
+          workspaceName,
+          workspaceUrl = null
+        ) {
+          if (!SequentialNav.instance) {
+            new SequentialNav();
+          }
+          return SequentialNav.instance.selectWorkspace(
+            workspaceId,
+            workspaceName,
+            workspaceUrl
+          );
+        }
+
+        selectWorkspace(workspaceId, workspaceName, workspaceUrl = null) {
+          console.log(
+            "Selecting workspace:",
+            workspaceId,
+            workspaceName,
+            workspaceUrl
+          );
+
+          this.selectedWorkspace = workspaceId;
+          this.selectedProject = null; // Reset project when workspace changes
+          this.saveState();
+
+          // Update UI
+          this.updateWorkspaceSelection(workspaceId);
+          this.updateArrowStates();
+
+          if (workspaceUrl) {
+            // Navigate to the workspace URL to update server context
+            console.log("Navigating to workspace URL:", workspaceUrl);
+            window.location.href = workspaceUrl;
+          } else {
+            // If no URL provided, just update the view
+            if (this.autoAdvance) {
+              setTimeout(() => {
+                this.showView("project-view");
+              }, 500);
+            }
+          }
+        }
+
+        static selectProject(projectId, projectName, projectUrl = null) {
+          if (!SequentialNav.instance) {
+            new SequentialNav();
+          }
+          return SequentialNav.instance.selectProject(
+            projectId,
+            projectName,
+            projectUrl
+          );
+        }
+
+        selectProject(projectId, projectName, projectUrl = null) {
+          console.log(
+            "Selecting project:",
+            projectId,
+            projectName,
+            projectUrl
+          );
+
+          this.selectedProject = projectId;
+          this.saveState();
+
+          // Update UI
+          this.updateProjectSelection(projectId);
+          this.updateArrowStates();
+
+          if (projectUrl) {
+            // Navigate to the project URL to update server context
+            console.log("Navigating to project URL:", projectUrl);
+            window.location.href = projectUrl;
+          } else {
+            // If no URL provided, just update the view
+            if (this.autoAdvance) {
+              setTimeout(() => {
+                this.showView("navigation-view");
+              }, 500);
+            }
+          }
+        }
+
+        updateWorkspaceSelection(workspaceId) {
+          document.querySelectorAll("[data-workspace-id]").forEach((item) => {
+            item.classList.remove("selected");
+            if (
+              parseInt(item.getAttribute("data-workspace-id")) === workspaceId
+            ) {
+              item.classList.add("selected");
+            }
+          });
+        }
+
+        updateProjectSelection(projectId) {
+          document.querySelectorAll("[data-project-id]").forEach((item) => {
+            item.classList.remove("selected");
+            if (parseInt(item.getAttribute("data-project-id")) === projectId) {
+              item.classList.add("selected");
+            }
+          });
+        }
+
+        updateArrowStates() {
+          const toProjectsBtn = document.getElementById("to-projects-btn");
+          const toNavigationBtn = document.getElementById("to-navigation-btn");
+
+          // Enable/disable next arrows based on selections
+          if (toProjectsBtn) {
+            toProjectsBtn.disabled = !this.selectedWorkspace;
+          }
+          if (toNavigationBtn) {
+            toNavigationBtn.disabled = !this.selectedProject;
+          }
+        }
+
+        updateProgressDots() {
+          const views = ["workspace-view", "project-view", "navigation-view"];
+          const currentIndex = views.indexOf(this.currentView);
+
+          document
+            .querySelectorAll(".nav-progress .progress-dot")
+            .forEach((dot, index) => {
+              dot.classList.remove("active", "completed");
+              if (index === currentIndex) {
+                dot.classList.add("active");
+              } else if (index < currentIndex) {
+                dot.classList.add("completed");
+              }
+            });
+        }
+
+        updateViewState() {
+          // Determine which view to show based on current selections
+          if (this.selectedWorkspace && this.selectedProject) {
+            this.showView("navigation-view");
+          } else if (this.selectedWorkspace) {
+            this.showView("project-view");
+          } else {
+            this.showView("workspace-view");
+          }
+        }
+
+        bindEvents() {
+          // Keyboard navigation
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft") {
+              this.navigateBack();
+            } else if (e.key === "ArrowRight") {
+              this.navigateForward();
+            }
+          });
+        }
+
+        navigateBack() {
+          const views = ["workspace-view", "project-view", "navigation-view"];
+          const currentIndex = views.indexOf(this.currentView);
+          if (currentIndex > 0) {
+            this.showView(views[currentIndex - 1]);
+          }
+        }
+
+        navigateForward() {
+          const views = ["workspace-view", "project-view", "navigation-view"];
+          const currentIndex = views.indexOf(this.currentView);
+          if (currentIndex < views.length - 1) {
+            // Check if we can advance
+            if (currentIndex === 0 && this.selectedWorkspace) {
+              this.showView("project-view");
+            } else if (currentIndex === 1 && this.selectedProject) {
+              this.showView("navigation-view");
+            }
+          }
+        }
+      }
+
       // Enhanced JavaScript functionality
       document.addEventListener("DOMContentLoaded", function () {
         const navbar = document.getElementById("navbar");
         const mobileToggle = document.getElementById("mobile-menu-toggle");
         const navLinks = document.getElementById("nav-links");
+
+        // Enhanced Dropdown functionality
+        const dropdownToggle = document.getElementById("navigation-dropdown");
+        const dropdownMenu = document.getElementById("dropdown-menu");
+        const dropdownOverlay = document.getElementById("dropdown-overlay");
+
+        if (dropdownToggle && dropdownMenu) {
+          dropdownToggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const isOpen = this.classList.contains("open");
+
+            // Close all other dropdowns
+            document
+              .querySelectorAll(".dropdown-toggle.open")
+              .forEach((toggle) => {
+                if (toggle !== this) {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                }
+              });
+
+            document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
+              if (menu !== dropdownMenu) {
+                menu.classList.remove("open");
+              }
+            });
+
+            // Toggle current dropdown
+            this.classList.toggle("open");
+            dropdownMenu.classList.toggle("open");
+            this.setAttribute("aria-expanded", !isOpen);
+
+            if (!isOpen) {
+              dropdownOverlay.style.display = "block";
+            } else {
+              dropdownOverlay.style.display = "none";
+            }
+          });
+
+          // Close dropdown when clicking on overlay
+          if (dropdownOverlay) {
+            dropdownOverlay.addEventListener("click", function () {
+              dropdownToggle.classList.remove("open");
+              dropdownMenu.classList.remove("open");
+              dropdownToggle.setAttribute("aria-expanded", "false");
+              this.style.display = "none";
+            });
+          }
+
+          // Close dropdown when clicking outside on desktop
+          document.addEventListener("click", function (e) {
+            if (
+              !dropdownToggle.contains(e.target) &&
+              !dropdownMenu.contains(e.target)
+            ) {
+              dropdownToggle.classList.remove("open");
+              dropdownMenu.classList.remove("open");
+              dropdownToggle.setAttribute("aria-expanded", "false");
+              if (dropdownOverlay) {
+                dropdownOverlay.style.display = "none";
+              }
+            }
+          });
+
+          // Close dropdown on escape key
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && dropdownMenu.classList.contains("open")) {
+              dropdownToggle.classList.remove("open");
+              dropdownMenu.classList.remove("open");
+              dropdownToggle.setAttribute("aria-expanded", "false");
+              if (dropdownOverlay) {
+                dropdownOverlay.style.display = "none";
+              }
+              dropdownToggle.focus();
+            }
+          });
+        }
 
         // Enhanced scroll behavior for navbar
         let lastScrollY = window.scrollY;
@@ -949,6 +1684,9 @@
           { passive: true }
         );
 
+        // Initialize sequential navigation
+        window.sequentialNav = new SequentialNav();
+
         // Enhanced mobile menu functionality
         if (mobileToggle && navLinks) {
           mobileToggle.addEventListener("click", (e) => {
@@ -960,6 +1698,22 @@
             mobileToggle.querySelector("i").className = isOpen
               ? "fas fa-bars"
               : "fas fa-times";
+
+            // Close dropdowns when mobile menu closes
+            if (!isOpen) {
+              document
+                .querySelectorAll(".dropdown-toggle.open")
+                .forEach((toggle) => {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                });
+              document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
+                menu.classList.remove("open");
+              });
+              if (dropdownOverlay) {
+                dropdownOverlay.style.display = "none";
+              }
+            }
 
             // Toggle body scroll
             document.body.style.overflow = isOpen ? "auto" : "hidden";
@@ -975,6 +1729,20 @@
               mobileToggle.setAttribute("aria-expanded", "false");
               mobileToggle.querySelector("i").className = "fas fa-bars";
               document.body.style.overflow = "auto";
+
+              // Close dropdowns
+              document
+                .querySelectorAll(".dropdown-toggle.open")
+                .forEach((toggle) => {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                });
+              document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
+                menu.classList.remove("open");
+              });
+              if (dropdownOverlay) {
+                dropdownOverlay.style.display = "none";
+              }
             }
           });
 
@@ -985,6 +1753,20 @@
               mobileToggle.setAttribute("aria-expanded", "false");
               mobileToggle.querySelector("i").className = "fas fa-bars";
               document.body.style.overflow = "auto";
+
+              // Close dropdowns
+              document
+                .querySelectorAll(".dropdown-toggle.open")
+                .forEach((toggle) => {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                });
+              document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
+                menu.classList.remove("open");
+              });
+              if (dropdownOverlay) {
+                dropdownOverlay.style.display = "none";
+              }
               mobileToggle.focus();
             }
           });
@@ -1018,13 +1800,164 @@
           });
         });
 
-        // Initialize any tooltips or interactive elements
-        initializeInteractiveElements();
+        console.log("Professional PickTask interface initialized");
       });
 
-      function initializeInteractiveElements() {
-        // Add any additional interactive element initialization here
-        console.log("Professional PickTask interface initialized");
+      // The loading screen
+      const userIsAuthenticated =
+        "{% if user.is_authenticated %}true{% else %}false{% endif %}" ===
+        "true";
+
+      if (userIsAuthenticated) {
+        const navEntries = performance.getEntriesByType("navigation");
+        const isReload =
+          navEntries.length > 0 && navEntries[0].type === "reload";
+        const isFirstLoadAfterLogin = !sessionStorage.getItem(
+          "picktask_authenticated_session"
+        );
+
+        if (isFirstLoadAfterLogin || isReload) {
+          sessionStorage.setItem("picktask_authenticated_session", "active");
+
+          const loader = document.getElementById("global-loading-screen");
+          const bar = document.getElementById("loading-progress-bar");
+          const logoImg = document.getElementById("loading-logo-img");
+          const icon = document.getElementById("loading-icon");
+          const iconContainer = document.getElementById(
+            "loading-logo-container"
+          );
+
+          if (loader && bar && logoImg && icon) {
+            // Show loader
+            loader.style.opacity = "1";
+            loader.style.visibility = "visible";
+
+            // ✅ Start smooth animation sequence
+            let currentIcon = "logo"; // 'logo' → 'calendar' → 'docs' → 'logo'
+            const icons = {
+              calendar: "fa-calendar-days",
+              docs: "fa-file-lines",
+            };
+
+            // Initial pulse-in for logo
+            logoImg.style.transform = "scale(1.2)";
+            logoImg.style.opacity = "0.8";
+            setTimeout(() => {
+              logoImg.style.transform = "scale(1)";
+              logoImg.style.opacity = "1";
+            }, 300);
+
+            // Animate morphing every 2 seconds
+            const animateIcons = () => {
+              setTimeout(() => {
+                if (currentIcon === "logo") {
+                  // Fade out logo
+                  logoImg.style.opacity = "0";
+                  setTimeout(() => {
+                    logoImg.style.display = "none";
+                    icon.className = "fa-solid " + icons.calendar;
+                    icon.style.display = "block";
+                    icon.style.opacity = "0";
+                    icon.style.transform = "scale(0.8) rotate(-10deg)";
+                    setTimeout(() => {
+                      icon.style.opacity = "1";
+                      icon.style.transform = "scale(1.1)";
+                      setTimeout(() => {
+                        icon.style.transform = "scale(1)";
+                        currentIcon = "calendar";
+                        animateIcons(); // Loop
+                      }, 300);
+                    }, 300);
+                  }, 300);
+                } else if (currentIcon === "calendar") {
+                  // Fade out calendar
+                  icon.style.opacity = "0";
+                  setTimeout(() => {
+                    icon.className = "fa-solid " + icons.docs;
+                    icon.style.opacity = "0";
+                    icon.style.transform = "scale(0.8) rotate(-10deg)";
+                    setTimeout(() => {
+                      icon.style.opacity = "1";
+                      icon.style.transform = "scale(1.1)";
+                      setTimeout(() => {
+                        icon.style.transform = "scale(1)";
+                        currentIcon = "docs";
+                        animateIcons(); // Loop
+                      }, 300);
+                    }, 300);
+                  }, 300);
+                } else if (currentIcon === "docs") {
+                  // Fade out docs, show logo
+                  icon.style.opacity = "0";
+                  setTimeout(() => {
+                    icon.style.display = "none";
+                    logoImg.style.display = "block";
+                    logoImg.style.opacity = "0";
+                    logoImg.style.transform = "scale(0.8) rotate(-10deg)";
+                    setTimeout(() => {
+                      logoImg.style.opacity = "1";
+                      logoImg.style.transform = "scale(1.1)";
+                      setTimeout(() => {
+                        logoImg.style.transform = "scale(1)";
+                        currentIcon = "logo";
+                        animateIcons(); // Loop
+                      }, 300);
+                    }, 300);
+                  }, 300);
+                }
+              }, 2000);
+            };
+
+            animateIcons();
+
+            // Keep all your existing loading logic
+            let isLoaded = false;
+            let hasMetMinTime = false;
+
+            window.addEventListener("load", () => {
+              isLoaded = true;
+              checkReady();
+            });
+
+            setTimeout(() => {
+              hasMetMinTime = true;
+              checkReady();
+            }, 2500);
+
+            setTimeout(() => {
+              isLoaded = true;
+              hasMetMinTime = true;
+              checkReady();
+            }, 8000);
+
+            let progress = 0;
+            const animate = () => {
+              if (progress >= 95) return;
+              const inc = isLoaded ? 5 : Math.random() * 3 + 1;
+              progress = Math.min(95, progress + inc);
+              bar.style.width = progress + "%";
+              if (!isLoaded || progress < 95) {
+                setTimeout(animate, isLoaded ? 50 : 120);
+              }
+            };
+            animate();
+
+            function checkReady() {
+              if (isLoaded && hasMetMinTime) {
+                bar.style.transition = "width 0.3s ease";
+                bar.style.width = "100%";
+                setTimeout(() => {
+                  loader.style.opacity = "0";
+                  setTimeout(() => {
+                    if (loader.parentNode) loader.remove();
+                  }, 300);
+                }, 300);
+              }
+            }
+          }
+        }
+      } else {
+        sessionStorage.removeItem("picktask_authenticated_session");
       }
     </script>
 

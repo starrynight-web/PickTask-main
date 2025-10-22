@@ -3,155 +3,385 @@
 
 {% block title %}Activity Log - {{ workspace.name }}{% endblock %}
 
+{% block extra_css %}
+<style>
+.activity-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Statistics Flex Container */
+.stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 200px;
+    background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-teal), var(--primary-green));
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+/* Filter Form Flex */
+.filter-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-field {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+/* Activity Items */
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-100);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.activity-item:hover {
+    background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+    border-left: 4px solid var(--primary-teal);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.activity-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+/* Cards */
+.filter-card {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.filter-header {
+    background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 1.25rem 1.5rem;
+}
+
+.filter-body {
+    padding: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+    }
+    
+    .stat-card {
+        min-width: 100%;
+    }
+    
+    .filter-form-row {
+        flex-direction: column;
+    }
+    
+    .filter-field {
+        min-width: 100%;
+    }
+    
+    .filter-actions {
+        justify-content: stretch;
+    }
+    
+    .activity-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .activity-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="flex justify-between items-center mb-6">
-    <div>
-        <h1>Activity Log</h1>
-        <p class="text-gray-600">{{ workspace.name }}</p>
+<div class="activity-container">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">Activity Log</h1>
+            <p class="text-gray-600 mt-2">{{ workspace.name }} • Real-time activity tracking</p>
+        </div>
+        <div class="flex gap-3" style="display: flex; gap: 0.75rem;">
+            <a href="{% url 'activity:summary' workspace.id %}" class="btn btn-primary">
+                <i class="fas fa-chart-bar mr-2"></i>
+                View Summary
+            </a>
+        </div>
     </div>
-    <div class="flex gap-3">
-        <a href="{% url 'activity:summary' workspace.id %}" class="btn btn-outline">
-            📊 View Summary
-        </a>
-    </div>
-</div>
 
-<!-- Activity Statistics -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <h3 class="text-2xl font-bold text-primary">{{ total_activities }}</h3>
-            <p class="text-gray-600 text-sm">Total Activities</p>
+    <!-- Statistics -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_activities }}</div>
+            <p class="text-gray-600 font-medium">Total Activities</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ workspace_users|length }}</div>
+            <p class="text-gray-600 font-medium">Active Users</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ page_obj.paginator.num_pages }}</div>
+            <p class="text-gray-600 font-medium">Pages</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">24/7</div>
+            <p class="text-gray-600 font-medium">Live Tracking</p>
         </div>
     </div>
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <h3 class="text-2xl font-bold text-success">{{ workspace_users|length }}</h3>
-            <p class="text-gray-600 text-sm">Active Users</p>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <h3 class="text-2xl font-bold text-warning">{{ page_obj.paginator.num_pages }}</h3>
-            <p class="text-gray-600 text-sm">Pages</p>
-        </div>
-    </div>
-    <div class="card text-center">
-        <div class="card-body p-4">
-            <h3 class="text-2xl font-bold text-secondary">24/7</h3>
-            <p class="text-gray-600 text-sm">Activity Tracking</p>
-        </div>
-    </div>
-</div>
 
-<!-- Filters -->
-<div class="card mb-6">
-    <div class="card-header">
-        <h2 class="card-title">Filters</h2>
+    <!-- Filters -->
+    <div class="filter-card">
+        <div class="filter-header">
+            <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-3">
+                <i class="fas fa-filter text-primary-teal"></i>
+                Filter Activities
+            </h2>
+        </div>
+        <div class="filter-body">
+            <form method="get" class="filter-form">
+                <div class="filter-form-row">
+                    <div class="filter-field">
+                        <label class="form-label font-semibold">Team Member</label>
+                        <select name="user" class="form-select">
+                            <option value="">All Team Members</option>
+                            {% for username, user_id in workspace_users %}
+                            <option value="{{ username }}" {% if filter_user == username %}selected{% endif %}>
+                                {{ username }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label class="form-label font-semibold">Action Type</label>
+                        <input type="text" name="action" value="{{ filter_action|default:'' }}" 
+                               class="form-input" placeholder="created, updated, deleted...">
+                    </div>
+                    <div class="filter-field">
+                        <label class="form-label font-semibold">From Date</label>
+                        <input type="date" name="date_from" value="{{ date_from|default:'' }}" class="form-input">
+                    </div>
+                    <div class="filter-field">
+                        <label class="form-label font-semibold">To Date</label>
+                        <input type="date" name="date_to" value="{{ date_to|default:'' }}" class="form-input">
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search mr-2"></i>
+                        Apply Filters
+                    </button>
+                    <a href="{% url 'activity:activity' workspace.id %}" class="btn btn-outline">
+                        <i class="fas fa-refresh mr-2"></i>
+                        Clear Filters
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="card-body">
-        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-                <label class="form-label">User</label>
-                <select name="user" class="form-select">
-                    <option value="">All Users</option>
-                    {% for username, user_id in workspace_users %}
-                    <option value="{{ username }}" {% if filter_user == username %}selected{% endif %}>
-                        {{ username }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label class="form-label">Action Contains</label>
-                <input type="text" name="action" value="{{ filter_action|default:'' }}" 
-                       class="form-input" placeholder="e.g., created, updated">
-            </div>
-            <div>
-                <label class="form-label">From Date</label>
-                <input type="date" name="date_from" value="{{ date_from|default:'' }}" class="form-input">
-            </div>
-            <div>
-                <label class="form-label">To Date</label>
-                <input type="date" name="date_to" value="{{ date_to|default:'' }}" class="form-input">
-            </div>
-            <div class="md:col-span-4 flex gap-3">
-                <button type="submit" class="btn btn-primary">Apply Filters</button>
-                <a href="{% url 'activity:activity' workspace.id %}" class="btn btn-outline">Clear Filters</a>
-            </div>
-        </form>
-    </div>
-</div>
 
-<!-- Activity List -->
-<div class="card">
-    <div class="card-header">
-        <h2 class="card-title">Recent Activity</h2>
-        <span class="text-sm text-gray-500">Showing {{ activities|length }} of {{ total_activities }} activities</span>
-    </div>
-    <div class="card-body p-0">
-        {% for activity in activities %}
-        <div class="activity-item border-b border-gray-200 last:border-b-0 p-4 hover:bg-gray-50">
-            <div class="flex items-start gap-4">
-                <!-- User Avatar -->
-                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+    <!-- Activity List -->
+    <div class="filter-card">
+        <div class="filter-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-3">
+                    <i class="fas fa-list-alt text-primary-teal"></i>
+                    Recent Activity
+                </h2>
+                <span class="text-sm text-gray-500 mt-1">Showing {{ activities|length }} of {{ total_activities }} activities</span>
+            </div>
+        </div>
+        <div>
+            {% for activity in activities %}
+            <div class="activity-item">
+                <div class="user-avatar">
                     {{ activity.user.username|first|upper }}
                 </div>
-                
-                <!-- Activity Content -->
-                <div class="flex-1 min-w-0">
-                    <div class="flex items-start justify-between mb-1">
-                        <div>
+                <div class="activity-content">
+                    <div class="activity-header">
+                        <div class="activity-meta">
                             <span class="font-semibold text-gray-900">{{ activity.user.username }}</span>
                             <span class="text-gray-600">{{ activity.action }}</span>
                         </div>
-                        <span class="text-sm text-gray-500 whitespace-nowrap ml-4">
+                        <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
                             {{ activity.timestamp|timesince }} ago
                         </span>
                     </div>
-                    
-                    <div class="text-sm text-gray-500">
-                        <span class="bg-gray-100 px-2 py-1 rounded">{{ activity.timestamp|date:"M d, Y g:i A" }}</span>
+                    <div class="text-sm text-gray-500 flex items-center gap-2">
+                        <i class="fas fa-clock"></i>
+                        {{ activity.timestamp|date:"M d, Y g:i A" }}
                     </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="empty-state">
+                <div class="empty-state-icon">📝</div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">No activities found</h3>
+                <p class="text-gray-500 max-w-md mx-auto">
+                    {% if filter_user or filter_action or date_from or date_to %}
+                    Try adjusting your filters to see more results.
+                    {% else %}
+                    Activity will appear here as your team works on tasks and projects.
+                    {% endif %}
+                </p>
+            </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <div class="text-center py-12">
-            <div class="text-4xl mb-4">📝</div>
-            <h3 class="text-lg font-semibold text-gray-600 mb-2">No activities found</h3>
-            <p class="text-gray-500">
-                {% if filter_user or filter_action or date_from or date_to %}
-                Try adjusting your filters to see more results.
-                {% else %}
-                Activity will appear here as team members work on tasks and projects.
-                {% endif %}
-            </p>
-        </div>
-        {% endfor %}
     </div>
-</div>
 
-<!-- Pagination -->
-{% if page_obj.paginator.num_pages > 1 %}
-<div class="flex justify-center items-center mt-6 space-x-2">
-    {% if page_obj.has_previous %}
-        <a href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
-           class="btn btn-outline btn-sm">First</a>
-        <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
-           class="btn btn-outline btn-sm">Previous</a>
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+               class="btn btn-outline btn-sm">
+                <i class="fas fa-angle-double-left mr-2"></i>
+                First
+            </a>
+            <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+               class="btn btn-outline btn-sm">
+                <i class="fas fa-chevron-left mr-2"></i>
+                Previous
+            </a>
+        {% endif %}
+
+        <span class="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-full font-medium">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+               class="btn btn-outline btn-sm">
+                Next
+                <i class="fas fa-chevron-right ml-2"></i>
+            </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
+               class="btn btn-outline btn-sm">
+                Last
+                <i class="fas fa-angle-double-right ml-2"></i>
+            </a>
+        {% endif %}
+    </div>
     {% endif %}
-
-    <span class="text-sm text-gray-600">
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-    </span>
-
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
-           class="btn btn-outline btn-sm">Next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" 
-           class="btn btn-outline btn-sm">Last</a>
-    {% endif %}
 </div>
-{% endif %}
 {% endblock %}

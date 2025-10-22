@@ -1,130 +1,373 @@
 {% extends 'base.html' %} {% load static %} {% block title %}Activity Summary -
-{{ workspace.name }}{% endblock %} {% block content %}
-<div class="flex justify-between items-center mb-6">
-  <div>
-    <h1>Activity Summary</h1>
-    <p class="text-gray-600">{{ workspace.name }} • Last {{ time_period }}</p>
-  </div>
-  <div class="flex gap-3">
-    <a
-      href="{% url 'activity:activity' workspace.id %}"
-      class="btn btn-outline"
-    >
-      📋 View Full Log
-    </a>
-  </div>
-</div>
+{{ workspace.name }}{% endblock %} {% block extra_css %}
+<style>
+  .summary-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
-<!-- Summary Stats -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-  <div class="card text-center">
-    <div class="card-body">
-      <h3 class="text-3xl font-bold text-primary">{{ total_activities }}</h3>
-      <p class="text-gray-600">Total Activities</p>
-    </div>
-  </div>
-  <div class="card text-center">
-    <div class="card-body">
-      <h3 class="text-3xl font-bold text-success">{{ active_users|length }}</h3>
-      <p class="text-gray-600">Active Users</p>
-    </div>
-  </div>
-  <div class="card text-center">
-    <div class="card-body">
-      <h3 class="text-3xl font-bold text-warning">
-        {{ common_actions|length }}
-      </h3>
-      <p class="text-gray-600">Activity Types</p>
-    </div>
-  </div>
-</div>
+  /* Stats Flex Container */
+  .summary-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    justify-content: center;
+  }
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-  <!-- Most Active Users -->
-  <div class="card">
-    <div class="card-header">
-      <h2 class="card-title">Most Active Users</h2>
+  .stat-card-lg {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+    border: 1px solid var(--gray-200);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card-lg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      var(--primary-teal),
+      var(--primary-green)
+    );
+  }
+
+  .stat-number-lg {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(
+      135deg,
+      var(--primary-teal),
+      var(--primary-green)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Content Layout */
+  .summary-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .summary-column {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  /* User Rank Items */
+  .user-rank-item,
+  .action-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    transition: all 0.3s ease;
+  }
+
+  .user-rank-item:hover,
+  .action-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .user-avatar-sm {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(
+      135deg,
+      var(--primary-teal),
+      var(--primary-green)
+    );
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  /* Trend Items */
+  .trend-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .trend-day {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  .trend-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .trend-bar {
+    background: linear-gradient(
+      90deg,
+      var(--primary-light) 0%,
+      transparent 100%
+    );
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    height: 12px;
+  }
+
+  .trend-fill {
+    background: linear-gradient(
+      90deg,
+      var(--primary-teal),
+      var(--primary-green)
+    );
+    height: 100%;
+    border-radius: 20px;
+    transition: width 1s ease-in-out;
+  }
+
+  /* Empty States */
+  .empty-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--gray-500);
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .summary-stats {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat-card-lg {
+      min-width: 100%;
+      max-width: 100%;
+    }
+
+    .summary-content {
+      flex-direction: column;
+    }
+
+    .summary-column {
+      min-width: 100%;
+    }
+
+    .user-rank-item,
+    .action-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="summary-container">
+  <!-- Header -->
+  <div
+    class="flex justify-between items-center mb-8"
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    "
+  >
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Activity Summary</h1>
+      <p class="text-gray-600 mt-2">
+        {{ workspace.name }} • Last {{ time_period }}
+      </p>
     </div>
-    <div class="card-body">
-      {% for user in active_users %}
-      <div
-        class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0"
+    <div class="flex gap-3" style="display: flex; gap: 0.75rem">
+      <a
+        href="{% url 'activity:activity' workspace.id %}"
+        class="btn btn-primary"
       >
-        <div class="flex items-center gap-3">
-          <div
-            class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold"
+        <i class="fas fa-list-alt mr-2"></i>
+        View Full Log
+      </a>
+    </div>
+  </div>
+
+  <!-- Summary Stats -->
+  <div class="summary-stats">
+    <div class="stat-card-lg">
+      <div class="stat-number-lg">{{ total_activities }}</div>
+      <p class="text-gray-600 font-medium text-lg">Total Activities</p>
+    </div>
+    <div class="stat-card-lg">
+      <div class="stat-number-lg">{{ active_users|length }}</div>
+      <p class="text-gray-600 font-medium text-lg">Active Users</p>
+    </div>
+    <div class="stat-card-lg">
+      <div class="stat-number-lg">{{ common_actions|length }}</div>
+      <p class="text-gray-600 font-medium text-lg">Activity Types</p>
+    </div>
+  </div>
+
+  <div class="summary-content">
+    <!-- Most Active Users -->
+    <div class="summary-column">
+      <div class="filter-card">
+        <div class="filter-header">
+          <h2
+            class="text-xl font-semibold text-gray-900 flex items-center gap-3"
           >
-            {{ user.user__username|first|upper }}
-          </div>
-          <span class="font-medium">{{ user.user__username }}</span>
+            <i class="fas fa-trophy text-yellow-500"></i>
+            Most Active Users
+          </h2>
         </div>
-        <span
-          class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium"
-        >
-          {{ user.activity_count }} activities
-        </span>
-      </div>
-      {% empty %}
-      <p class="text-gray-500 text-center py-4">No activity data available</p>
-      {% endfor %}
-    </div>
-  </div>
-
-  <!-- Common Actions -->
-  <div class="card">
-    <div class="card-header">
-      <h2 class="card-title">Common Activities</h2>
-    </div>
-    <div class="card-body">
-      {% for action in common_actions %}
-      <div
-        class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0"
-      >
-        <div class="flex-1 min-w-0">
-          <p class="text-sm text-gray-700 truncate">{{ action.action }}</p>
-        </div>
-        <span
-          class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium ml-4"
-        >
-          {{ action.count }}
-        </span>
-      </div>
-      {% empty %}
-      <p class="text-gray-500 text-center py-4">No activity data available</p>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-
-<!-- Daily Activity Trend -->
-<div class="card mt-8">
-  <div class="card-header">
-    <h2 class="card-title">Activity Trend (Last 7 Days)</h2>
-  </div>
-  <div class="card-body">
-    {% if daily_activity %}
-    <div class="space-y-4">
-      {% for day in daily_activity %}
-      <div class="flex items-center gap-4">
-        <div class="w-24 text-sm text-gray-600">{{ day.date|date:"M d" }}</div>
-        <div class="flex-1">
-          <div class="bg-blue-100 rounded-full h-6 flex items-center">
-            <div
-              class="bg-primary h-6 rounded-full flex items-center justify-center text-white text-xs font-medium"
-              style="width: {% widthratio day.count 10 100 %}%; min-width: 40px;"
-            >
-              {{ day.count }}
+        <div class="filter-body">
+          {% for user in active_users %}
+          <div class="user-rank-item">
+            <div class="user-info">
+              <div class="user-avatar-sm">
+                {{ user.user__username|first|upper }}
+              </div>
+              <div>
+                <span class="font-semibold text-gray-900"
+                  >{{ user.user__username }}</span
+                >
+                <p class="text-sm text-gray-500">Team Member</p>
+              </div>
             </div>
+            <span
+              class="bg-gradient-to-r from-primary-teal to-primary-green text-white px-4 py-2 rounded-full text-sm font-semibold"
+            >
+              {{ user.activity_count }} activities
+            </span>
           </div>
+          {% empty %}
+          <div class="empty-column">
+            <div class="empty-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <p>No user activity data available</p>
+          </div>
+          {% endfor %}
         </div>
       </div>
-      {% endfor %}
     </div>
-    {% else %}
-    <p class="text-gray-500 text-center py-4">
-      No activity data for the last 7 days
-    </p>
-    {% endif %}
+
+    <!-- Common Actions -->
+    <div class="summary-column">
+      <div class="filter-card">
+        <div class="filter-header">
+          <h2
+            class="text-xl font-semibold text-gray-900 flex items-center gap-3"
+          >
+            <i class="fas fa-chart-pie text-blue-500"></i>
+            Common Activities
+          </h2>
+        </div>
+        <div class="filter-body">
+          {% for action in common_actions %}
+          <div class="action-item">
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-gray-900 capitalize">
+                {{ action.action }}
+              </p>
+            </div>
+            <span
+              class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold ml-4"
+            >
+              {{ action.count }}
+            </span>
+          </div>
+          {% empty %}
+          <div class="empty-column">
+            <div class="empty-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <p>No activity data available</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Activity Trend -->
+  <div class="filter-card">
+    <div class="filter-header">
+      <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-3">
+        <i class="fas fa-chart-line text-green-500"></i>
+        Activity Trend (Last 7 Days)
+      </h2>
+    </div>
+    <div class="filter-body">
+      {% if daily_activity %}
+      <div class="trend-container">
+        {% for day in daily_activity %}
+        <div class="trend-day">
+          <div class="trend-header">
+            <span class="font-semibold text-gray-900"
+              >{{ day.date|date:"M d, Y" }}</span
+            >
+            <span class="text-primary-teal font-semibold"
+              >{{ day.count }} activities</span
+            >
+          </div>
+          <div class="trend-bar">
+            <div
+              class="trend-fill"
+              style="width: {% widthratio day.count max_activities 100 %}%"
+            ></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-column">
+        <div class="empty-icon">
+          <i class="fas fa-calendar-times"></i>
+        </div>
+        <p>No activity data for the last 7 days</p>
+      </div>
+      {% endif %}
+    </div>
   </div>
 </div>
 {% endblock %}

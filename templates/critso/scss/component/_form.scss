@@ -1,0 +1,222 @@
+form {
+    position: relative;
+    &.form-search {
+        .button-submit {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            button {
+                padding: 0;
+                border: 0;
+                font-size: 16px;
+                color: var(--Gray);
+                i {
+                    @include transition3;
+                }
+                &:hover {
+                    i {
+                        color: var(--Secondary)
+                    }
+                }
+            }
+        }
+    }
+    &.form-style-1 {
+        @include d-flex;
+        flex-direction: column;
+        gap: 24px;
+        > * {
+            @include flex(center,start);
+            gap: 10px;
+            > * {
+                &:first-child {
+                    width: 100%;
+                    max-width: 300px;
+                }
+            }
+        }
+        .upload-image {
+            .item {
+                &.up-load {
+                    min-height: 250px;
+                }
+            }
+        }
+    }
+    &.form-style-2 {
+        @include d-flex;
+        flex-direction: column;
+        gap: 30px;
+        > * {
+            @include d-flex;
+            flex-direction: row;
+            gap: 30px;
+            .left {
+                width: 100%;
+                max-width: 368px;
+            }
+        }
+    }
+    textarea {
+        height: 200px !important;
+        &.h100 {
+            height: 100px !important;
+        }
+    }
+    .cols {
+        @include d-flex;
+    }
+    .cols-lg {
+        @include d-flex;
+        justify-content: space-between;
+        >* {
+            max-width: 330px;
+        }
+    }
+    &.form-setting {
+        input {
+            font-size: 14px;
+            &::placeholder {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+    outline           : 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow   : none;
+    box-shadow        : none;
+    width: 100%;
+    padding: 13.5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    background-color: var(--White);
+    border: 0;
+    border-radius: 8px;
+    color: var(--Black);
+    overflow: hidden;
+    margin-bottom: 0;
+    &::placeholder {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+        color: var(--Gray);
+    }
+    &.style-1 {
+        padding: 10.5px 36px;
+        border: 1px solid var(--Gray);
+    }
+}
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    padding: 14px 22px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 12px;
+    color: var(--Main-Dark);
+    overflow: hidden;
+    display           : inline-block;
+    -webkit-appearance: none;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition   : all 0.3s ease;
+    transition        : all 0.3s ease;
+    position          : relative;
+    &:hover {
+        color: var(--primary);
+    }
+}
+
+.password {
+    position: relative;
+    .show-pass {
+        position: absolute;
+        bottom: 14px;
+        right: 12px;
+        font-size: 20px;
+        height: 20px;
+        display: flex;
+        cursor: pointer;
+        .view {
+            display: none;
+        }
+        &.active {
+            .hide {
+                display: none;
+            }
+            .view {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+fieldset {
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.tf-select {
+    position: relative;
+    &::after {
+        position: absolute;
+        font-family: $fontIcon;
+        content: "\e911";
+        font-size: 16px;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+select {
+    border: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    padding: 10px 36px 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--Gainsboro);
+    margin-bottom: 0px;
+    position: relative;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -ms-appearance: none;
+}
+
+.form-login {
+    input {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
+    }
+}

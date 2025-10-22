@@ -384,6 +384,7 @@
 
       .form-group {
         margin-bottom: 1.5rem;
+        position: relative;
       }
 
       .form-label {
@@ -409,6 +410,46 @@
         border-color: var(--primary-teal);
         box-shadow: 0 0 0 3px rgba(123, 104, 238, 0.1);
         transform: translateY(-1px);
+      }
+
+      /* Password Toggle Styles */
+      .password-input-wrapper {
+        position: relative;
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--gray-500);
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        z-index: 2;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toggle-password:hover {
+        color: var(--primary-teal);
+        background: var(--gray-100);
+      }
+
+      .toggle-password:focus {
+        outline: 2px solid var(--primary-teal);
+        outline-offset: 2px;
+      }
+
+      .password-input-wrapper .form-input {
+        padding-right: 3rem;
       }
 
       .btn {
@@ -772,5 +813,63 @@
         </div>
       </div>
     </main>
+
+    <script>
+      // Password toggle functionality
+      function togglePassword(button) {
+        const wrapper = button.closest('.password-input-wrapper');
+        const input = wrapper.querySelector('input');
+        const icon = button.querySelector('i');
+        
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.className = 'fas fa-eye-slash';
+          button.setAttribute('aria-label', 'Hide password');
+        } else {
+          input.type = 'password';
+          icon.className = 'fas fa-eye';
+          button.setAttribute('aria-label', 'Show password');
+        }
+      }
+
+      // Initialize password toggles on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add toggle buttons to password fields that don't have them
+        const passwordInputs = document.querySelectorAll('input[type="password"]');
+        
+        passwordInputs.forEach(input => {
+          // Check if this input already has a toggle button
+          if (!input.parentElement.classList.contains('password-input-wrapper')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'password-input-wrapper';
+            
+            // Wrap the input
+            input.parentNode.insertBefore(wrapper, input);
+            wrapper.appendChild(input);
+            
+            // Create toggle button
+            const toggleButton = document.createElement('button');
+            toggleButton.type = 'button';
+            toggleButton.className = 'toggle-password';
+            toggleButton.setAttribute('aria-label', 'Show password');
+            toggleButton.innerHTML = '<i class="fas fa-eye"></i>';
+            
+            toggleButton.addEventListener('click', function() {
+              togglePassword(this);
+            });
+            
+            wrapper.appendChild(toggleButton);
+          }
+        });
+
+        // Also initialize existing toggle buttons
+        const existingToggleButtons = document.querySelectorAll('.toggle-password');
+        existingToggleButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            togglePassword(this);
+          });
+        });
+      });
+    </script>
   </body>
 </html>

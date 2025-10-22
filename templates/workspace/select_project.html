@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Select Project - {{ workspace.name }}{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <h1>Select a Project</h1>
+    <p>Choose a project to continue in <strong>{{ workspace.name }}</strong></p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for project in projects %}
+    <div class="card">
+        <div class="card-body text-center">
+            <i class="fa-solid fa-list-check text-3xl text-primary mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2">{{ project.name }}</h3>
+            <p class="text-gray-600 mb-4">{{ project.tasks.count }} tasks</p>
+            <a href="{% url 'workspace:select-project' workspace.id project.id %}" 
+               class="btn btn-primary w-full">
+                Select Project
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="mt-8 text-center">
+    <p class="text-gray-600 mb-4">Or create a new project</p>
+    <a href="{% url 'workspace:create-project' workspace.id %}" class="btn btn-outline">
+        <i class="fa-solid fa-plus"></i>
+        Create New Project
+    </a>
+</div>
+{% endblock %}

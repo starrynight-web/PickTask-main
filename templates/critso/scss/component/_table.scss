@@ -1,0 +1,249 @@
+
+.tab-sell-order {
+    margin-bottom: -2px;
+    tr {
+        @include flex(center,space-between);
+    }
+
+    thead {
+        tr {
+            margin-bottom: 7px;
+            width: 100%;
+            @include flex(center,space-between);
+            th {
+                padding: 0;
+            }
+        }
+    }
+    tbody {
+        tr {
+            margin-left: -10px;
+            margin-right: -10px;
+            border-radius: 6px;
+            @include transition3();
+            &:not(:last-child) {
+                margin-bottom: 1px;
+            }
+            &:hover {
+                background-color: var(--Primary);
+                td {
+                    color: var(--White);
+                }
+            }
+            td {
+                @include transition3();
+                padding: 6px 10px;
+            }
+        }
+    }
+}
+
+.table-list-transaction {
+    overflow-x: auto;
+    > * {
+        min-width: 940px;
+    }
+    .list-transaction-head {
+        padding: 5px 12px;
+        border-radius: 8px;
+        background-color: var(--Primary);
+        @include flex(center,space-between);
+        margin-bottom: 12px;
+        > * {
+            @include flex(center,start);
+            gap: 6px;
+            padding: 11px 16px;
+            &:nth-child(1) {
+                width: 181px;
+                gap: 8px;
+                padding: 9px 12px;
+            }
+            &:nth-child(2) {
+                width: 130px;
+            }
+            &:nth-child(3) {
+                width: 116px;
+            }
+            &:nth-child(4) {
+                width: 133px;
+            }
+            &:nth-child(5) {
+                width: 133px;
+            }
+            &:nth-child(6) {
+                width: 98px;
+            }
+            &:nth-child(7) {
+                width: 137px;
+                justify-content: end;
+            }
+        }
+    }
+    tbody {
+        tr {
+            @include flex(center,space-between);
+            padding: 0 12px;
+            &:not(:last-child) {
+                margin-bottom: 12px;
+            }
+            td {
+                flex-shrink: 0;
+                height: 70px;
+                padding: 0 10px 0 16px;
+                place-content: center;
+                &:last-child {
+                    > div {
+                        margin-left: auto;
+                    }
+                }
+                &:nth-child(1) {
+                    width: 181px;
+                    padding: 0px 12px;
+                }
+                &:nth-child(2) {
+                    width: 130px;
+                }
+                &:nth-child(3) {
+                    width: 116px;
+                }
+                &:nth-child(4) {
+                    width: 133px;
+                }
+                &:nth-child(5) {
+                    width: 133px;
+                }
+                &:nth-child(6) {
+                    width: 98px;
+                }
+                &:nth-child(7) {
+                    width: 137px;
+                }
+            }
+        }
+    }
+}
+
+.tf-table-item {
+    border-radius: 8px;
+    background-color: var(--Gainsboro);
+    position: relative;
+    .wrap-image {
+        @include d-flex();
+        align-items: center;
+        gap: 6px;
+        .image {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        &.style-1 {
+            .image {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+    &::before {
+        position: absolute;
+        content: '';
+        width: 4px;
+        height: 0;
+        left: 0;
+        background-color: var(--Primary);
+        border-radius: 99px;
+        @include transition3();
+
+        top: auto;
+        bottom: 0;
+    }
+    &.checked {
+        &::before {
+            height: 100%;
+            top: 0;
+            bottom: auto;
+        }
+    }
+}
+
+.table-list-crypto {
+    overflow-x: auto;
+    > * {
+        min-width: 930px;
+    }
+    .list-crypto-head {
+        padding: 3px 12px 2px 12px;
+        border-radius: 8px;
+        background-color: var(--Primary);
+        @include flex(center,space-between);
+        margin-bottom: 12px;
+        > * {
+            @include flex(center,start);
+            gap: 6px;
+            padding: 11px 0px 11px 16px;
+            &:nth-child(1) {
+                width: 116px;
+                gap: 8px;
+                padding: 9px 12px;
+            }
+            &:nth-child(2) {
+                width: 105px;
+            }
+            &:nth-child(3) {
+                width: 101px;
+            }
+            &:nth-child(4) {
+                width: 134px;
+            }
+            &:nth-child(5) {
+                width: 146px;
+            }
+            &:nth-child(6) {
+                width: 286px;
+                justify-content: end;
+                padding-right: 12px;
+            }
+        }
+    }
+    tbody {
+        tr {
+            @include flex(center,space-between);
+            padding: 0 12px;
+            &:not(:last-child) {
+                margin-bottom: 12px;
+            }
+            td {
+                flex-shrink: 0;
+                height: 70px;
+                padding: 0px 0 0 16px;
+                place-content: center;
+                &:last-child {
+                    > div {
+                        margin-left: auto;
+                    }
+                }
+                &:nth-child(1) {
+                    width: 116px;
+                    padding: 0px 12px;
+                }
+                &:nth-child(2) {
+                    width: 105px;
+                }
+                &:nth-child(3) {
+                    width: 101px;
+                }
+                &:nth-child(4) {
+                    width: 134px;
+                }
+                &:nth-child(5) {
+                    width: 146px;
+                }
+                &:nth-child(6) {
+                    width: 286px;
+                    padding-right: 12px;
+                }
+            }
+        }
+    }
+}

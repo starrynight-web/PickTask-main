@@ -1,0 +1,42 @@
+@mixin flex($alignItem, $justifyContent) {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: $alignItem;
+    justify-content: $justifyContent;
+}
+@mixin grid($loop, $num, $row-gap, $col-gap) {
+    display: grid;
+    grid-template-columns: repeat($loop, $num);
+    gap: $row-gap $col-gap;
+}
+@mixin transition3() {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+@mixin transition0() {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+@mixin d-flex() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+@mixin center($x, $y) {
+    -webkit-transform: translate($x,$y);
+    -moz-transform: translate($x,$y);
+    -ms-transform: translate($x,$y);
+    -o-transform: translate($x,$y);
+    transform: translate($x,$y);
+}

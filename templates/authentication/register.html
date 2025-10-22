@@ -39,7 +39,12 @@
 
     <div class="form-group">
         <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
-        {{ form.password1 }}
+        <div class="password-input-wrapper">
+            {{ form.password1 }}
+            <button type="button" class="toggle-password" aria-label="Show password">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
         {% if form.password1.errors %}
         <div class="error-list">
             {{ form.password1.errors }}
@@ -49,7 +54,12 @@
 
     <div class="form-group">
         <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
-        {{ form.password2 }}
+        <div class="password-input-wrapper">
+            {{ form.password2 }}
+            <button type="button" class="toggle-password" aria-label="Show password">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
         {% if form.password2.errors %}
         <div class="error-list">
             {{ form.password2.errors }}
