@@ -1,131 +1,580 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Dashboard - PickTask{% endblock %}
+{% block title %}{% if current_workspace %}{{ current_workspace.name }}{% else %}PickTask{% endif %} - Dashboard{% endblock %}
 
 {% block content_header %}
 <div class="content-header">
     <h1>
         {% if current_project %}
-            {{ current_project.name }} Dashboard
+            <span class="text-gray-900">{{ current_project.name }}</span> Dashboard
+        {% elif current_workspace %}
+            <span class="text-gray-900">{{ current_workspace.name }}</span> Workspace
         {% else %}
-            Workspace Dashboard
+            Welcome to <span style="background: linear-gradient(135deg, var(--primary-teal), var(--primary-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PickTask</span>
         {% endif %}
     </h1>
-    <p>
+    <p class="text-gray-600 max-w-2xl">
         {% if current_project %}
-            Project in <strong>{{ current_workspace.name }}</strong> workspace
+            Manage tasks, track progress, and collaborate in real time.
         {% elif current_workspace %}
-            {{ current_workspace.name }} - Select a project to continue
+            Your central hub for projects, teams, and productivity.
         {% else %}
-            Welcome to PickTask! Create your first workspace.
+            Create your first workspace to unlock the full power of PickTask.
         {% endif %}
     </p>
 </div>
 {% endblock %}
-
+{% if current_workspace and user_membership.role == 'admin' %}
+<div class="text-right mt-4">
+    <a href="{% url 'workspace:delete-workspace' current_workspace.id %}" 
+       class="text-error hover:text-red-700 inline-flex items-center gap-1">
+        <i class="fas fa-trash"></i> Delete Workspace
+    </a>
+</div>
+{% endif %}
 {% block content %}
 {% if current_workspace %}
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-    <div class="card">
-        <div class="card-body text-center">
-            <h3 class="text-3xl font-bold text-primary">{{ total_tasks }}</h3>
-            <p class="text-gray-600">Total Tasks</p>
+<!-- Premium Stats Overview -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <!-- Projects -->
+    <div class="card group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="p-6 relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 shadow-sm">
+                    <i class="fas fa-layer-group text-blue-600 text-xl"></i>
+                </div>
+                <span class="text-gray-500 text-sm font-medium">Total</span>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ projects|length }}</h3>
+            <p class="text-gray-600 font-medium">Projects</p>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body text-center">
-            <h3 class="text-3xl font-bold text-success">{{ completed_tasks }}</h3>
-            <p class="text-gray-600">Completed</p>
+
+    <!-- Tasks -->
+    <div class="card group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="p-6 relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-xl bg-gradient-to-br from-green-100 to-emerald-50 shadow-sm">
+                    <i class="fas fa-tasks text-green-600 text-xl"></i>
+                </div>
+                <span class="text-gray-500 text-sm font-medium">All</span>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ total_tasks }}</h3>
+            <p class="text-gray-600 font-medium">Tasks</p>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body text-center">
-            <h3 class="text-3xl font-bold text-warning">{{ projects.count }}</h3>
-            <p class="text-gray-600">Projects</p>
+
+    <!-- Completed -->
+    <div class="card group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="p-6 relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-xl bg-gradient-to-br from-emerald-100 to-teal-50 shadow-sm">
+                    <i class="fas fa-check-circle text-emerald-600 text-xl"></i>
+                </div>
+                <span class="text-gray-500 text-sm font-medium">Done</span>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ completed_tasks }}</h3>
+            <p class="text-gray-600 font-medium">Completed</p>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body text-center">
-            <h3 class="text-3xl font-bold text-secondary">{{ current_workspace.memberships.count }}</h3>
-            <p class="text-gray-600">Team Members</p>
+
+    <!-- Team -->
+    <div class="card group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-violet-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="p-6 relative z-10">
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-xl bg-gradient-to-br from-purple-100 to-violet-50 shadow-sm">
+                    <i class="fas fa-users text-purple-600 text-xl"></i>
+                </div>
+                <span class="text-gray-500 text-sm font-medium">Active</span>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-1">{{ current_workspace.memberships.count }}</h3>
+            <p class="text-gray-600 font-medium">Team Members</p>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
         </div>
     </div>
 </div>
 
+<!-- Dual Panel Layout -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <!-- Recent Projects -->
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">Recent Projects</h2>
-        </div>
-        <div class="card-body">
-            {% for project in projects %}
-            <div class="project-item p-4 border-b border-gray-200 last:border-b-0">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h4 class="font-semibold">{{ project.name }}</h4>
-                        <p class="text-gray-600 text-sm">{{ project.tasks.count }} tasks</p>
+    <div class="card overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <div class="card-header border-b border-gray-100 bg-gradient-to-r from-white to-gray-50/80 py-5">
+            <div class="flex items-center justify-between">
+                <h2 class="card-title flex items-center gap-3 text-lg font-bold">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-sm">
+                        <i class="fas fa-layer-group text-white text-sm"></i>
                     </div>
-                    {% if current_project and current_project.id != project.id %}
+                    <span>Recent Projects</span>
+                </h2>
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                    {{ projects|length }}
+                </span>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            {% for project in projects %}
+            <div class="p-5 border-b border-gray-100 last:border-b-0 hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-white transition-all duration-300 group">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start gap-4">
+                        <div class="w-3 h-12 rounded-full mt-1 shadow-sm" style="background: {{ project.color }};"></div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="font-semibold text-gray-900 group-hover:text-gray-800">{{ project.name }}</h4>
+                                {% if project.tasks.count > 0 %}
+                                <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
+                                    {{ project.tasks.count }} task{{ project.tasks.count|pluralize }}
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% if project.description %}
+                            <p class="text-gray-600 text-sm line-clamp-2">{{ project.description|truncatewords:15 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
                     <a href="{% url 'workspace:select-project' current_workspace.id project.id %}" 
-                       class="btn btn-sm btn-outline">
-                        Switch
+                       class="premium-btn premium-btn-sm premium-btn-outline opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        <i class="fas fa-arrow-right text-xs"></i>
                     </a>
-                    {% endif %}
                 </div>
             </div>
             {% empty %}
-            <p class="text-gray-500 text-center py-4">No projects yet</p>
+            <div class="text-center py-12 text-gray-500">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center shadow-inner">
+                    <i class="fas fa-inbox text-2xl text-gray-400"></i>
+                </div>
+                <p class="font-semibold text-gray-700 mb-1">No projects yet</p>
+                <p class="text-sm text-gray-500">Start by creating your first project</p>
+            </div>
             {% endfor %}
             
-            <div class="mt-4">
-                <a href="{% url 'workspace:create-project' current_workspace.id %}" class="btn btn-outline w-full">
-                    Create New Project
+            <div class="p-5 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                <a href="{% url 'workspace:create-project' current_workspace.id %}" class="premium-btn premium-btn-primary premium-btn-lg w-full justify-center">
+                    <i class="fas fa-plus mr-2"></i> Create New Project
                 </a>
             </div>
         </div>
     </div>
 
     <!-- Recent Activity -->
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">Recent Activity</h2>
-        </div>
-        <div class="card-body">
-            {% for activity in recent_activities %}
-            <div class="activity-item p-3 border-b border-gray-200 last:border-b-0">
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                        {{ activity.user.username|first|upper }}
+    <div class="card overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <div class="card-header border-b border-gray-100 bg-gradient-to-r from-white to-gray-50/80 py-5">
+            <div class="flex items-center justify-between">
+                <h2 class="card-title flex items-center gap-3 text-lg font-bold">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-sm">
+                        <i class="fas fa-history text-white text-sm"></i>
                     </div>
-                    <div class="flex-1">
-                        <p class="text-sm">
-                            <span class="font-semibold">{{ activity.user.username }}</span>
-                            {{ activity.action }}
+                    <span>Recent Activity</span>
+                </h2>
+                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+                    {{ recent_activities|length }}
+                </span>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            {% for activity in recent_activities %}
+            <div class="p-5 border-b border-gray-100 last:border-b-0 hover:bg-gradient-to-r hover:from-purple-50/50 hover:to-white transition-all duration-300 group">
+                <div class="flex items-start gap-4">
+                    <div class="relative">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-white font-bold shadow-sm">
+                            {{ activity.user.username|first|upper }}
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm text-gray-900 mb-1">
+                            <span class="font-semibold text-gray-800">{{ activity.user.username }}</span>
+                            <span class="text-gray-700 ml-1">{{ activity.action }}</span>
                         </p>
-                        <p class="text-gray-500 text-xs">{{ activity.timestamp|timesince }} ago</p>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <i class="fas fa-clock"></i>
+                            <span>{{ activity.timestamp|timesince }} ago</span>
+                            {% if activity.project %}
+                            <span class="mx-1">•</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded-full">{{ activity.project.name }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
             {% empty %}
-            <p class="text-gray-500 text-center py-4">No recent activity</p>
+            <div class="text-center py-12 text-gray-500">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center shadow-inner">
+                    <i class="fas fa-bell-slash text-2xl text-gray-400"></i>
+                </div>
+                <p class="font-semibold text-gray-700 mb-1">No recent activity</p>
+                <p class="text-sm text-gray-500">Your team's actions will appear here</p>
+            </div>
             {% endfor %}
-            <div class="mt-4">
-                <a href="{% url 'activity:activity' current_workspace.id %}" class="btn btn-outline w-full">
-                    View All Activity
+            
+            <div class="p-5 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                <a href="{% url 'activity:activity' current_workspace.id %}" class="premium-btn premium-btn-outline premium-btn-lg w-full justify-center">
+                    <i class="fas fa-eye mr-2"></i> View Full Activity Log
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="mt-10">
+    <div class="card border-0 shadow-lg">
+        <div class="card-header border-b border-gray-100 bg-gradient-to-r from-white to-gray-50/80 py-5">
+            <h2 class="card-title flex items-center gap-3 text-lg font-bold">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-sm">
+                    <i class="fas fa-bolt text-white text-sm"></i>
+                </div>
+                <span>Quick Actions</span>
+            </h2>
+        </div>
+        <div class="card-body p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="{% url 'workspace:create-project' current_workspace.id %}" class="premium-action-card premium-action-green">
+                    <div class="premium-action-icon bg-gradient-to-br from-green-100 to-emerald-50">
+                        <i class="fas fa-plus text-green-600"></i>
+                    </div>
+                    <h3>New Project</h3>
+                    <p>Start a new project</p>
+                </a>
+                
+                <a href="{% url 'kanban:kanban' current_workspace.id %}" class="premium-action-card premium-action-blue">
+                    <div class="premium-action-icon bg-gradient-to-br from-blue-100 to-indigo-50">
+                        <i class="fas fa-table-columns text-blue-600"></i>
+                    </div>
+                    <h3>Kanban Board</h3>
+                    <p>Manage tasks visually</p>
+                </a>
+                
+                <a href="{% url 'team:team' current_workspace.id %}" class="premium-action-card premium-action-purple">
+                    <div class="premium-action-icon bg-gradient-to-br from-purple-100 to-violet-50">
+                        <i class="fas fa-users text-purple-600"></i>
+                    </div>
+                    <h3>Team</h3>
+                    <p>Manage team members</p>
                 </a>
             </div>
         </div>
     </div>
 </div>
 {% else %}
-<div class="card text-center py-12">
-    <h2 class="text-2xl font-semibold mb-4">Welcome to PickTask!</h2>
-    <p class="text-gray-600 mb-6">Get started by creating your first workspace</p>
-    <a href="{% url 'workspace:create-workspace' %}" class="btn btn-primary">
-        Create Workspace
+<!-- First-Time User Experience -->
+<div class="card text-center py-16 px-8 max-w-2xl mx-auto border-0 shadow-2xl bg-gradient-to-br from-white to-gray-50/50">
+    <div class="mb-8">
+        <div class="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary-teal to-primary-green flex items-center justify-center shadow-lg">
+            <i class="fas fa-rocket text-white text-4xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Transform Your Workflow?</h2>
+        <p class="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed text-lg">
+            PickTask gives you the power to plan, execute, and deliver — all in one beautifully designed workspace.
+        </p>
+    </div>
+    <a href="{% url 'workspace:create-workspace' %}" class="premium-btn premium-btn-primary premium-btn-xl premium-btn-glow inline-flex items-center gap-3">
+        <i class="fas fa-plus"></i>
+        Create Your First Workspace
     </a>
+    <p class="text-gray-500 text-sm mt-6 flex items-center justify-center gap-2">
+        <i class="fas fa-clock"></i>
+        It takes less than a minute to get started.
+    </p>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Premium Button System */
+    .premium-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        font-size: 0.9rem;
+        background: transparent;
+    }
+
+    .premium-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .premium-btn:hover::before {
+        left: 100%;
+    }
+
+    /* Primary Button */
+    .premium-btn-primary {
+        background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+        color: white;
+        box-shadow: 0 4px 15px rgba(123, 104, 238, 0.3);
+        border: 1px solid rgba(123, 104, 238, 0.2);
+    }
+
+    .premium-btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(123, 104, 238, 0.4);
+        background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+    }
+
+    .premium-btn-primary:active {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(123, 104, 238, 0.3);
+    }
+
+    /* Outline Button */
+    .premium-btn-outline {
+        background: transparent;
+        border: 2px solid #e5e7eb;
+        color: #6b7280;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-btn-outline::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .premium-btn-outline:hover {
+        border-color: var(--primary-teal);
+        color: var(--primary-teal);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(123, 104, 238, 0.15);
+    }
+
+    .premium-btn-outline:hover::after {
+        opacity: 1;
+    }
+
+    /* Button Sizes */
+    .premium-btn-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        border-radius: 10px;
+    }
+
+    .premium-btn-lg {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        border-radius: 14px;
+    }
+
+    .premium-btn-xl {
+        padding: 1.25rem 2.5rem;
+        font-size: 1.1rem;
+        border-radius: 16px;
+        font-weight: 700;
+    }
+
+    /* Glow Effect */
+    .premium-btn-glow {
+        box-shadow: 0 4px 20px rgba(123, 104, 238, 0.4);
+    }
+
+    .premium-btn-glow:hover {
+        box-shadow: 0 8px 30px rgba(123, 104, 238, 0.6);
+    }
+
+    /* Premium Action Cards */
+    .premium-action-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        border: 2px dashed #e5e7eb;
+        background: white;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-action-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, currentColor, transparent);
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+    }
+
+    .premium-action-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .premium-action-green:hover {
+        border-color: #10b981;
+        background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+        color: #047857;
+    }
+
+    .premium-action-blue:hover {
+        border-color: #3b82f6;
+        background: linear-gradient(135deg, #eff6ff, #dbeafe);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+        color: #1d4ed8;
+    }
+
+    .premium-action-purple:hover {
+        border-color: #8b5cf6;
+        background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
+        color: #7c3aed;
+    }
+
+    .premium-action-icon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        font-size: 1.25rem;
+    }
+
+    .premium-action-card:hover .premium-action-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .premium-action-card h3 {
+        font-weight: 700;
+        font-size: 1.125rem;
+        margin-bottom: 0.5rem;
+        color: inherit;
+    }
+
+    .premium-action-card p {
+        font-size: 0.875rem;
+        color: #6b7280;
+        transition: color 0.3s ease;
+    }
+
+    .premium-action-card:hover p {
+        color: currentColor;
+    }
+
+    /* Enhanced card animations */
+    .card {
+        border-radius: 16px;
+        background: white;
+        position: relative;
+    }
+    
+    /* Gradient overlay effects */
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(123, 104, 238, 0.3), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .card:hover::before {
+        opacity: 1;
+    }
+    
+    /* Line clamp utility */
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    /* Improved empty states */
+    .empty-state {
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    }
+    
+    /* Responsive enhancements */
+    @media (max-width: 768px) {
+        .grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+        }
+        
+        .card {
+            margin-bottom: 1rem;
+        }
+        
+        .content-header h1 {
+            font-size: 1.75rem;
+        }
+
+        .premium-btn-xl {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+    }
+    
+    /* Smooth scrolling for activity */
+    .card-body {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .card-body::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .card-body::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 2px;
+    }
+    
+    .card-body::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 2px;
+    }
+    
+    .card-body::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+</style>
 {% endblock %}

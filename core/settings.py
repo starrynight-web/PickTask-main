@@ -100,7 +100,7 @@ AUTHENTICATION_BACKENDS = [
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
+EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hemzamtodo96@gmail.com'
@@ -108,6 +108,6 @@ EMAIL_HOST_PASSWORD = 'opkkhbajhulgelpw'
 DEFAULT_FROM_EMAIL = 'hemzamtodo96@gmail.com'
 
 LOGIN_URL = 'authentication:login'
-LOGIN_REDIRECT_URL = 'workspace:dashboard'
+LOGIN_REDIRECT_URL = 'workspace:home'
 LOGOUT_REDIRECT_URL = 'authentication:login'
 SITE_URL = 'http://localhost:8000'

@@ -1,23 +1,75 @@
-<!-- templates/workspace/workspace_list.html -->
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Workspaces - PickTask{% endblock %}
+
+{% block content_header %}
+<div class="content-header">
+    <h1>
+        <span style="background: linear-gradient(135deg, var(--primary-teal), var(--primary-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Your Workspaces
+        </span>
+    </h1>
+    <p class="text-gray-600">
+        Manage your workspaces, switch between teams, or create a new one.
+    </p>
+</div>
+{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
-    <h1>Your Workspaces</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-        {% for membership in memberships %}
-        <div class="card">
-            <div class="card-body">
-                <h3 class="text-xl font-semibold">{{ membership.workspace.name }}</h3>
-                <p class="text-gray-600">Role: {{ membership.get_role_display }}</p>
-                <a href="{% url 'kanban:kanban' membership.workspace.id %}" class="btn btn-primary mt-3">
-                    Open Board
+{% if memberships %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for membership in memberships %}
+    <div class="card group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
+        <div class="card-body p-6">
+            <div class="flex items-start justify-between mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">{{ membership.workspace.name }}</h3>
+                {% if membership.workspace.memberships.count > 1 %}
+                <i class="fas fa-users text-primary-teal" title="Shared workspace"></i>
+                {% endif %}
+            </div>
+            <p class="text-gray-600 mb-5">
+                <span class="inline-flex items-center gap-1">
+                    <i class="fas fa-user-tag text-gray-500"></i>
+                    {{ membership.get_role_display|title }}
+                </span>
+                • 
+                <span class="inline-flex items-center gap-1">
+                    <i class="fas fa-layer-group text-gray-500"></i>
+                    {{ membership.workspace.projects.count }} projects
+                </span>
+            </p>
+            <div class="flex gap-3">
+                <a href="{% url 'workspace:workspace-detail' membership.workspace.id %}" 
+                   class="btn btn-outline flex-1 justify-center">
+                    <i class="fas fa-arrow-right mr-2"></i> Open
                 </a>
+                {% if membership.role == 'admin' %}
+                <a href="{% url 'workspace:delete-workspace' membership.workspace.id %}" 
+                   class="btn btn-outline text-error hover:text-white hover:bg-error"
+                   title="Delete workspace">
+                    <i class="fas fa-trash"></i>
+                </a>
+                {% endif %}
             </div>
         </div>
-        {% empty %}
-        <p>You are not a member of any workspace.</p>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
+{% else %}
+<div class="card text-center py-16">
+    <div class="mb-6">
+        <div class="w-20 h-20 rounded-full bg-primary-light flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-inbox text-primary-teal text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-3">No Workspaces Yet</h2>
+        <p class="text-gray-600 mb-8 max-w-md mx-auto">
+            You haven't joined or created any workspace. Get started by creating your first one!
+        </p>
+    </div>
+    <a href="{% url 'workspace:create-workspace' %}" class="btn btn-primary px-8 py-3 text-lg font-semibold inline-flex items-center gap-2">
+        <i class="fas fa-plus"></i> Create Workspace
+    </a>
+</div>
+{% endif %}
 {% endblock %}

@@ -4,85 +4,254 @@
 {% block title %}{{ task.title }} - PickTask{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
+<div class="max-w-4xl mx-auto px-4">
     <!-- Task Header -->
-    <div class="flex justify-between items-start mb-6">
-        <div>
-            <h1 class="text-2xl font-bold">{{ task.title }}</h1>
-            <p class="text-gray-600">in {{ task.project.name }}</p>
+    <div class="flex justify-between items-start mb-8">
+        <div class="flex-1">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 mb-3">
+                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                <span class="text-sm font-medium text-gray-700">{{ task.project.name }}</span>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ task.title }}</h1>
         </div>
-        <a href="{% url 'task:edit-task' task.project.workspace.id task.id %}" class="btn btn-primary">
+        <a href="{% url 'task:edit-task' task.project.workspace.id task.id %}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-sm transition-all duration-200 hover:shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            <i class="fas fa-edit text-sm mr-2"></i>
             Edit Task
         </a>
     </div>
 
     <!-- Task Details -->
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 mb-8 transition-all duration-300 hover:shadow-md">
         {% if task.description %}
-            <div class="mb-4">
-                <h3 class="font-semibold text-gray-700 mb-2">Description</h3>
-                <p class="text-gray-800 whitespace-pre-line">{{ task.description }}</p>
+            <div class="mb-6">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-1 h-6 bg-blue-500 rounded-full"></div>
+                    <h3 class="font-semibold text-gray-800 text-lg">Description</h3>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                    <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ task.description }}</p>
+                </div>
             </div>
         {% endif %}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-                <span class="text-gray-500">Status:</span>
-                <span class="ml-2 px-2 py-1 rounded bg-blue-100 text-blue-800">{{ task.get_status_display }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-100">
+                    <span class="text-gray-600 font-medium">Status</span>
+                    <span class="px-3 py-1.5 rounded-full bg-white border border-blue-200 text-blue-700 font-medium text-sm shadow-sm">
+                        {{ task.get_status_display }}
+                    </span>
+                </div>
+                
+                {% if task.assigned_to %}
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
+                    <span class="text-gray-600 font-medium">Assigned to</span>
+                    <span class="font-semibold text-gray-800">{{ task.assigned_to.username }}</span>
+                </div>
+                {% endif %}
             </div>
-            <div>
-                <span class="text-gray-500">Priority:</span>
-                <span class="ml-2 px-2 py-1 rounded bg-{{ task.priority|priority_color }}-100 text-{{ task.priority|priority_color }}-800">
-                    {{ task.get_priority_display }}
-                </span>
+            
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-{{ task.priority|priority_color }}-50 rounded-xl border border-{{ task.priority|priority_color }}-100">
+                    <span class="text-gray-600 font-medium">Priority</span>
+                    <span class="px-3 py-1.5 rounded-full bg-white border border-{{ task.priority|priority_color }}-200 text-{{ task.priority|priority_color }}-700 font-medium text-sm shadow-sm">
+                        {{ task.get_priority_display }}
+                    </span>
+                </div>
+                
+                {% if task.due_date %}
+                <div class="flex items-center justify-between p-4 bg-purple-50 rounded-xl border border-purple-100">
+                    <span class="text-gray-600 font-medium">Due Date</span>
+                    <span class="font-semibold text-gray-800">{{ task.due_date|date:"M d, Y g:i A" }}</span>
+                </div>
+                {% endif %}
             </div>
-            {% if task.assigned_to %}
-            <div>
-                <span class="text-gray-500">Assigned to:</span>
-                <span class="ml-2 font-medium">{{ task.assigned_to.username }}</span>
-            </div>
-            {% endif %}
-            {% if task.due_date %}
-            <div>
-                <span class="text-gray-500">Due:</span>
-                <span class="ml-2 font-medium">{{ task.due_date|date:"M d, Y g:i A" }}</span>
-            </div>
-            {% endif %}
         </div>
     </div>
 
     <!-- Comments Section -->
-    <div class="mb-6">
-        <h2 class="text-xl font-semibold mb-4">Comments ({{ comments|length }})</h2>
+    <div class="mb-8">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-1 h-8 bg-blue-500 rounded-full"></div>
+            <h2 class="text-2xl font-bold text-gray-900">Comments</h2>
+            <span class="px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-medium shadow-sm">
+                {{ comments|length }}
+            </span>
+        </div>
         
         <!-- Add Comment Form -->
-        <form method="post" class="mb-6">
+        <form method="post" class="mb-8">
             {% csrf_token %}
-            <div class="mb-3">
-                {{ comment_form.content }}
+            <div class="mb-4">
+                <div class="relative">
+                    <textarea 
+                        name="content" 
+                        placeholder="Add a comment..." 
+                        class="w-full px-6 py-4 border border-gray-200 rounded-xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none shadow-sm"
+                        rows="4"
+                    >{% if comment_form.content.value %}{{ comment_form.content.value }}{% endif %}</textarea>
+                    <div class="absolute bottom-3 right-3">
+                        <button type="submit" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-sm transition-all duration-200 hover:shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <i class="fas fa-paper-plane text-sm mr-2"></i>
+                            Post Comment
+                        </button>
+                    </div>
+                </div>
                 {% if comment_form.content.errors %}
-                    <div class="text-red-500 text-sm mt-1">{{ comment_form.content.errors }}</div>
+                    <div class="text-red-500 text-sm mt-2 px-4">{{ comment_form.content.errors }}</div>
                 {% endif %}
             </div>
-            <button type="submit" class="btn btn-primary">Add Comment</button>
         </form>
 
         <!-- Comments List -->
         {% if comments %}
             <div class="space-y-4">
                 {% for comment in comments %}
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="font-medium">{{ comment.author.username }}</span>
-                        <span class="text-xs text-gray-500">{{ comment.created_at|date:"M d, Y g:i A" }}</span>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-300 hover:shadow-md">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                {{ comment.author.username|first|upper }}
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-900 block">{{ comment.author.username }}</span>
+                                <span class="text-xs text-gray-500">{{ comment.created_at|date:"M d, Y g:i A" }}</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-gray-800 whitespace-pre-line">{{ comment.content }}</p>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                        <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ comment.content }}</p>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="text-gray-500 italic">No comments yet. Be the first to comment!</p>
+            <div class="text-center py-12">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-200">
+                    <i class="fas fa-comments text-gray-400 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">No comments yet</h3>
+                <p class="text-gray-500 max-w-sm mx-auto">Be the first to share your thoughts and start the discussion.</p>
+            </div>
         {% endif %}
     </div>
 </div>
+
+<style>
+    /* Custom styles to ensure compatibility with your base.css */
+    .max-w-4xl { max-width: 56rem; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .flex { display: flex; }
+    .justify-between { justify-content: space-between; }
+    .items-start { align-items: flex-start; }
+    .items-center { align-items: center; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .flex-1 { flex: 1; }
+    .inline-flex { display: inline-flex; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-6 { gap: 1.5rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .rounded-full { border-radius: 9999px; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .bg-blue-50 { background-color: rgba(239, 246, 255, 1); }
+    .bg-gray-50 { background-color: rgba(249, 250, 251, 1); }
+    .bg-purple-50 { background-color: rgba(250, 245, 255, 1); }
+    .bg-white { background-color: white; }
+    .bg-blue-600 { background-color: rgba(37, 99, 235, 1); }
+    .bg-blue-500 { background-color: rgba(59, 130, 246, 1); }
+    .border { border-width: 1px; }
+    .border-blue-100 { border-color: rgba(219, 234, 254, 1); }
+    .border-gray-100 { border-color: rgba(243, 244, 246, 1); }
+    .border-purple-100 { border-color: rgba(237, 233, 254, 1); }
+    .border-blue-200 { border-color: rgba(191, 219, 254, 1); }
+    .border-gray-200 { border-color: rgba(229, 231, 235, 1); }
+    .text-sm { font-size: 0.875rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-3xl { font-size: 1.875rem; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .text-gray-700 { color: rgba(55, 65, 81, 1); }
+    .text-gray-800 { color: rgba(31, 41, 55, 1); }
+    .text-gray-900 { color: rgba(17, 24, 39, 1); }
+    .text-gray-500 { color: rgba(107, 114, 128, 1); }
+    .text-gray-600 { color: rgba(75, 85, 99, 1); }
+    .text-blue-700 { color: rgba(29, 78, 216, 1); }
+    .text-white { color: white; }
+    .text-gray-400 { color: rgba(156, 163, 175, 1); }
+    .text-red-500 { color: rgba(239, 68, 68, 1); }
+    .w-2 { width: 0.5rem; }
+    .h-2 { height: 0.5rem; }
+    .w-1 { width: 0.25rem; }
+    .h-6 { height: 1.5rem; }
+    .h-8 { height: 2rem; }
+    .w-10 { width: 2.5rem; }
+    .h-10 { height: 2.5rem; }
+    .w-24 { width: 6rem; }
+    .h-24 { height: 6rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+    .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+    .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+    .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+    .duration-200 { transition-duration: 200ms; }
+    .duration-300 { transition-duration: 300ms; }
+    .hover\:shadow-lg:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+    .hover\:bg-blue-700:hover { background-color: rgba(29, 78, 216, 1); }
+    .focus\:outline-none:focus { outline: 2px solid transparent; outline-offset: 2px; }
+    .focus\:ring-2:focus { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); }
+    .focus\:ring-blue-500:focus { --tw-ring-color: rgba(59, 130, 246, 1); }
+    .focus\:border-transparent:focus { border-color: transparent; }
+    .focus\:ring-offset-2:focus { --tw-ring-offset-width: 2px; }
+    .resize-none { resize: none; }
+    .placeholder-gray-400::placeholder { color: rgba(156, 163, 175, 1); }
+    .space-y-4 > * + * { margin-top: 1rem; }
+    .space-y-6 > * + * { margin-top: 1.5rem; }
+    .grid { display: grid; }
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .relative { position: relative; }
+    .absolute { position: absolute; }
+    .bottom-3 { bottom: 0.75rem; }
+    .right-3 { right: 0.75rem; }
+    .block { display: block; }
+    .text-center { text-align: center; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .max-w-sm { max-width: 24rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-xs { font-size: 0.75rem; }
+    .leading-relaxed { line-height: 1.625; }
+    .whitespace-pre-line { white-space: pre-line; }
+
+    /* Priority color classes */
+    .bg-red-50 { background-color: rgba(254, 242, 242, 1); }
+    .bg-yellow-50 { background-color: rgba(254, 252, 232, 1); }
+    .bg-green-50 { background-color: rgba(236, 253, 245, 1); }
+    .border-red-100 { border-color: rgba(254, 226, 226, 1); }
+    .border-yellow-100 { border-color: rgba(254, 243, 199, 1); }
+    .border-green-100 { border-color: rgba(209, 250, 229, 1); }
+    .border-red-200 { border-color: rgba(254, 202, 202, 1); }
+    .border-yellow-200 { border-color: rgba(253, 230, 138, 1); }
+    .border-green-200 { border-color: rgba(167, 243, 208, 1); }
+    .text-red-700 { color: rgba(185, 28, 28, 1); }
+    .text-yellow-700 { color: rgba(161, 98, 7, 1); }
+    .text-green-700 { color: rgba(4, 120, 87, 1); }
+
+    @media (min-width: 768px) {
+        .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+</style>
 {% endblock %}
