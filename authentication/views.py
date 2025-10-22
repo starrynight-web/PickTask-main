@@ -17,7 +17,7 @@ User = get_user_model()  # ✅ This points to 'home.User'
 
 def register_view(request):
     if request.user.is_authenticated:
-        return redirect('workspace:dashboard')
+        return redirect('workspace:home')
         
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -42,7 +42,7 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('workspace:dashboard')
+        return redirect('workspace:home')
         
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -64,7 +64,7 @@ def login_view(request):
             login(request, user)
             messages.success(request, f'Welcome back, {user.username}!')
             
-            next_url = request.GET.get('next', 'workspace:dashboard')
+            next_url = request.GET.get('next', 'workspace:home')
             return redirect(next_url)
     else:
         form = UserLoginForm()

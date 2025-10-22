@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - PickTask{% endblock %}
+
+{% block content_header %}
+<div class="content-header">
+    <h1>
+        {% if current_project %}
+            {{ current_project.name }} Dashboard
+        {% else %}
+            Workspace Dashboard
+        {% endif %}
+    </h1>
+    <p>
+        {% if current_project %}
+            Project in <strong>{{ current_workspace.name }}</strong> workspace
+        {% elif current_workspace %}
+            {{ current_workspace.name }} - Select a project to continue
+        {% else %}
+            Welcome to PickTask! Create your first workspace.
+        {% endif %}
+    </p>
+</div>
+{% endblock %}
+
+{% block content %}
+{% if current_workspace %}
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="text-3xl font-bold text-primary">{{ total_tasks }}</h3>
+            <p class="text-gray-600">Total Tasks</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="text-3xl font-bold text-success">{{ completed_tasks }}</h3>
+            <p class="text-gray-600">Completed</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="text-3xl font-bold text-warning">{{ projects.count }}</h3>
+            <p class="text-gray-600">Projects</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="text-3xl font-bold text-secondary">{{ current_workspace.memberships.count }}</h3>
+            <p class="text-gray-600">Team Members</p>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Recent Projects -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Recent Projects</h2>
+        </div>
+        <div class="card-body">
+            {% for project in projects %}
+            <div class="project-item p-4 border-b border-gray-200 last:border-b-0">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-semibold">{{ project.name }}</h4>
+                        <p class="text-gray-600 text-sm">{{ project.tasks.count }} tasks</p>
+                    </div>
+                    {% if current_project and current_project.id != project.id %}
+                    <a href="{% url 'workspace:select-project' current_workspace.id project.id %}" 
+                       class="btn btn-sm btn-outline">
+                        Switch
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-500 text-center py-4">No projects yet</p>
+            {% endfor %}
+            
+            <div class="mt-4">
+                <a href="{% url 'workspace:create-project' current_workspace.id %}" class="btn btn-outline w-full">
+                    Create New Project
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Recent Activity</h2>
+        </div>
+        <div class="card-body">
+            {% for activity in recent_activities %}
+            <div class="activity-item p-3 border-b border-gray-200 last:border-b-0">
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                        {{ activity.user.username|first|upper }}
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm">
+                            <span class="font-semibold">{{ activity.user.username }}</span>
+                            {{ activity.action }}
+                        </p>
+                        <p class="text-gray-500 text-xs">{{ activity.timestamp|timesince }} ago</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-500 text-center py-4">No recent activity</p>
+            {% endfor %}
+            <div class="mt-4">
+                <a href="{% url 'activity:activity' current_workspace.id %}" class="btn btn-outline w-full">
+                    View All Activity
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card text-center py-12">
+    <h2 class="text-2xl font-semibold mb-4">Welcome to PickTask!</h2>
+    <p class="text-gray-600 mb-6">Get started by creating your first workspace</p>
+    <a href="{% url 'workspace:create-workspace' %}" class="btn btn-primary">
+        Create Workspace
+    </a>
+</div>
+{% endif %}
+{% endblock %}
