@@ -1335,7 +1335,7 @@
           this.init();
         }
 
-        init() {
+        init(); {
           // Restore state from session storage
           this.restoreState();
 
@@ -1348,7 +1348,7 @@
           console.log("SequentialNav initialized");
         }
 
-        restoreState() {
+        restoreState(); {
           const savedState = sessionStorage.getItem("picktask_nav_state");
           if (savedState) {
             try {
@@ -1362,7 +1362,7 @@
           }
         }
 
-        saveState() {
+        saveState(); {
           const state = {
             currentView: this.currentView,
             selectedWorkspace: this.selectedWorkspace,
@@ -1371,14 +1371,14 @@
           sessionStorage.setItem("picktask_nav_state", JSON.stringify(state));
         }
 
-        static showView(viewId) {
+        static showView(viewId); {
           if (!SequentialNav.instance) {
             new SequentialNav();
           }
           return SequentialNav.instance.showView(viewId);
         }
 
-        showView(viewId) {
+        showView(viewId); {
           // Hide all views
           document.querySelectorAll(".nav-view").forEach((view) => {
             view.classList.remove("active");
@@ -1399,7 +1399,7 @@
           workspaceId,
           workspaceName,
           workspaceUrl = null
-        ) {
+        ); {
           if (!SequentialNav.instance) {
             new SequentialNav();
           }
@@ -1410,7 +1410,7 @@
           );
         }
 
-        selectWorkspace(workspaceId, workspaceName, workspaceUrl = null) {
+        selectWorkspace(workspaceId, workspaceName, workspaceUrl = null); {
           console.log(
             "Selecting workspace:",
             workspaceId,
@@ -1440,7 +1440,7 @@
           }
         }
 
-        static selectProject(projectId, projectName, projectUrl = null) {
+        static selectProject(projectId, projectName, projectUrl = null); {
           if (!SequentialNav.instance) {
             new SequentialNav();
           }
@@ -1451,7 +1451,7 @@
           );
         }
 
-        selectProject(projectId, projectName, projectUrl = null) {
+        selectProject(projectId, projectName, projectUrl = null); {
           console.log(
             "Selecting project:",
             projectId,
@@ -1480,7 +1480,7 @@
           }
         }
 
-        updateWorkspaceSelection(workspaceId) {
+        updateWorkspaceSelection(workspaceId); {
           document.querySelectorAll("[data-workspace-id]").forEach((item) => {
             item.classList.remove("selected");
             if (
@@ -1491,7 +1491,7 @@
           });
         }
 
-        updateProjectSelection(projectId) {
+        updateProjectSelection(projectId); {
           document.querySelectorAll("[data-project-id]").forEach((item) => {
             item.classList.remove("selected");
             if (parseInt(item.getAttribute("data-project-id")) === projectId) {
@@ -1500,7 +1500,7 @@
           });
         }
 
-        updateArrowStates() {
+        updateArrowStates(); {
           const toProjectsBtn = document.getElementById("to-projects-btn");
           const toNavigationBtn = document.getElementById("to-navigation-btn");
 
@@ -1513,7 +1513,7 @@
           }
         }
 
-        updateProgressDots() {
+        updateProgressDots(); {
           const views = ["workspace-view", "project-view", "navigation-view"];
           const currentIndex = views.indexOf(this.currentView);
 
@@ -1529,7 +1529,7 @@
             });
         }
 
-        updateViewState() {
+        updateViewState(); {
           // Determine which view to show based on current selections
           if (this.selectedWorkspace && this.selectedProject) {
             this.showView("navigation-view");
@@ -1540,7 +1540,7 @@
           }
         }
 
-        bindEvents() {
+        bindEvents(); {
           // Keyboard navigation
           document.addEventListener("keydown", (e) => {
             if (e.key === "ArrowLeft") {
@@ -1551,7 +1551,7 @@
           });
         }
 
-        navigateBack() {
+        navigateBack(); {
           const views = ["workspace-view", "project-view", "navigation-view"];
           const currentIndex = views.indexOf(this.currentView);
           if (currentIndex > 0) {
@@ -1559,7 +1559,7 @@
           }
         }
 
-        navigateForward() {
+        navigateForward(); {
           const views = ["workspace-view", "project-view", "navigation-view"];
           const currentIndex = views.indexOf(this.currentView);
           if (currentIndex < views.length - 1) {
