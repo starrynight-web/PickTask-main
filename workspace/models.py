@@ -49,7 +49,21 @@ class Project(models.Model):
         ordering = ['-created_at']
 
 
+class StatusColumn(models.Model):
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, related_name='status_columns')
+    name = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'id']
+        unique_together = ['workspace', 'name']
+
+    def __str__(self):
+        return f"{self.name} ({self.workspace.name})"
+
+
 class Task(models.Model):
+    # Legacy status field — kept for backward compatibility during transition
     STATUS_CHOICES = [
         ('todo', 'To Do'),
         ('in_progress', 'In Progress'),
@@ -74,7 +88,18 @@ class Task(models.Model):
         blank=True,
         related_name='assigned_tasks'
     )
+    
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='todo')
+    
+    
+    status_column = models.ForeignKey(
+        StatusColumn,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='tasks'
+    )
+    
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='medium')
     due_date = models.DateTimeField(null=True, blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tasks_created')
@@ -86,6 +111,7 @@ class Task(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
 
 class Group(models.Model):
     name = models.CharField(max_length=255)
@@ -105,6 +131,7 @@ class Group(models.Model):
     def member_count(self):
         return self.memberships.count()  
 
+
 class GroupMembership(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='memberships')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='group_memberships')
@@ -118,6 +145,7 @@ class GroupMembership(models.Model):
     def __str__(self):
         return f"{self.user.username} in {self.group.name}"
     
+
 class ActivityLog(models.Model):
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, related_name='activities')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='activities')
@@ -129,7 +157,6 @@ class ActivityLog(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
-
 
 
 class Comment(models.Model):

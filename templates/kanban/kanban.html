@@ -95,7 +95,7 @@
 .priority-high { background: var(--error); }
 .priority-urgent { background: #DC2626; }
 
-/* Enhanced Quick Add Task Styling */
+/* Quick Add Task */
 .quick-add-task {
     margin-top: auto;
     padding-top: 1rem;
@@ -108,22 +108,7 @@
     gap: 0.75rem;
 }
 
-.quick-add-input {
-    flex: 1;
-    font-size: 0.875rem;
-    padding: 0.625rem 0.75rem;
-    border: 1px solid var(--gray-300);
-    border-radius: var(--border-radius);
-    background: white;
-    transition: all 0.2s;
-}
-
-.quick-add-input:focus {
-    outline: none;
-    border-color: var(--primary-teal);
-    box-shadow: 0 0 0 3px rgba(123, 104, 238, 0.1);
-}
-
+.quick-add-input,
 .quick-add-select {
     font-size: 0.875rem;
     padding: 0.625rem 0.75rem;
@@ -133,6 +118,7 @@
     transition: all 0.2s;
 }
 
+.quick-add-input:focus,
 .quick-add-select:focus {
     outline: none;
     border-color: var(--primary-teal);
@@ -160,50 +146,7 @@
     transform: translateY(-1px);
 }
 
-.quick-add-btn:active {
-    transform: translateY(0);
-}
-
-.no-projects-message {
-    text-align: center;
-    color: var(--gray-500);
-    padding: 2rem 1rem;
-    font-size: 0.875rem;
-}
-
-.project-filter {
-    background: var(--gray-100);
-    padding: 1.25rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--gray-200);
-}
-
-.filter-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.filter-label {
-    font-weight: 600;
-    color: var(--gray-700);
-    font-size: 0.875rem;
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.btn-sm {
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
-}
-
-/* Header styling */
+/* Header & UI */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -212,16 +155,135 @@
     gap: 1rem;
 }
 
-.header-content h1 {
-    margin-bottom: 0.25rem;
-}
-
 .header-actions {
     display: flex;
     gap: 0.75rem;
 }
 
-/* Empty state styling */
+.btn-manage-columns {
+    background: var(--gray-200);
+    border: 1px solid var(--gray-300);
+    color: var(--gray-700);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.btn-manage-columns:hover {
+    background: var(--gray-300);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 600px;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.close-modal {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray-500);
+}
+
+.columns-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.columns-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.column-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    margin-right: 0.5rem;
+}
+
+.btn-save-column,
+.btn-delete-column {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+.btn-save-column {
+    background: var(--primary-teal);
+    color: white;
+    border: none;
+}
+
+.btn-delete-column {
+    background: var(--error);
+    color: white;
+    border: none;
+}
+
+.add-column-form {
+    display: flex;
+    margin-top: 1.5rem;
+    gap: 0.5rem;
+}
+
+.add-column-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+}
+
+.add-column-btn {
+    padding: 0.5rem 1rem;
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+/* Reusable styles */
 .empty-column {
     text-align: center;
     color: var(--gray-500);
@@ -232,7 +294,6 @@
     border: 2px dashed var(--gray-300);
 }
 
-/* Message styling */
 .alert {
     padding: 0.75rem 1rem;
     border-radius: var(--border-radius);
@@ -240,91 +301,23 @@
     border-left: 4px solid transparent;
 }
 
-.alert-success {
-    background-color: #d1fae5;
-    color: #065f46;
-    border-left-color: #10b981;
-}
+.alert-success { background-color: #d1fae5; color: #065f46; border-left-color: #10b981; }
+.alert-error { background-color: #fee2e2; color: #b91c1c; border-left-color: #ef4444; }
 
-.alert-error {
-    background-color: #fee2e2;
-    color: #b91c1c;
-    border-left-color: #ef4444;
-}
-
-/* Flex utilities */
-.flex {
-    display: flex;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-.items-center {
-    align-items: center;
-}
-
-.items-start {
-    align-items: flex-start;
-}
-
+.flex { display: flex; }
+.justify-between { justify-content: space-between; }
+.items-center { align-items: center; }
 .gap-2 { gap: 0.5rem; }
 .gap-3 { gap: 0.75rem; }
-.gap-4 { gap: 1rem; }
-
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-3 { margin-bottom: 0.75rem; }
 .mb-6 { margin-bottom: 1.5rem; }
-
-.text-sm { font-size: 0.875rem; }
 .text-gray-600 { color: var(--gray-600); }
-
 .font-semibold { font-weight: 600; }
-.font-medium { font-weight: 500; }
 
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.text-center { text-align: center; }
-
-/* Responsive design */
+/* Responsive */
 @media (max-width: 768px) {
-    .kanban-board {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .kanban-column {
-        min-height: 500px;
-    }
-    
-    .page-header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .header-actions {
-        justify-content: center;
-    }
-    
-    .filter-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .filter-buttons {
-        justify-content: center;
-    }
-    
-    .quick-add-form {
-        flex-direction: column;
-    }
+    .kanban-board { grid-template-columns: 1fr; gap: 1rem; }
+    .kanban-column { min-height: 500px; }
+    .page-header { flex-direction: column; align-items: stretch; }
 }
 </style>
 {% endblock %}
@@ -338,25 +331,25 @@
             <p class="text-gray-600">{{ workspace.name }}{% if current_project %} - {{ current_project.name }}{% endif %}</p>
         </div>
         <div class="header-actions">
+            <button class="btn-manage-columns" id="openManageModal">
+                <i class="fas fa-cog"></i> Manage Columns
+            </button>
             <a href="{% url 'task:create-task' workspace.id %}" class="btn btn-primary">
-                <i class="fas fa-plus mr-2"></i>
-                New Task
+                <i class="fas fa-plus mr-2"></i> New Task
             </a>
         </div>
     </div>
 
-    <!-- Messages Display -->
+    <!-- Messages -->
     {% if messages %}
     <div class="mb-6">
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
         {% endfor %}
     </div>
     {% endif %}
 
-    <!-- Project Filter or Create Project Prompt -->
+    <!-- Project Filter -->
     {% if has_projects %}
     <div class="project-filter">
         <div class="filter-container">
@@ -376,45 +369,39 @@
         </div>
     </div>
     {% else %}
-    <!-- No projects prompt -->
     <div class="card mb-6" style="background: #eff6ff; border-color: #3b82f6;">
         <div class="card-body text-center">
             <h3 class="card-title mb-2" style="color: #1e40af;">No projects yet</h3>
             <p class="text-gray-600 mb-4">Create your first project to start organizing tasks</p>
-            <a href="{% url 'workspace:create-project' workspace.id %}" 
-               class="btn btn-primary">
-                <i class="fas fa-plus mr-2"></i>
-                Create Project
+            <a href="{% url 'workspace:create-project' workspace.id %}" class="btn btn-primary">
+                <i class="fas fa-plus mr-2"></i> Create Project
             </a>
         </div>
     </div>
     {% endif %}
 
     <!-- Kanban Board -->
-    <div class="kanban-board">
-        {% for status_key, status_label in status_choices %}
-        <div class="kanban-column" data-status="{{ status_key }}">
+    <div class="kanban-board" id="kanbanBoard">
+        {% for column in status_columns %}
+        <div class="kanban-column" data-column-id="{{ column.id }}">
             <div class="kanban-column-header">
-                <h3 class="column-title">{{ status_label }}</h3>
-                <span class="task-count">{{ tasks_by_status|get_item:status_key|length }}</span>
+                <h3 class="column-title">{{ column.name }}</h3>
+                <span class="task-count">
+                    {{ tasks_by_column|get_item:column.id|default:empty_list|length }}
+                </span>
             </div>
             
             <div class="kanban-column-content">
-                {% for task in tasks_by_status|get_item:status_key %}
+                {% for task in tasks_by_column|get_item:column.id|default:empty_list %}
                 <div class="task-card" data-task-id="{{ task.id }}">
                     <div class="flex justify-between items-start mb-2">
                         <span class="task-priority priority-{{ task.priority }}"></span>
-                        <span class="status-badge status-{{ task.status }}">
-                            {{ task.get_priority_display }}
-                        </span>
+                        <span class="text-xs font-medium">{{ task.get_priority_display }}</span>
                     </div>
-                    
                     <h4 class="font-semibold mb-2">{{ task.title }}</h4>
-                    
                     {% if task.description %}
                     <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ task.description|truncatewords:20 }}</p>
                     {% endif %}
-                    
                     <div class="flex justify-between items-center text-sm text-gray-500 mb-2">
                         <span class="bg-gray-100 px-2 py-1 rounded">#{{ task.id }}</span>
                         {% if task.assigned_to %}
@@ -423,19 +410,15 @@
                         <span class="text-gray-400">Unassigned</span>
                         {% endif %}
                     </div>
-                    
                     {% if task.due_date %}
                     <div class="text-xs text-gray-500 mb-3">
-                        <i class="fas fa-calendar mr-1"></i>
-                        {{ task.due_date|date:"M d, Y" }}
+                        <i class="fas fa-calendar mr-1"></i> {{ task.due_date|date:"M d, Y" }}
                     </div>
                     {% endif %}
-                    
                     <div class="flex gap-2">
                         <a href="{% url 'task:task-detail' task.id %}" class="btn btn-outline btn-sm flex-1 text-center">
-                            <i class="fas fa-eye mr-1"></i>
-                            View
-                        </a>    
+                            <i class="fas fa-eye mr-1"></i> View
+                        </a>
                     </div>
                 </div>
                 {% empty %}
@@ -446,15 +429,13 @@
                 </div>
                 {% endfor %}
             </div>
-            
-            <!-- Enhanced Quick Add Task -->
+
             {% if has_projects %}
             <div class="quick-add-task">
                 <form method="post" action="{% url 'kanban:quick-create-task' workspace.id %}" class="quick-add-form">
                     {% csrf_token %}
-                    <input type="hidden" name="status" value="{{ status_key }}">
-                    <input type="text" name="title" placeholder="+ Add task" 
-                           class="quick-add-input" required>
+                    <input type="hidden" name="status_column_id" value="{{ column.id }}">
+                    <input type="text" name="title" placeholder="+ Add task" class="quick-add-input" required>
                     <select name="project_id" class="quick-add-select" required>
                         <option value="">Select Project</option>
                         {% for project in projects %}
@@ -462,8 +443,7 @@
                         {% endfor %}
                     </select>
                     <button type="submit" class="quick-add-btn">
-                        <i class="fas fa-plus"></i>
-                        Add Task
+                        <i class="fas fa-plus"></i> Add Task
                     </button>
                 </form>
             </div>
@@ -479,130 +459,192 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- Manage Columns Modal -->
+<div id="manageColumnsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Manage Columns</h2>
+            <span class="close-modal" id="closeManageModal">&times;</span>
+        </div>
+        <ul class="columns-list" id="columnsList">
+            {% for column in status_columns %}
+            <li data-column-id="{{ column.id }}">
+                <input type="text" class="column-input" value="{{ column.name }}" maxlength="100">
+                <button class="btn-save-column" onclick="saveColumn({{ column.id }})">Save</button>
+                <button class="btn-delete-column" onclick="deleteColumn({{ column.id }})">Delete</button>
+            </li>
+            {% endfor %}
+        </ul>
+        <form class="add-column-form" id="addColumnForm">
+            {% csrf_token %}
+            <input type="text" class="add-column-input" id="newColumnName" placeholder="New column name" maxlength="100" required>
+            <button type="submit" class="add-column-btn">Add Column</button>
+        </form>
+    </div>
+</div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Make task cards draggable
-    document.querySelectorAll('.task-card').forEach(function(card) {
+    // === Modal Handling ===
+    const modal = document.getElementById('manageColumnsModal');
+    document.getElementById('openManageModal').onclick = () => modal.style.display = 'block';
+    document.getElementById('closeManageModal').onclick = () => modal.style.display = 'none';
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+
+    // === Drag & Drop (Updated for column-id) ===
+    document.querySelectorAll('.task-card').forEach(card => {
         card.setAttribute('draggable', 'true');
-        
-        card.addEventListener('dragstart', function(e) {
+        card.addEventListener('dragstart', e => {
             e.dataTransfer.setData('text/plain', card.dataset.taskId);
             card.classList.add('dragging');
         });
-        
-        card.addEventListener('dragend', function() {
-            card.classList.remove('dragging');
-        });
+        card.addEventListener('dragend', () => card.classList.remove('dragging'));
     });
 
-    // Make columns droppable
-    document.querySelectorAll('.kanban-column').forEach(function(column) {
-        column.addEventListener('dragover', function(e) {
+    document.querySelectorAll('.kanban-column').forEach(column => {
+        column.addEventListener('dragover', e => {
             e.preventDefault();
             column.classList.add('drag-over');
         });
-        
-        column.addEventListener('dragleave', function() {
-            column.classList.remove('drag-over');
-        });
-        
-        column.addEventListener('drop', function(e) {
+        column.addEventListener('dragleave', () => column.classList.remove('drag-over'));
+        column.addEventListener('drop', e => {
             e.preventDefault();
             column.classList.remove('drag-over');
-            
             const taskId = e.dataTransfer.getData('text/plain');
-            const newStatus = column.dataset.status;
-            
-            updateTaskStatus(taskId, newStatus);
+            const newColumnId = column.dataset.columnId;
+            updateTaskStatus(taskId, newColumnId);
         });
     });
 
-function updateTaskStatus(taskId, newStatus) {
-    // ✅ 1. Get elements
-    const taskCard = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
-    const oldColumn = taskCard.closest('.kanban-column');
-    const newColumn = document.querySelector(`.kanban-column[data-status="${newStatus}"]`);
+    // === Update Task Status (AJAX) ===
+    function updateTaskStatus(taskId, newColumnId) {
+        const taskCard = document.querySelector(`.task-card[data-task-id="${taskId}"]`);
+        const oldColumn = taskCard.closest('.kanban-column');
+        const newColumn = document.querySelector(`.kanban-column[data-column-id="${newColumnId}"]`);
+        if (!taskCard || !newColumn) return;
 
-    if (!taskCard || !newColumn) return;
-
-    const oldContent = oldColumn.querySelector('.kanban-column-content');
-    const newContent = newColumn.querySelector('.kanban-column-content');
-
-    // ✅ 2. Optimistic UI: Move the task
-    newContent.appendChild(taskCard);
-
-    // ✅ 3. Toggle placeholders based on task count
-    toggleEmptyPlaceholder(oldContent);
-    toggleEmptyPlaceholder(newContent);
-
-    // ✅ 4. Update task count badges
-    updateTaskCountBadge(oldColumn);
-    updateTaskCountBadge(newColumn);
-
-    // ✅ 5. Sync with server in background
-    const formData = new FormData();
-    formData.append('task_id', taskId);
-    formData.append('status', newStatus);
-
-    fetch(`/kanban/{{ workspace.id }}/update-status/`, {
-        method: 'POST',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRFToken': getCookie('csrftoken'),
-        },
-        body: formData
-    })
-    .catch(error => {
-        // ❌ Revert on failure
-        console.error('Update failed, reverting:', error);
-        oldContent.appendChild(taskCard);
-
-        // Re-toggle placeholders
+        const oldContent = oldColumn.querySelector('.kanban-column-content');
+        const newContent = newColumn.querySelector('.kanban-column-content');
+        newContent.appendChild(taskCard);
         toggleEmptyPlaceholder(oldContent);
         toggleEmptyPlaceholder(newContent);
-
-        // Re-update counts
         updateTaskCountBadge(oldColumn);
         updateTaskCountBadge(newColumn);
 
-        alert('Failed to update task. Please try again.');
+        fetch(`/kanban/{{ workspace.id }}/update-status/`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ task_id: taskId, status_column_id: newColumnId })
+        }).catch(() => {
+            // Revert on error
+            oldContent.appendChild(taskCard);
+            toggleEmptyPlaceholder(oldContent);
+            toggleEmptyPlaceholder(newContent);
+            updateTaskCountBadge(oldColumn);
+            updateTaskCountBadge(newColumn);
+            alert('Failed to update task status.');
+        });
+    }
+
+    // === Column Management (AJAX) ===
+    document.getElementById('addColumnForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('newColumnName').value.trim();
+        if (!name) return;
+
+        fetch(`/kanban/{{ workspace.id }}/manage-columns/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ action: 'add', name: name })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); // Simple reload for now
+            } else {
+                alert('Failed to add column: ' + (data.error || 'Unknown error'));
+            }
+        });
     });
-}
 
-// ✅ Helper: Toggle empty placeholder based on child task cards
-function toggleEmptyPlaceholder(columnContent) {
-    const taskCards = columnContent.querySelectorAll('.task-card');
-    const existingPlaceholder = columnContent.querySelector('.empty-column');
+    window.saveColumn = function(columnId) {
+        const input = document.querySelector(`li[data-column-id="${columnId}"] .column-input`);
+        const newName = input.value.trim();
+        if (!newName) return alert('Name cannot be empty');
 
-    if (taskCards.length === 0) {
-        if (!existingPlaceholder) {
-            const placeholder = document.createElement('div');
-            placeholder.className = 'empty-column';
-            placeholder.innerHTML = `
-                <i class="fas fa-inbox text-2xl mb-2"></i>
-                <p>No tasks</p>
-                <p class="text-xs mt-1">Drag tasks here or create new ones</p>
-            `;
-            columnContent.appendChild(placeholder);
-        }
-    } else {
-        if (existingPlaceholder) {
-            existingPlaceholder.remove();
+        fetch(`/kanban/{{ workspace.id }}/manage-columns/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ action: 'rename', column_id: columnId, name: newName })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Update column title on board
+                const boardCol = document.querySelector(`.kanban-column[data-column-id="${columnId}"] .column-title`);
+                if (boardCol) boardCol.textContent = newName;
+            } else {
+                alert('Failed to rename column');
+            }
+        });
+    };
+
+    window.deleteColumn = function(columnId) {
+        if (!confirm('Are you sure? All tasks in this column will be moved to "To Do".')) return;
+
+        fetch(`/kanban/{{ workspace.id }}/manage-columns/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ action: 'delete', column_id: columnId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Failed to delete column');
+            }
+        });
+    };
+
+    // === Helpers ===
+    function toggleEmptyPlaceholder(content) {
+        const cards = content.querySelectorAll('.task-card');
+        const placeholder = content.querySelector('.empty-column');
+        if (cards.length === 0 && !placeholder) {
+            const el = document.createElement('div');
+            el.className = 'empty-column';
+            el.innerHTML = `<i class="fas fa-inbox text-2xl mb-2"></i><p>No tasks</p><p class="text-xs mt-1">Drag tasks here or create new ones</p>`;
+            content.appendChild(el);
+        } else if (cards.length > 0 && placeholder) {
+            placeholder.remove();
         }
     }
-}
 
-// ✅ Helper: Update task count badge
-function updateTaskCountBadge(column) {
-    const countBadge = column.querySelector('.task-count');
-    if (countBadge) {
-        const taskCards = column.querySelectorAll('.task-card');
-        countBadge.textContent = taskCards.length;
+    function updateTaskCountBadge(column) {
+        const badge = column.querySelector('.task-count');
+        if (badge) {
+            const count = column.querySelectorAll('.task-card').length;
+            badge.textContent = count;
+        }
     }
-}
 
     function getCookie(name) {
         let cookieValue = null;
