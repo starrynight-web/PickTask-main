@@ -1,117 +1,130 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Activity Summary - {{ workspace.name }}{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %}Activity Summary -
+{{ workspace.name }}{% endblock %} {% block content %}
 <div class="flex justify-between items-center mb-6">
-    <div>
-        <h1>Activity Summary</h1>
-        <p class="text-gray-600">{{ workspace.name }} • Last {{ time_period }}</p>
-    </div>
-    <div class="flex gap-3">
-        <a href="{% url 'activity:activity' workspace.id %}" class="btn btn-outline">
-            📋 View Full Log
-        </a>
-    </div>
+  <div>
+    <h1>Activity Summary</h1>
+    <p class="text-gray-600">{{ workspace.name }} • Last {{ time_period }}</p>
+  </div>
+  <div class="flex gap-3">
+    <a
+      href="{% url 'activity:activity' workspace.id %}"
+      class="btn btn-outline"
+    >
+      📋 View Full Log
+    </a>
+  </div>
 </div>
 
 <!-- Summary Stats -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="card text-center">
-        <div class="card-body">
-            <h3 class="text-3xl font-bold text-primary">{{ total_activities }}</h3>
-            <p class="text-gray-600">Total Activities</p>
-        </div>
+  <div class="card text-center">
+    <div class="card-body">
+      <h3 class="text-3xl font-bold text-primary">{{ total_activities }}</h3>
+      <p class="text-gray-600">Total Activities</p>
     </div>
-    <div class="card text-center">
-        <div class="card-body">
-            <h3 class="text-3xl font-bold text-success">{{ active_users|length }}</h3>
-            <p class="text-gray-600">Active Users</p>
-        </div>
+  </div>
+  <div class="card text-center">
+    <div class="card-body">
+      <h3 class="text-3xl font-bold text-success">{{ active_users|length }}</h3>
+      <p class="text-gray-600">Active Users</p>
     </div>
-    <div class="card text-center">
-        <div class="card-body">
-            <h3 class="text-3xl font-bold text-warning">{{ common_actions|length }}</h3>
-            <p class="text-gray-600">Activity Types</p>
-        </div>
+  </div>
+  <div class="card text-center">
+    <div class="card-body">
+      <h3 class="text-3xl font-bold text-warning">
+        {{ common_actions|length }}
+      </h3>
+      <p class="text-gray-600">Activity Types</p>
     </div>
+  </div>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <!-- Most Active Users -->
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">Most Active Users</h2>
-        </div>
-        <div class="card-body">
-            {% for user in active_users %}
-            <div class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                        {{ user.user__username|first|upper }}
-                    </div>
-                    <span class="font-medium">{{ user.user__username }}</span>
-                </div>
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">
-                    {{ user.activity_count }} activities
-                </span>
-            </div>
-            {% empty %}
-            <p class="text-gray-500 text-center py-4">No activity data available</p>
-            {% endfor %}
-        </div>
+  <!-- Most Active Users -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Most Active Users</h2>
     </div>
+    <div class="card-body">
+      {% for user in active_users %}
+      <div
+        class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-semibold"
+          >
+            {{ user.user__username|first|upper }}
+          </div>
+          <span class="font-medium">{{ user.user__username }}</span>
+        </div>
+        <span
+          class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium"
+        >
+          {{ user.activity_count }} activities
+        </span>
+      </div>
+      {% empty %}
+      <p class="text-gray-500 text-center py-4">No activity data available</p>
+      {% endfor %}
+    </div>
+  </div>
 
-    <!-- Common Actions -->
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">Common Activities</h2>
-        </div>
-        <div class="card-body">
-            {% for action in common_actions %}
-            <div class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0">
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm text-gray-700 truncate">{{ action.action }}</p>
-                </div>
-                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium ml-4">
-                    {{ action.count }}
-                </span>
-            </div>
-            {% empty %}
-            <p class="text-gray-500 text-center py-4">No activity data available</p>
-            {% endfor %}
-        </div>
+  <!-- Common Actions -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Common Activities</h2>
     </div>
+    <div class="card-body">
+      {% for action in common_actions %}
+      <div
+        class="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0"
+      >
+        <div class="flex-1 min-w-0">
+          <p class="text-sm text-gray-700 truncate">{{ action.action }}</p>
+        </div>
+        <span
+          class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium ml-4"
+        >
+          {{ action.count }}
+        </span>
+      </div>
+      {% empty %}
+      <p class="text-gray-500 text-center py-4">No activity data available</p>
+      {% endfor %}
+    </div>
+  </div>
 </div>
 
 <!-- Daily Activity Trend -->
 <div class="card mt-8">
-    <div class="card-header">
-        <h2 class="card-title">Activity Trend (Last 7 Days)</h2>
-    </div>
-    <div class="card-body">
-        {% if daily_activity %}
-        <div class="space-y-4">
-            {% for day in daily_activity %}
-            <div class="flex items-center gap-4">
-                <div class="w-24 text-sm text-gray-600">
-                    {{ day.date|date:"M d" }}
-                </div>
-                <div class="flex-1">
-                    <div class="bg-blue-100 rounded-full h-6 flex items-center">
-                        <div class="bg-primary h-6 rounded-full flex items-center justify-center text-white text-xs font-medium"
-                             style="width: {% widthratio day.count 10 100 %}%; min-width: 40px;">
-                            {{ day.count }}
-                        </div>
-                    </div>
-                </div>
+  <div class="card-header">
+    <h2 class="card-title">Activity Trend (Last 7 Days)</h2>
+  </div>
+  <div class="card-body">
+    {% if daily_activity %}
+    <div class="space-y-4">
+      {% for day in daily_activity %}
+      <div class="flex items-center gap-4">
+        <div class="w-24 text-sm text-gray-600">{{ day.date|date:"M d" }}</div>
+        <div class="flex-1">
+          <div class="bg-blue-100 rounded-full h-6 flex items-center">
+            <div
+              class="bg-primary h-6 rounded-full flex items-center justify-center text-white text-xs font-medium"
+              style="width: {% widthratio day.count 10 100 %}%; min-width: 40px;"
+            >
+              {{ day.count }}
             </div>
-            {% endfor %}
+          </div>
         </div>
-        {% else %}
-        <p class="text-gray-500 text-center py-4">No activity data for the last 7 days</p>
-        {% endif %}
+      </div>
+      {% endfor %}
     </div>
+    {% else %}
+    <p class="text-gray-500 text-center py-4">
+      No activity data for the last 7 days
+    </p>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

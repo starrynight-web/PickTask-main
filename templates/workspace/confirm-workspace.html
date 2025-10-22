@@ -1,66 +1,244 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Workspace Created - PickTask{% endblock %}
-
-{% block content %}
-<div class="max-w-2xl mx-auto text-center">
+{% extends 'base.html' %} {% load static %} {% block title %}Workspace Created -
+PickTask{% endblock %} {% block content %}
+<div class="container">
+  <div class="max-w-2xl mx-auto text-center">
     <div class="mb-8">
-        <div class="w-16 h-16 bg-success rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-        </div>
-        <h1>Workspace Created!</h1>
-        <p class="text-gray-600">Your workspace "{{ workspace.name }}" has been successfully created.</p>
+      <div
+        class="w-16 h-16 bg-success rounded-full flex items-center justify-center mx-auto mb-4"
+        style="background-color: var(--success)"
+      >
+        <i class="fas fa-check text-white text-2xl"></i>
+      </div>
+      <h1 class="text-3xl font-bold mb-2">Workspace Created!</h1>
+      <p class="text-gray-600">
+        Your workspace "{{ workspace.name }}" has been successfully created.
+      </p>
     </div>
 
     <div class="card">
-        <div class="card-body">
-            <h2 class="card-title mb-4">What's next?</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <a href="{% url 'kanban:kanban' workspace.id %}" class="p-4 border border-gray-200 rounded-lg hover:border-primary transition-colors">
-                    <div class="text-primary mb-2">
-                        <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path>
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-sm">Create Projects</h3>
-                    <p class="text-gray-500 text-xs mt-1">Start organizing your work</p>
-                </a>
-                
-                <a href="{% url 'team:invite' workspace.id %}" class="p-4 border border-gray-200 rounded-lg hover:border-primary transition-colors">
-                    <div class="text-primary mb-2">
-                        <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-sm">Invite Team</h3>
-                    <p class="text-gray-500 text-xs mt-1">Collaborate with your team</p>
-                </a>
-                
-                <a href="{% url 'task:create-task' workspace.id %}" class="p-4 border border-gray-200 rounded-lg hover:border-primary transition-colors">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-6">What's next?</h2>
 
-                    <div class="text-primary mb-2">
-                        <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-sm">Add Tasks</h3>
-                    <p class="text-gray-500 text-xs mt-1">Start tracking work</p>
-                </a>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <a
+            href="{% url 'kanban:kanban' workspace.id %}"
+            class="card hover:shadow-lg transition-all duration-300 text-decoration-none"
+            style="
+              border: 1px solid var(--gray-200);
+              padding: 1.5rem;
+              text-align: center;
+              display: block;
+              border-radius: var(--border-radius);
+            "
+          >
+            <div class="text-primary mb-3" style="color: var(--primary-teal)">
+              <i class="fas fa-columns text-2xl"></i>
             </div>
-            
-            <div class="flex gap-4 justify-center">
-               <a href="{% url 'workspace:workspace-detail' workspace.id %}" class="btn btn-primary">
-                    Go to Dashboard
-                </a>
-                <a href="{% url 'kanban:kanban' workspace.id %}" class="btn btn-outline">
-                    Open Kanban Board
-              </a>
+            <h3
+              class="font-semibold mb-2"
+              style="font-size: 1rem; color: var(--gray-800)"
+            >
+              Create Projects
+            </h3>
+            <p class="text-gray-500 text-sm">Start organizing your work</p>
+          </a>
+
+          <a
+            href="{% url 'team:invite' workspace.id %}"
+            class="card hover:shadow-lg transition-all duration-300 text-decoration-none"
+            style="
+              border: 1px solid var(--gray-200);
+              padding: 1.5rem;
+              text-align: center;
+              display: block;
+              border-radius: var(--border-radius);
+            "
+          >
+            <div class="text-primary mb-3" style="color: var(--primary-teal)">
+              <i class="fas fa-users text-2xl"></i>
             </div>
+            <h3
+              class="font-semibold mb-2"
+              style="font-size: 1rem; color: var(--gray-800)"
+            >
+              Invite Team
+            </h3>
+            <p class="text-gray-500 text-sm">Collaborate with your team</p>
+          </a>
+
+          <a
+            href="{% url 'task:create-task' workspace.id %}"
+            class="card hover:shadow-lg transition-all duration-300 text-decoration-none"
+            style="
+              border: 1px solid var(--gray-200);
+              padding: 1.5rem;
+              text-align: center;
+              display: block;
+              border-radius: var(--border-radius);
+            "
+          >
+            <div class="text-primary mb-3" style="color: var(--primary-teal)">
+              <i class="fas fa-plus-circle text-2xl"></i>
+            </div>
+            <h3
+              class="font-semibold mb-2"
+              style="font-size: 1rem; color: var(--gray-800)"
+            >
+              Add Tasks
+            </h3>
+            <p class="text-gray-500 text-sm">Start tracking work</p>
+          </a>
         </div>
+
+        <div class="flex gap-4 justify-center flex-wrap">
+          <a
+            href="{% url 'workspace:workspace-detail' workspace.id %}"
+            class="btn btn-primary"
+          >
+            <i class="fas fa-tachometer-alt mr-2"></i>
+            Go to Dashboard
+          </a>
+          <a
+            href="{% url 'kanban:kanban' workspace.id %}"
+            class="btn btn-outline"
+          >
+            <i class="fas fa-columns mr-2"></i>
+            Open Kanban Board
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+
+<style>
+  /* Additional styles for the confirmation page */
+  .bg-success {
+    width: 30px;
+    height: 30px;
+  }
+  .max-w-2xl {
+    max-width: 42rem;
+  }
+
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .mb-3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+
+  .mb-6 {
+    margin-bottom: 1.5rem;
+  }
+
+  .mb-8 {
+    margin-bottom: 2rem;
+  }
+
+  .mr-2 {
+    margin-right: 0.5rem;
+  }
+
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .font-semibold {
+    font-weight: 600;
+  }
+
+  .text-sm {
+    font-size: 0.875rem;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+
+  .rounded-full {
+    border-radius: 9999px;
+  }
+
+  .gap-4 {
+    gap: 10px;
+  }
+
+  .hover\:shadow-lg:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .transition-all {
+    transition: all 0.3s ease;
+  }
+
+  .duration-300 {
+    transition-duration: 300ms;
+  }
+
+  .text-decoration-none {
+    text-decoration: none;
+  }
+
+  /* Grid system for the cards */
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    .md\:grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Ensure links have proper cursor */
+  a {
+    cursor: pointer;
+  }
+
+  /* Card hover effects */
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-teal);
+  }
+</style>
 {% endblock %}
