@@ -3,12 +3,28 @@
 
 {% block title %}Dashboard - PickTask{% endblock %}
 
-{% block content %}
-<div class="dashboard-header">
-    <h1>Dashboard</h1>
-    <p>Welcome back, {{ user.username }}! Here's your workspace overview.</p>
+{% block content_header %}
+<div class="content-header">
+    <h1>
+        {% if current_project %}
+            {{ current_project.name }} Dashboard
+        {% else %}
+            Workspace Dashboard
+        {% endif %}
+    </h1>
+    <p>
+        {% if current_project %}
+            Project in <strong>{{ current_workspace.name }}</strong> workspace
+        {% elif current_workspace %}
+            {{ current_workspace.name }} - Select a project to continue
+        {% else %}
+            Welcome to PickTask! Create your first workspace.
+        {% endif %}
+    </p>
 </div>
+{% endblock %}
 
+{% block content %}
 {% if current_workspace %}
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
     <div class="card">
@@ -51,6 +67,12 @@
                         <h4 class="font-semibold">{{ project.name }}</h4>
                         <p class="text-gray-600 text-sm">{{ project.tasks.count }} tasks</p>
                     </div>
+                    {% if current_project and current_project.id != project.id %}
+                    <a href="{% url 'workspace:select-project' current_workspace.id project.id %}" 
+                       class="btn btn-sm btn-outline">
+                        Switch
+                    </a>
+                    {% endif %}
                 </div>
             </div>
             {% empty %}
@@ -58,10 +80,9 @@
             {% endfor %}
             
             <div class="mt-4">
-              <a href="{% url 'kanban:kanban' current_workspace.id %}" class="btn btn-outline w-full">
-                    View All Projects
+                <a href="{% url 'workspace:create-project' current_workspace.id %}" class="btn btn-outline w-full">
+                    Create New Project
                 </a>
- 
             </div>
         </div>
     </div>
@@ -90,12 +111,10 @@
             {% empty %}
             <p class="text-gray-500 text-center py-4">No recent activity</p>
             {% endfor %}
-            <a href="{% url 'activity:activity' current_workspace.id %}" class="btn btn-outline w-full">
+            <div class="mt-4">
+                <a href="{% url 'activity:activity' current_workspace.id %}" class="btn btn-outline w-full">
                     View All Activity
                 </a>
-
-            <div class="mt-4">
-                
             </div>
         </div>
     </div>
