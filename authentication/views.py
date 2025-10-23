@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout, get_user_model  # ✅ Updated
+from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -13,7 +13,7 @@ from .forms import UserRegisterForm, UserLoginForm, CustomPasswordResetForm, Cus
 from .models import EmailVerification, PasswordResetToken
 from .utils import send_verification_email, send_password_reset_email
 
-User = get_user_model()  # ✅ This points to 'home.User'
+User = get_user_model()
 
 def register_view(request):
     if request.user.is_authenticated:
@@ -22,19 +22,27 @@ def register_view(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False  # Deactivate until email verification
-            user.save()
-         
-            verification = EmailVerification.objects.create(user=user)
-        
-            send_verification_email(request, user, verification.token)
-            
-            messages.success(
-                request, 
-                'Account created successfully! Please check your email to verify your account.'
-            )
-            return redirect('authentication:email_verification_sent')
+            try:
+                user = form.save(commit=False)
+                # TEMPORARY FIX: Activate user immediately without email verification
+                user.is_active = True  # Changed from False to True
+                user.save()
+             
+                # TEMPORARY FIX: Comment out email verification
+                # verification = EmailVerification.objects.create(user=user)
+                # send_verification_email(request, user, verification.token)
+                
+                messages.success(
+                    request, 
+                    'Account created successfully! You can now log in.'  # Updated message
+                )
+                return redirect('authentication:login')  # Redirect to login instead
+            except Exception as e:
+                print(f"Registration error: {e}")
+                messages.error(
+                    request,
+                    'An error occurred during registration. Please try again.'
+                )
     else:
         form = UserRegisterForm()
     
@@ -49,17 +57,18 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
           
-            try:
-                verification = EmailVerification.objects.get(user=user)
-                if not verification.is_verified:
-                    messages.error(
-                        request, 
-                        'Please verify your email before logging in. '
-                        'Check your email for the verification link.'
-                    )
-                    return redirect('authentication:login')
-            except EmailVerification.DoesNotExist:
-                pass
+            # TEMPORARY FIX: Remove email verification check
+            # try:
+            #     verification = EmailVerification.objects.get(user=user)
+            #     if not verification.is_verified:
+            #         messages.error(
+            #             request, 
+            #             'Please verify your email before logging in. '
+            #             'Check your email for the verification link.'
+            #         )
+            #         return redirect('authentication:login')
+            # except EmailVerification.DoesNotExist:
+            #     pass
                 
             login(request, user)
             messages.success(request, f'Welcome back, {user.username}!')
@@ -109,17 +118,18 @@ def password_reset_view(request):
         form = CustomPasswordResetForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            associated_users = User.objects.filter(email=email)  # ✅ Now uses home.User
+            associated_users = User.objects.filter(email=email)
             
             if associated_users.exists():
                 for user in associated_users:
-                    # Create password reset token
-                    reset_token = PasswordResetToken.objects.create(user=user)
-                    send_password_reset_email(request, user, reset_token.token)
+                    # TEMPORARY FIX: Comment out password reset email
+                    # reset_token = PasswordResetToken.objects.create(user=user)
+                    # send_password_reset_email(request, user, reset_token.token)
+                    pass
             
             messages.success(
                 request,
-                'Password reset link has been sent to your email if an account exists.'
+                'Password reset feature is temporarily disabled. Please contact support.'
             )
             return redirect('authentication:password_reset_done')
     else:
@@ -161,16 +171,6 @@ def password_reset_complete_view(request):
 
 @login_required
 def resend_verification_email_view(request):
-    try:
-        verification = EmailVerification.objects.get(user=request.user)
-        if not verification.is_verified:
-            send_verification_email(request, request.user, verification.token)
-            messages.success(request, 'Verification email has been resent!')
-        else:
-            messages.info(request, 'Your email is already verified.')
-    except EmailVerification.DoesNotExist:
-        verification = EmailVerification.objects.create(user=request.user)
-        send_verification_email(request, request.user, verification.token)
-        messages.success(request, 'Verification email has been sent!')
-    
-    return redirect('authentication:email_verification_sent')
+    # TEMPORARY FIX: Disable resend verification
+    messages.info(request, 'Email verification is temporarily disabled. Your account is already active.')
+    return redirect('workspace:home')
