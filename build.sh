@@ -2,13 +2,18 @@
 # build.sh
 
 # Exit on error
-set -e
+set -o errexit
 
 # Install dependencies
+echo "Installing dependencies..."
 pip install -r requirements.txt
 
-# Collect static files
-python manage.py collectstatic --noinput
-
-# Run migrations (safe: won't fail if already applied)
+# Apply migrations
+echo "Applying database migrations..."
 python manage.py migrate
+
+# Collect static files
+echo "Collecting static files..."
+python manage.py collectstatic --noinput --clear
+
+echo "Build completed successfully!"

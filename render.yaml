@@ -4,7 +4,7 @@ services:
     env: python
     region: oregon
     buildCommand: "./build.sh"
-    startCommand: "gunicorn core.wsgi:application"
+    startCommand: "gunicorn -c gunicorn.conf.py core.wsgi:application"
     envVars:
       - key: DEBUG
         value: "False"
@@ -17,10 +17,10 @@ services:
           name: picktask-db
           property: connectionString
       - key: EMAIL_HOST_USER
-        sync: false
+        value: "picktask.co@gmail.com"
       - key: EMAIL_HOST_PASSWORD
-        sync: false
-    healthCheckPath: /
+        value: "your-gmail-app-password-here"
+    healthCheckPath: "/"
 
 databases:
   - name: picktask-db
