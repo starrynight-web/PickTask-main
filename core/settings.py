@@ -132,6 +132,6 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Set in Render
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Site URL (for email links)
-SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
+SITE_URL = os.getenv('SITE_URL', 'https://picktask.onrender.com')
 #SECRET_KEY = 'django-insecure-z7))(^8+q&#jktu2c-got8g(kg2#!q=6)+9t1-d*35spwp!g5l'
 #EMAIL_HOST_PASSWORD = 'cdhptofgcpbmfzpa'
