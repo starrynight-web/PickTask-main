@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Workspace, Task
+from workspace.models import Workspace, Task
 
 
 def home(request):

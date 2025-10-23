@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 from django.contrib.auth import get_user_model  # ✅ Critical for custom user
 from django.core.exceptions import ValidationError
 
-User = get_user_model()  # ✅ Points to 'home.User'
+User = get_user_model()  
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(

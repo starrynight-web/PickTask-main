@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
-# build.sh
+# build.sh - Simplified build script
 
-# Exit on error
 set -o errexit
 
+echo "🚀 Starting build process..."
+
 # Install dependencies
-echo "Installing dependencies..."
 pip install -r requirements.txt
 
-# Apply migrations
-echo "Applying database migrations..."
+# Run migrations
+python manage.py makemigrations
 python manage.py migrate
 
 # Collect static files
-echo "Collecting static files..."
-python manage.py collectstatic --noinput --clear
+python manage.py collectstatic --noinput
 
-echo "Build completed successfully!"
+echo "✅ Build completed!"
