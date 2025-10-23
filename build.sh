@@ -1,18 +1,21 @@
-#!/usr/bin/env bash
-# build.sh - Simplified build script
-
 set -o errexit
 
-echo "🚀 Starting build process..."
+echo "==========================================="
+echo "🚀 Starting PickTask Build Process"
+echo "==========================================="
 
-# Install dependencies
+echo "📦 Installing dependencies..."
 pip install -r requirements.txt
 
-# Run migrations
-python manage.py makemigrations
-python manage.py migrate
+echo "🗃️ Creating database migrations..."
+python manage.py makemigrations home authentication workspace --noinput
 
-# Collect static files
-python manage.py collectstatic --noinput
+echo "🔄 Applying migrations..."
+python manage.py migrate --noinput
 
-echo "✅ Build completed!"
+echo "📁 Collecting static files..."
+python manage.py collectstatic --noinput --clear
+
+echo "==========================================="
+echo "✅ Build completed successfully!"
+echo "==========================================="

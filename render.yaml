@@ -22,8 +22,3 @@ services:
         value: "your-gmail-app-password-here"
     healthCheckPath: "/"
 
-databases:
-  - name: picktask-db
-    databaseName: picktask
-    user: picktask_user
-    region: oregon
