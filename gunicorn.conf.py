@@ -1,8 +1,9 @@
 # gunicorn.conf.py
 import multiprocessing
+import os
 
-# Server socket
-bind = "0.0.0.0:8000"
+# Server socket - use Render's PORT environment variable
+bind = "0.0.0.0:" + os.environ.get("PORT", "8000")
 workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = "sync"
 worker_connections = 1000
