@@ -4,134 +4,387 @@
 
 {% block content_header %}
   <!-- Hero Section -->
-  <div class="text-center mb-10">
-    <h1 class="font-bold" style="font-size: 2.5rem; background: linear-gradient(135deg, var(--primary-teal), var(--primary-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-      Welcome to PickTask
-    </h1>
-    <p class="text-gray-600 mt-3 max-w-2xl mx-auto" style="font-size: 1.1rem;">
-      The intuitive workspace for teams who want to plan, track, and deliver great work — without the clutter.
-    </p>
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Welcome to PickTask
+      </h1>
+      <p class="hero-subtitle">
+        The intuitive workspace for teams who want to plan, track, and deliver great work — without the clutter.
+      </p>
+    </div>
   </div>
 {% endblock %}
 
 {% block content %}
 <!-- Onboarding Steps -->
-<div class="mb-12">
-  <h2 class="text-center font-semibold mb-6" style="font-size: 1.5rem; color: var(--gray-800);">Get Started in 3 Simple Steps</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="card text-center p-6">
-      <div class="w-14 h-14 rounded-full bg-primary-light flex items-center justify-center mx-auto mb-4">
-        <i class="fas fa-layer-group text-primary-teal text-xl"></i>
+<div class="onboarding-section">
+  <h2 class="section-title">Get Started in 3 Simple Steps</h2>
+  <div class="steps-container">
+    <div class="step-card">
+      <div class="step-icon">
+        <i class="fas fa-layer-group"></i>
       </div>
-      <h3 class="font-semibold mb-2">1. Create a Workspace</h3>
-      <p class="text-gray-600 text-sm">Your central hub for projects, tasks, and team collaboration.</p>
+      <h3 class="step-title">1. Create a Workspace</h3>
+      <p class="step-description">Your central hub for projects, tasks, and team collaboration.</p>
     </div>
-    <div class="card text-center p-6">
-      <div class="w-14 h-14 rounded-full bg-primary-light flex items-center justify-center mx-auto mb-4">
-        <i class="fas fa-table-columns text-primary-teal text-xl"></i>
+    <div class="step-card">
+      <div class="step-icon">
+        <i class="fas fa-table-columns"></i>
       </div>
-      <h3 class="font-semibold mb-2">2. Build Your Board</h3>
-      <p class="text-gray-600 text-sm">Customize columns, add tasks, and drag to track progress.</p>
+      <h3 class="step-title">2. Build Your Board</h3>
+      <p class="step-description">Customize columns, add tasks, and drag to track progress.</p>
     </div>
-    <div class="card text-center p-6">
-      <div class="w-14 h-14 rounded-full bg-primary-light flex items-center justify-center mx-auto mb-4">
-        <i class="fas fa-user-plus text-primary-teal text-xl"></i>
+    <div class="step-card">
+      <div class="step-icon">
+        <i class="fas fa-user-plus"></i>
       </div>
-      <h3 class="font-semibold mb-2">3. Invite Your Team</h3>
-      <p class="text-gray-600 text-sm">Collaborate in real time with shared visibility and updates.</p>
+      <h3 class="step-title">3. Invite Your Team</h3>
+      <p class="step-description">Collaborate in real time with shared visibility and updates.</p>
     </div>
   </div>
 </div>
 
 <!-- Primary CTA -->
-<div class="text-center mb-12">
-  <a href="{% url 'workspace:create-workspace' %}" class="btn btn-primary btn-lg">
+<div class="cta-section">
+  <a href="{% url 'workspace:create-workspace' %}" class="cta-button">
     <i class="fas fa-plus"></i> Create Your First Workspace
   </a>
-  <p class="text-gray-500 mt-3">It only takes 30 seconds to get started.</p>
+  <p class="cta-subtitle">It only takes 30 seconds to get started.</p>
 </div>
 
 <!-- Feature Highlights -->
-<div class="mb-12">
-  <h2 class="text-center font-semibold mb-6" style="font-size: 1.5rem;">Why Teams Love PickTask</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="card p-6">
-      <div class="flex items-start gap-4">
-        <div class="mt-1">
-          <i class="fas fa-palette text-primary-teal text-xl"></i>
+<div class="features-section">
+  <h2 class="section-title">Why Teams Love PickTask</h2>
+  <div class="features-container">
+    <div class="feature-card">
+      <div class="feature-header">
+        <div class="feature-icon">
+          <i class="fas fa-palette"></i>
         </div>
-        <div>
-          <h3 class="font-semibold mb-2">Fully Customizable</h3>
-          <p class="text-gray-600 text-sm">Rename, add, or reorder Kanban columns to match your workflow.</p>
-        </div>
+        <h3 class="feature-title">Fully Customizable</h3>
       </div>
+      <p class="feature-description">Rename, add, or reorder Kanban columns to match your workflow.</p>
     </div>
-    <div class="card p-6">
-      <div class="flex items-start gap-4">
-        <div class="mt-1">
-          <i class="fas fa-bolt text-primary-teal text-xl"></i>
+    <div class="feature-card">
+      <div class="feature-header">
+        <div class="feature-icon">
+          <i class="fas fa-bolt"></i>
         </div>
-        <div>
-          <h3 class="font-semibold mb-2">Lightning Fast</h3>
-          <p class="text-gray-600 text-sm">Built with Django for speed, security, and reliability.</p>
-        </div>
+        <h3 class="feature-title">Lightning Fast</h3>
       </div>
+      <p class="feature-description">Built with Django for speed, security, and reliability.</p>
     </div>
-    <div class="card p-6">
-      <div class="flex items-start gap-4">
-        <div class="mt-1">
-          <i class="fas fa-lock text-primary-teal text-xl"></i>
+    <div class="feature-card">
+      <div class="feature-header">
+        <div class="feature-icon">
+          <i class="fas fa-lock"></i>
         </div>
-        <div>
-          <h3 class="font-semibold mb-2">Secure & Private</h3>
-          <p class="text-gray-600 text-sm">Your data stays yours — with role-based access control.</p>
-        </div>
+        <h3 class="feature-title">Secure & Private</h3>
       </div>
+      <p class="feature-description">Your data stays yours — with role-based access control.</p>
     </div>
   </div>
 </div>
 
 <!-- Inspirational Quote -->
-<div class="card p-6 text-center mb-8" style="background: linear-gradient(135deg, var(--primary-light) 0%, rgba(255,255,255,0.8) 100%);">
-  <blockquote class="text-gray-700 italic mb-3" style="font-size: 1.1rem; line-height: 1.6;">
+<div class="quote-section">
+  <blockquote class="quote-content">
     {% comment %} Rotate quotes on page refresh {% endcomment %}
     {% now "U" as seed %}
     {% if seed|divisibleby:"3" %}
-      “Productivity is never an accident. It is always the result of a commitment to excellence.” — Colin Powell
+      "Productivity is never an accident. It is always the result of a commitment to excellence." — Colin Powell
     {% elif seed|divisibleby:"2" %}
-      “The way to get started is to quit talking and begin doing.” — Walt Disney
+      "The way to get started is to quit talking and begin doing." — Walt Disney
     {% else %}
-      “Great things are done by a series of small things brought together.” — Vincent Van Gogh
+      "Great things are done by a series of small things brought together." — Vincent Van Gogh
     {% endif %}
   </blockquote>
 </div>
 
 <!-- Future Stats (Placeholder) -->
-<div class="text-center text-gray-500 text-sm">
-  <p>Once you create workspaces, you’ll see your activity and progress here.</p>
+<div class="stats-placeholder">
+  <p>Once you create workspaces, you'll see your activity and progress here.</p>
 </div>
 {% endblock %}
 
 {% block extra_css %}
 <style>
-  .card {
+  /* Modern Hero Section */
+  .hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .hero-content {
+    text-align: center;
+    max-width: 800px;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--gray-600);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Section Styling */
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 3rem;
+  }
+  
+  /* Onboarding Steps */
+  .onboarding-section {
+    margin-bottom: 4rem;
+  }
+  
+  .steps-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .step-card {
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--gray-100);
     transition: all 0.3s ease;
-    border: 1px solid var(--gray-200);
   }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+  
+  .step-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
   }
-  .btn-lg {
-    padding: 1rem 2.5rem;
-    font-size: 1.1rem;
+  
+  .step-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
   }
+  
+  .step-icon i {
+    color: white;
+    font-size: 1.75rem;
+  }
+  
+  .step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+  }
+  
+  .step-description {
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+  
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2.5rem;
+    background: linear-gradient(135deg, var(--primary-teal), var(--primary-green));
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(123, 104, 238, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(123, 104, 238, 0.4);
+  }
+  
+  .cta-subtitle {
+    margin-top: 1rem;
+    color: var(--gray-500);
+    font-size: 0.95rem;
+  }
+  
+  /* Features Section */
+  .features-section {
+    margin-bottom: 4rem;
+  }
+  
+  .features-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .feature-card {
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--gray-100);
+    transition: all 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  
+  .feature-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+  
+  .feature-icon i {
+    color: var(--primary-teal);
+    font-size: 1.25rem;
+  }
+  
+  .feature-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-800);
+  }
+  
+  .feature-description {
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+  
+  /* Quote Section */
+  .quote-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+  
+  .quote-content {
+    max-width: 700px;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(255,255,255,0.8) 100%);
+    border-radius: 16px;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--gray-700);
+    line-height: 1.6;
+    text-align: center;
+    border-left: 4px solid var(--primary-teal);
+  }
+  
+  /* Stats Placeholder */
+  .stats-placeholder {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .stats-placeholder p {
+    color: var(--gray-500);
+    font-size: 0.95rem;
+  }
+  
+  /* Responsive Design */
   @media (max-width: 768px) {
-    .grid {
-      grid-template-columns: 1fr !important;
+    .hero-title {
+      font-size: 2.25rem;
     }
-    h1 {
-      font-size: 2rem !important;
+    
+    .hero-subtitle {
+      font-size: 1.125rem;
+    }
+    
+    .section-title {
+      font-size: 1.75rem;
+    }
+    
+    .steps-container,
+    .features-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .step-card,
+    .feature-card {
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .cta-button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+    
+    .quote-content {
+      font-size: 1.125rem;
+      padding: 2rem 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .step-card,
+    .feature-card {
+      padding: 1.5rem;
     }
   }
 </style>

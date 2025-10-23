@@ -355,186 +355,200 @@
         opacity: 0.8;
       }
 
-      /* Updated Sidebar Styles */
-      .sidebar-nav {
-        padding: 1.5rem 0;
+      /* Sequential Navigation Styles */
+      .sequential-nav {
+        position: relative;
         height: 100%;
-        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
       }
 
-      .nav-section {
-        margin-bottom: 2rem;
+      .nav-view {
+        display: none;
+        flex-direction: column;
+        height: 100%;
+        animation: fadeIn 0.3s ease;
       }
 
-      .nav-section-header {
+      .nav-view.active {
+        display: flex;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateX(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .nav-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 1.5rem 0.75rem;
+        padding: 1.25rem 1.5rem;
         border-bottom: 1px solid var(--gray-200);
-        margin-bottom: 0.5rem;
+        background: var(--white);
+        flex-shrink: 0;
       }
 
-      .nav-section-title {
-        font-size: 0.85rem;
+      .nav-title {
         font-weight: 600;
-        color: var(--gray-600);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        color: var(--gray-800);
+        font-size: 0.95rem;
+        text-align: center;
+        flex: 1;
       }
 
-      .nav-action-btn {
+      .nav-arrow {
+        background: var(--gray-100);
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
-        background: var(--gray-100);
+        cursor: pointer;
+        transition: all 0.3s ease;
         color: var(--gray-600);
-        text-decoration: none;
-        font-size: 0.7rem;
-        transition: all 0.2s ease;
+        flex-shrink: 0;
       }
 
-      .nav-action-btn:hover {
+      .nav-arrow:hover:not(:disabled) {
         background: var(--primary-teal);
         color: white;
-        transform: scale(1.05);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
       }
 
-      .nav-action-btn.danger:hover {
-        background: var(--error);
+      .nav-arrow:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background: var(--gray-100);
+        color: var(--gray-400);
       }
 
-      .nav-section-content {
-        padding: 0 0.5rem;
+      .nav-arrow-spacer {
+        width: 32px;
+        visibility: hidden;
       }
 
-      .nav-item-wrapper {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.25rem;
-        border-radius: var(--border-radius-sm);
-        transition: background-color 0.2s ease;
-      }
-
-      .nav-item-wrapper:hover {
-        background: var(--gray-50);
+      .nav-content {
+        flex: 1;
+        padding: 1rem 0;
+        overflow-y: auto;
       }
 
       .nav-item {
         display: flex;
         align-items: center;
-        flex: 1;
-        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+        padding: 0.875rem 1.5rem;
         color: var(--gray-700);
         text-decoration: none;
-        transition: all 0.2s ease;
-        border-radius: var(--border-radius-sm);
-        gap: 0.75rem;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+        cursor: pointer;
+        position: relative;
+        margin: 0.125rem 0;
+        font-weight: 500;
+        font-size: 0.9rem;
       }
 
-      .nav-item:hover {
-        background: var(--primary-light);
+      .nav-item:hover:not(.empty-state) {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          transparent 100%
+        );
         color: var(--primary-teal);
+        border-left-color: var(--primary-teal);
         transform: translateX(4px);
       }
 
-      .nav-item.selected,
-      .nav-item.active {
-        background: var(--primary-light);
+      .nav-item.selected {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          rgba(123, 104, 238, 0.05) 100%
+        );
+        border-left-color: var(--primary-teal);
         color: var(--primary-teal);
         font-weight: 600;
       }
 
-      .nav-item-icon {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-
-      .nav-item-content {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        min-width: 0; /* Allow text truncation */
-      }
-
-      .nav-item-title {
-        font-size: 0.9rem;
-        font-weight: 500;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .nav-item-badge {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: var(--primary-light);
+      .nav-item.active {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          rgba(123, 104, 238, 0.1) 100%
+        );
+        border-left-color: var(--primary-teal);
         color: var(--primary-teal);
-        font-size: 0.6rem;
-        flex-shrink: 0;
-      }
-
-      .nav-item-indicator {
-        color: var(--success);
-        font-size: 0.8rem;
-        margin-left: auto;
-        flex-shrink: 0;
-      }
-
-      .nav-item-actions {
-        display: flex;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-        padding-right: 0.5rem;
-      }
-
-      .nav-item-wrapper:hover .nav-item-actions {
-        opacity: 1;
+        font-weight: 600;
       }
 
       .nav-item.empty-state {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
         color: var(--gray-500);
-        font-size: 0.9rem;
         cursor: default;
       }
 
-      .nav-item.empty-state i {
-        width: 20px;
-        text-align: center;
-      }
-
-      /* Scrollbar styling for sidebar */
-      .sidebar-nav::-webkit-scrollbar {
-        width: 4px;
-      }
-
-      .sidebar-nav::-webkit-scrollbar-track {
+      .nav-item.empty-state:hover {
         background: transparent;
+        color: var(--gray-500);
+        transform: none;
+        border-left-color: transparent;
       }
 
-      .sidebar-nav::-webkit-scrollbar-thumb {
+      .nav-item.new-item {
+        color: var(--primary-teal);
+        font-weight: 600;
+      }
+
+      .nav-item.new-item:hover {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light) 0%,
+          transparent 100%
+        );
+        border-left-color: var(--primary-teal);
+      }
+
+      .selected-check {
+        margin-left: auto;
+        color: var(--success);
+        font-size: 0.8rem;
+      }
+
+      .nav-progress {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1.25rem 1.5rem;
+        border-top: 1px solid var(--gray-200);
+        background: var(--white);
+        flex-shrink: 0;
+      }
+
+      .progress-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
         background: var(--gray-300);
-        border-radius: 2px;
+        transition: all 0.3s ease;
       }
 
-      .sidebar-nav::-webkit-scrollbar-thumb:hover {
-        background: var(--gray-400);
+      .progress-dot.active {
+        background: var(--primary-teal);
+        transform: scale(1.2);
+      }
+
+      .progress-dot.completed {
+        background: var(--success);
       }
 
       /* Enhanced Main Content Area */
@@ -930,7 +944,7 @@
           max-height: 60vh;
         }
 
-        .sidebar-nav {
+        .sequential-nav {
           height: auto;
         }
 
@@ -1010,10 +1024,6 @@
 
         .card-body {
           padding: 1.5rem;
-        }
-
-        .nav-item-actions {
-          opacity: 1; /* Always show actions on mobile */
         }
       }
 
@@ -1307,78 +1317,339 @@
     </div>
 
     <script>
-      // Enhanced JavaScript functionality
-      document.addEventListener('DOMContentLoaded', function() {
-        const navbar = document.getElementById('navbar');
-        const mobileToggle = document.getElementById('mobile-menu-toggle');
-        const navLinks = document.getElementById('nav-links');
+      // Sequential Navigation State Management
+      class SequentialNav {
+        static instance = null;
 
-        // Enhanced Dropdown functionality
-        const dropdownToggle = document.getElementById('navigation-dropdown');
-        const dropdownMenu = document.getElementById('dropdown-menu');
-        const dropdownOverlay = document.getElementById('dropdown-overlay');
+        constructor() {
+          if (SequentialNav.instance) {
+            return SequentialNav.instance;
+          }
 
-        if (dropdownToggle && dropdownMenu) {
-          dropdownToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isOpen = this.classList.contains('open');
+          this.currentView = "workspace-view";
+          this.selectedWorkspace = {% if current_workspace %}{{ current_workspace.id }}{% else %}null{% endif %};
+          this.selectedProject = {% if current_project %}{{ current_project.id }}{% else %}null{% endif %};
+          this.autoAdvance = true;
 
-            // Close all other dropdowns
-            document.querySelectorAll('.dropdown-toggle.open').forEach((toggle) => {
-              if (toggle !== this) {
-                toggle.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
+          SequentialNav.instance = this;
+          this.init();
+        }
+
+        init() {
+          // Restore state from session storage
+          this.restoreState();
+
+          // Set initial view based on current selections
+          this.updateViewState();
+
+          // Initialize event listeners
+          this.bindEvents();
+
+          console.log("SequentialNav initialized");
+        }
+
+        restoreState() {
+          const savedState = sessionStorage.getItem("picktask_nav_state");
+          if (savedState) {
+            try {
+              const state = JSON.parse(savedState);
+              this.currentView = state.currentView || "workspace-view";
+              this.selectedWorkspace = state.selectedWorkspace || null;
+              this.selectedProject = state.selectedProject || null;
+            } catch (e) {
+              console.warn("Failed to restore nav state:", e);
+            }
+          }
+        }
+
+        saveState() {
+          const state = {
+            currentView: this.currentView,
+            selectedWorkspace: this.selectedWorkspace,
+            selectedProject: this.selectedProject,
+          };
+          sessionStorage.setItem("picktask_nav_state", JSON.stringify(state));
+        }
+
+        static showView(viewId) {
+          if (!SequentialNav.instance) {
+            new SequentialNav();
+          }
+          return SequentialNav.instance.showView(viewId);
+        }
+
+        showView(viewId) {
+          // Hide all views
+          document.querySelectorAll(".nav-view").forEach((view) => {
+            view.classList.remove("active");
+          });
+
+          // Show target view
+          const targetView = document.getElementById(viewId);
+          if (targetView) {
+            targetView.classList.add("active");
+            this.currentView = viewId;
+            this.saveState();
+            this.updateArrowStates();
+            this.updateProgressDots();
+          }
+        }
+
+        static selectWorkspace(
+          workspaceId,
+          workspaceName,
+          workspaceUrl = null
+        ) {
+          if (!SequentialNav.instance) {
+            new SequentialNav();
+          }
+          return SequentialNav.instance.selectWorkspace(
+            workspaceId,
+            workspaceName,
+            workspaceUrl
+          );
+        }
+
+        selectWorkspace(workspaceId, workspaceName, workspaceUrl = null) {
+          console.log(
+            "Selecting workspace:",
+            workspaceId,
+            workspaceName,
+            workspaceUrl
+          );
+
+          this.selectedWorkspace = workspaceId;
+          this.selectedProject = null; // Reset project when workspace changes
+          this.saveState();
+
+          // Update UI
+          this.updateWorkspaceSelection(workspaceId);
+          this.updateArrowStates();
+
+          if (workspaceUrl) {
+            // Navigate to the workspace URL to update server context
+            console.log("Navigating to workspace URL:", workspaceUrl);
+            window.location.href = workspaceUrl;
+          } else {
+            // If no URL provided, just update the view
+            if (this.autoAdvance) {
+              setTimeout(() => {
+                this.showView("project-view");
+              }, 500);
+            }
+          }
+        }
+
+        static selectProject(projectId, projectName, projectUrl = null) {
+          if (!SequentialNav.instance) {
+            new SequentialNav();
+          }
+          return SequentialNav.instance.selectProject(
+            projectId,
+            projectName,
+            projectUrl
+          );
+        }
+
+        selectProject(projectId, projectName, projectUrl = null) {
+          console.log(
+            "Selecting project:",
+            projectId,
+            projectName,
+            projectUrl
+          );
+
+          this.selectedProject = projectId;
+          this.saveState();
+
+          // Update UI
+          this.updateProjectSelection(projectId);
+          this.updateArrowStates();
+
+          if (projectUrl) {
+            // Navigate to the project URL to update server context
+            console.log("Navigating to project URL:", projectUrl);
+            window.location.href = projectUrl;
+          } else {
+            // If no URL provided, just update the view
+            if (this.autoAdvance) {
+              setTimeout(() => {
+                this.showView("navigation-view");
+              }, 500);
+            }
+          }
+        }
+
+        updateWorkspaceSelection(workspaceId) {
+          document.querySelectorAll("[data-workspace-id]").forEach((item) => {
+            item.classList.remove("selected");
+            if (
+              parseInt(item.getAttribute("data-workspace-id")) === workspaceId
+            ) {
+              item.classList.add("selected");
+            }
+          });
+        }
+
+        updateProjectSelection(projectId) {
+          document.querySelectorAll("[data-project-id]").forEach((item) => {
+            item.classList.remove("selected");
+            if (parseInt(item.getAttribute("data-project-id")) === projectId) {
+              item.classList.add("selected");
+            }
+          });
+        }
+
+        updateArrowStates() {
+          const toProjectsBtn = document.getElementById("to-projects-btn");
+          const toNavigationBtn = document.getElementById("to-navigation-btn");
+
+          // Enable/disable next arrows based on selections
+          if (toProjectsBtn) {
+            toProjectsBtn.disabled = !this.selectedWorkspace;
+          }
+          if (toNavigationBtn) {
+            toNavigationBtn.disabled = !this.selectedProject;
+          }
+        }
+
+        updateProgressDots() {
+          const views = ["workspace-view", "project-view", "navigation-view"];
+          const currentIndex = views.indexOf(this.currentView);
+
+          document
+            .querySelectorAll(".nav-progress .progress-dot")
+            .forEach((dot, index) => {
+              dot.classList.remove("active", "completed");
+              if (index === currentIndex) {
+                dot.classList.add("active");
+              } else if (index < currentIndex) {
+                dot.classList.add("completed");
               }
             });
+        }
 
-            document.querySelectorAll('.dropdown-menu.open').forEach((menu) => {
+        updateViewState() {
+          // Determine which view to show based on current selections
+          if (this.selectedWorkspace && this.selectedProject) {
+            this.showView("navigation-view");
+          } else if (this.selectedWorkspace) {
+            this.showView("project-view");
+          } else {
+            this.showView("workspace-view");
+          }
+        }
+
+        bindEvents() {
+          // Keyboard navigation
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft") {
+              this.navigateBack();
+            } else if (e.key === "ArrowRight") {
+              this.navigateForward();
+            }
+          });
+        }
+
+        navigateBack() {
+          const views = ["workspace-view", "project-view", "navigation-view"];
+          const currentIndex = views.indexOf(this.currentView);
+          if (currentIndex > 0) {
+            this.showView(views[currentIndex - 1]);
+          }
+        }
+
+        navigateForward() {
+          const views = ["workspace-view", "project-view", "navigation-view"];
+          const currentIndex = views.indexOf(this.currentView);
+          if (currentIndex < views.length - 1) {
+            // Check if we can advance
+            if (currentIndex === 0 && this.selectedWorkspace) {
+              this.showView("project-view");
+            } else if (currentIndex === 1 && this.selectedProject) {
+              this.showView("navigation-view");
+            }
+          }
+        }
+      }
+
+      // Enhanced JavaScript functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.getElementById("navbar");
+        const mobileToggle = document.getElementById("mobile-menu-toggle");
+        const navLinks = document.getElementById("nav-links");
+
+        // Enhanced Dropdown functionality
+        const dropdownToggle = document.getElementById("navigation-dropdown");
+        const dropdownMenu = document.getElementById("dropdown-menu");
+        const dropdownOverlay = document.getElementById("dropdown-overlay");
+
+        if (dropdownToggle && dropdownMenu) {
+          dropdownToggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const isOpen = this.classList.contains("open");
+
+            // Close all other dropdowns
+            document
+              .querySelectorAll(".dropdown-toggle.open")
+              .forEach((toggle) => {
+                if (toggle !== this) {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                }
+              });
+
+            document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
               if (menu !== dropdownMenu) {
-                menu.classList.remove('open');
+                menu.classList.remove("open");
               }
             });
 
             // Toggle current dropdown
-            this.classList.toggle('open');
-            dropdownMenu.classList.toggle('open');
-            this.setAttribute('aria-expanded', !isOpen);
+            this.classList.toggle("open");
+            dropdownMenu.classList.toggle("open");
+            this.setAttribute("aria-expanded", !isOpen);
 
             if (!isOpen) {
-              dropdownOverlay.style.display = 'block';
+              dropdownOverlay.style.display = "block";
             } else {
-              dropdownOverlay.style.display = 'none';
+              dropdownOverlay.style.display = "none";
             }
           });
 
           // Close dropdown when clicking on overlay
           if (dropdownOverlay) {
-            dropdownOverlay.addEventListener('click', function() {
-              dropdownToggle.classList.remove('open');
-              dropdownMenu.classList.remove('open');
-              dropdownToggle.setAttribute('aria-expanded', 'false');
-              this.style.display = 'none';
+            dropdownOverlay.addEventListener("click", function () {
+              dropdownToggle.classList.remove("open");
+              dropdownMenu.classList.remove("open");
+              dropdownToggle.setAttribute("aria-expanded", "false");
+              this.style.display = "none";
             });
           }
 
           // Close dropdown when clicking outside on desktop
-          document.addEventListener('click', function(e) {
-            if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-              dropdownToggle.classList.remove('open');
-              dropdownMenu.classList.remove('open');
-              dropdownToggle.setAttribute('aria-expanded', 'false');
+          document.addEventListener("click", function (e) {
+            if (
+              !dropdownToggle.contains(e.target) &&
+              !dropdownMenu.contains(e.target)
+            ) {
+              dropdownToggle.classList.remove("open");
+              dropdownMenu.classList.remove("open");
+              dropdownToggle.setAttribute("aria-expanded", "false");
               if (dropdownOverlay) {
-                dropdownOverlay.style.display = 'none';
+                dropdownOverlay.style.display = "none";
               }
             }
           });
 
           // Close dropdown on escape key
-          document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && dropdownMenu.classList.contains('open')) {
-              dropdownToggle.classList.remove('open');
-              dropdownMenu.classList.remove('open');
-              dropdownToggle.setAttribute('aria-expanded', 'false');
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && dropdownMenu.classList.contains("open")) {
+              dropdownToggle.classList.remove("open");
+              dropdownMenu.classList.remove("open");
+              dropdownToggle.setAttribute("aria-expanded", "false");
               if (dropdownOverlay) {
-                dropdownOverlay.style.display = 'none';
+                dropdownOverlay.style.display = "none";
               }
               dropdownToggle.focus();
             }
@@ -1393,9 +1664,9 @@
           const scrollY = window.scrollY;
 
           if (scrollY > 20) {
-            navbar.classList.add('scrolled');
+            navbar.classList.add("scrolled");
           } else {
-            navbar.classList.remove('scrolled');
+            navbar.classList.remove("scrolled");
           }
 
           lastScrollY = scrollY;
@@ -1403,7 +1674,7 @@
         };
 
         window.addEventListener(
-          'scroll',
+          "scroll",
           () => {
             if (!ticking) {
               requestAnimationFrame(updateNavbar);
@@ -1413,76 +1684,88 @@
           { passive: true }
         );
 
+        // Initialize sequential navigation
+        window.sequentialNav = new SequentialNav();
+
         // Enhanced mobile menu functionality
         if (mobileToggle && navLinks) {
-          mobileToggle.addEventListener('click', (e) => {
+          mobileToggle.addEventListener("click", (e) => {
             e.preventDefault();
-            const isOpen = navLinks.classList.contains('open');
+            const isOpen = navLinks.classList.contains("open");
 
-            navLinks.classList.toggle('open');
-            mobileToggle.setAttribute('aria-expanded', !isOpen);
-            mobileToggle.querySelector('i').className = isOpen
-              ? 'fas fa-bars'
-              : 'fas fa-times';
+            navLinks.classList.toggle("open");
+            mobileToggle.setAttribute("aria-expanded", !isOpen);
+            mobileToggle.querySelector("i").className = isOpen
+              ? "fas fa-bars"
+              : "fas fa-times";
 
             // Close dropdowns when mobile menu closes
             if (!isOpen) {
-              document.querySelectorAll('.dropdown-toggle.open').forEach((toggle) => {
-                toggle.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-              });
-              document.querySelectorAll('.dropdown-menu.open').forEach((menu) => {
-                menu.classList.remove('open');
+              document
+                .querySelectorAll(".dropdown-toggle.open")
+                .forEach((toggle) => {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                });
+              document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
+                menu.classList.remove("open");
               });
               if (dropdownOverlay) {
-                dropdownOverlay.style.display = 'none';
+                dropdownOverlay.style.display = "none";
               }
             }
 
             // Toggle body scroll
-            document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+            document.body.style.overflow = isOpen ? "auto" : "hidden";
           });
 
           // Close menu when clicking outside
-          document.addEventListener('click', (e) => {
-            if (!mobileToggle.contains(e.target) && !navLinks.contains(e.target)) {
-              navLinks.classList.remove('open');
-              mobileToggle.setAttribute('aria-expanded', 'false');
-              mobileToggle.querySelector('i').className = 'fas fa-bars';
-              document.body.style.overflow = 'auto';
+          document.addEventListener("click", (e) => {
+            if (
+              !mobileToggle.contains(e.target) &&
+              !navLinks.contains(e.target)
+            ) {
+              navLinks.classList.remove("open");
+              mobileToggle.setAttribute("aria-expanded", "false");
+              mobileToggle.querySelector("i").className = "fas fa-bars";
+              document.body.style.overflow = "auto";
 
               // Close dropdowns
-              document.querySelectorAll('.dropdown-toggle.open').forEach((toggle) => {
-                toggle.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-              });
-              document.querySelectorAll('.dropdown-menu.open').forEach((menu) => {
-                menu.classList.remove('open');
+              document
+                .querySelectorAll(".dropdown-toggle.open")
+                .forEach((toggle) => {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                });
+              document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
+                menu.classList.remove("open");
               });
               if (dropdownOverlay) {
-                dropdownOverlay.style.display = 'none';
+                dropdownOverlay.style.display = "none";
               }
             }
           });
 
           // Close menu on escape key
-          document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-              navLinks.classList.remove('open');
-              mobileToggle.setAttribute('aria-expanded', 'false');
-              mobileToggle.querySelector('i').className = 'fas fa-bars';
-              document.body.style.overflow = 'auto';
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && navLinks.classList.contains("open")) {
+              navLinks.classList.remove("open");
+              mobileToggle.setAttribute("aria-expanded", "false");
+              mobileToggle.querySelector("i").className = "fas fa-bars";
+              document.body.style.overflow = "auto";
 
               // Close dropdowns
-              document.querySelectorAll('.dropdown-toggle.open').forEach((toggle) => {
-                toggle.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-              });
-              document.querySelectorAll('.dropdown-menu.open').forEach((menu) => {
-                menu.classList.remove('open');
+              document
+                .querySelectorAll(".dropdown-toggle.open")
+                .forEach((toggle) => {
+                  toggle.classList.remove("open");
+                  toggle.setAttribute("aria-expanded", "false");
+                });
+              document.querySelectorAll(".dropdown-menu.open").forEach((menu) => {
+                menu.classList.remove("open");
               });
               if (dropdownOverlay) {
-                dropdownOverlay.style.display = 'none';
+                dropdownOverlay.style.display = "none";
               }
               mobileToggle.focus();
             }
@@ -1490,12 +1773,12 @@
         }
 
         // Add loading states to buttons on form submission
-        const forms = document.querySelectorAll('form');
+        const forms = document.querySelectorAll("form");
         forms.forEach((form) => {
-          form.addEventListener('submit', function() {
+          form.addEventListener("submit", function () {
             const submitBtn = this.querySelector('button[type="submit"]');
             if (submitBtn) {
-              submitBtn.classList.add('loading');
+              submitBtn.classList.add("loading");
               submitBtn.disabled = true;
             }
           });
@@ -1503,120 +1786,120 @@
 
         // Enhanced form interactions
         const formInputs = document.querySelectorAll(
-          '.form-input, .form-select, .form-textarea'
+          ".form-input, .form-select, .form-textarea"
         );
         formInputs.forEach((input) => {
-          input.addEventListener('focus', function() {
-            this.parentElement.classList.add('focused');
+          input.addEventListener("focus", function () {
+            this.parentElement.classList.add("focused");
           });
 
-          input.addEventListener('blur', function() {
-            if (this.value === '') {
-              this.parentElement.classList.remove('focused');
+          input.addEventListener("blur", function () {
+            if (this.value === "") {
+              this.parentElement.classList.remove("focused");
             }
           });
         });
 
-        console.log('Professional PickTask interface initialized');
+        console.log("Professional PickTask interface initialized");
       });
 
       // The loading screen
       const userIsAuthenticated =
-        '{% if user.is_authenticated %}true{% else %}false{% endif %}' ===
-        'true';
+        "{% if user.is_authenticated %}true{% else %}false{% endif %}" ===
+        "true";
 
       if (userIsAuthenticated) {
-        const navEntries = performance.getEntriesByType('navigation');
+        const navEntries = performance.getEntriesByType("navigation");
         const isReload =
-          navEntries.length > 0 && navEntries[0].type === 'reload';
+          navEntries.length > 0 && navEntries[0].type === "reload";
         const isFirstLoadAfterLogin = !sessionStorage.getItem(
-          'picktask_authenticated_session'
+          "picktask_authenticated_session"
         );
 
         if (isFirstLoadAfterLogin || isReload) {
-          sessionStorage.setItem('picktask_authenticated_session', 'active');
+          sessionStorage.setItem("picktask_authenticated_session", "active");
 
-          const loader = document.getElementById('global-loading-screen');
-          const bar = document.getElementById('loading-progress-bar');
-          const logoImg = document.getElementById('loading-logo-img');
-          const icon = document.getElementById('loading-icon');
+          const loader = document.getElementById("global-loading-screen");
+          const bar = document.getElementById("loading-progress-bar");
+          const logoImg = document.getElementById("loading-logo-img");
+          const icon = document.getElementById("loading-icon");
           const iconContainer = document.getElementById(
-            'loading-logo-container'
+            "loading-logo-container"
           );
 
           if (loader && bar && logoImg && icon) {
             // Show loader
-            loader.style.opacity = '1';
-            loader.style.visibility = 'visible';
+            loader.style.opacity = "1";
+            loader.style.visibility = "visible";
 
             // ✅ Start smooth animation sequence
-            let currentIcon = 'logo'; // 'logo' → 'calendar' → 'docs' → 'logo'
+            let currentIcon = "logo"; // 'logo' → 'calendar' → 'docs' → 'logo'
             const icons = {
-              calendar: 'fa-calendar-days',
-              docs: 'fa-file-lines',
+              calendar: "fa-calendar-days",
+              docs: "fa-file-lines",
             };
 
             // Initial pulse-in for logo
-            logoImg.style.transform = 'scale(1.2)';
-            logoImg.style.opacity = '0.8';
+            logoImg.style.transform = "scale(1.2)";
+            logoImg.style.opacity = "0.8";
             setTimeout(() => {
-              logoImg.style.transform = 'scale(1)';
-              logoImg.style.opacity = '1';
+              logoImg.style.transform = "scale(1)";
+              logoImg.style.opacity = "1";
             }, 300);
 
             // Animate morphing every 2 seconds
             const animateIcons = () => {
               setTimeout(() => {
-                if (currentIcon === 'logo') {
+                if (currentIcon === "logo") {
                   // Fade out logo
-                  logoImg.style.opacity = '0';
+                  logoImg.style.opacity = "0";
                   setTimeout(() => {
-                    logoImg.style.display = 'none';
-                    icon.className = 'fa-solid ' + icons.calendar;
-                    icon.style.display = 'block';
-                    icon.style.opacity = '0';
-                    icon.style.transform = 'scale(0.8) rotate(-10deg)';
+                    logoImg.style.display = "none";
+                    icon.className = "fa-solid " + icons.calendar;
+                    icon.style.display = "block";
+                    icon.style.opacity = "0";
+                    icon.style.transform = "scale(0.8) rotate(-10deg)";
                     setTimeout(() => {
-                      icon.style.opacity = '1';
-                      icon.style.transform = 'scale(1.1)';
+                      icon.style.opacity = "1";
+                      icon.style.transform = "scale(1.1)";
                       setTimeout(() => {
-                        icon.style.transform = 'scale(1)';
-                        currentIcon = 'calendar';
+                        icon.style.transform = "scale(1)";
+                        currentIcon = "calendar";
                         animateIcons(); // Loop
                       }, 300);
                     }, 300);
                   }, 300);
-                } else if (currentIcon === 'calendar') {
+                } else if (currentIcon === "calendar") {
                   // Fade out calendar
-                  icon.style.opacity = '0';
+                  icon.style.opacity = "0";
                   setTimeout(() => {
-                    icon.className = 'fa-solid ' + icons.docs;
-                    icon.style.opacity = '0';
-                    icon.style.transform = 'scale(0.8) rotate(-10deg)';
+                    icon.className = "fa-solid " + icons.docs;
+                    icon.style.opacity = "0";
+                    icon.style.transform = "scale(0.8) rotate(-10deg)";
                     setTimeout(() => {
-                      icon.style.opacity = '1';
-                      icon.style.transform = 'scale(1.1)';
+                      icon.style.opacity = "1";
+                      icon.style.transform = "scale(1.1)";
                       setTimeout(() => {
-                        icon.style.transform = 'scale(1)';
-                        currentIcon = 'docs';
+                        icon.style.transform = "scale(1)";
+                        currentIcon = "docs";
                         animateIcons(); // Loop
                       }, 300);
                     }, 300);
                   }, 300);
-                } else if (currentIcon === 'docs') {
+                } else if (currentIcon === "docs") {
                   // Fade out docs, show logo
-                  icon.style.opacity = '0';
+                  icon.style.opacity = "0";
                   setTimeout(() => {
-                    icon.style.display = 'none';
-                    logoImg.style.display = 'block';
-                    logoImg.style.opacity = '0';
-                    logoImg.style.transform = 'scale(0.8) rotate(-10deg)';
+                    icon.style.display = "none";
+                    logoImg.style.display = "block";
+                    logoImg.style.opacity = "0";
+                    logoImg.style.transform = "scale(0.8) rotate(-10deg)";
                     setTimeout(() => {
-                      logoImg.style.opacity = '1';
-                      logoImg.style.transform = 'scale(1.1)';
+                      logoImg.style.opacity = "1";
+                      logoImg.style.transform = "scale(1.1)";
                       setTimeout(() => {
-                        logoImg.style.transform = 'scale(1)';
-                        currentIcon = 'logo';
+                        logoImg.style.transform = "scale(1)";
+                        currentIcon = "logo";
                         animateIcons(); // Loop
                       }, 300);
                     }, 300);
@@ -1631,7 +1914,7 @@
             let isLoaded = false;
             let hasMetMinTime = false;
 
-            window.addEventListener('load', () => {
+            window.addEventListener("load", () => {
               isLoaded = true;
               checkReady();
             });
@@ -1652,7 +1935,7 @@
               if (progress >= 95) return;
               const inc = isLoaded ? 5 : Math.random() * 3 + 1;
               progress = Math.min(95, progress + inc);
-              bar.style.width = progress + '%';
+              bar.style.width = progress + "%";
               if (!isLoaded || progress < 95) {
                 setTimeout(animate, isLoaded ? 50 : 120);
               }
@@ -1661,10 +1944,10 @@
 
             function checkReady() {
               if (isLoaded && hasMetMinTime) {
-                bar.style.transition = 'width 0.3s ease';
-                bar.style.width = '100%';
+                bar.style.transition = "width 0.3s ease";
+                bar.style.width = "100%";
                 setTimeout(() => {
-                  loader.style.opacity = '0';
+                  loader.style.opacity = "0";
                   setTimeout(() => {
                     if (loader.parentNode) loader.remove();
                   }, 300);
@@ -1674,7 +1957,7 @@
           }
         }
       } else {
-        sessionStorage.removeItem('picktask_authenticated_session');
+        sessionStorage.removeItem("picktask_authenticated_session");
       }
     </script>
 
