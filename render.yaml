@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: picktask
+    env: python
+    region: oregon
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn core.wsgi:application"
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: picktask-db
+          property: connectionString
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+    healthCheckPath: /
+
+databases:
+  - name: picktask-db
+    databaseName: picktask
+    user: picktask_user
+    region: oregon
